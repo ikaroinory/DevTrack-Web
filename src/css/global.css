@@ -1,0 +1,57 @@
+:root {
+    --color-primary: #409eff;
+    --color-primary-light: #79bbff;
+
+    --color-border: #e4e7ed;
+
+    --color-text-remark: #8b949e;
+    --color-text-description: var(--color-text-remark);
+
+    --color-blue: #409eff;
+    --color-green: #67c23a;
+    --color-yellow: #fac858;
+    --color-red: #f56c6c;
+
+
+    --border-default: 1px solid var(--color-border);
+
+    --border-radius-default: 4px;
+    --border-radius-item: 12px;
+
+    --shadow-default: 0 0 12px rgba(0, 0, 0, 0.12);
+}
+
+.el-message-box__status {
+    top: 10px !important;
+}
+
+.global-frame-fillet {
+    margin: 20px;
+    padding: 24px;
+    border: var(--border-default);
+    border-radius: var(--border-radius-item);
+    box-shadow: var(--shadow-default);
+}
+
+.global-frame-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.global-vertical-margin {
+    margin-bottom: 32px;
+}
+
+.global-vertical-margin:nth-last-child(1) {
+    margin-bottom: 0;
+}
+
+.global-icon {
+    margin-right: 4px;
+}
+
+.global-flex-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
