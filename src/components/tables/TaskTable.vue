@@ -231,11 +231,11 @@
 </script>
 
 <style scoped>
-    .el-table >>> .warning-row {
+    :deep(.warning-row) {
         --el-table-tr-bg-color: var(--el-color-warning-light-9);
     }
 
-    .el-table >>> .success-row {
+    :deep(.success-row) {
         --el-table-tr-bg-color: var(--el-color-success-light-9);
     }
 
@@ -250,13 +250,14 @@
         left: 50%;
     }
 
-    .pagination-box >>> .el-pagination__total {
+    /*调整分页样式*/
+    :deep(.el-pagination__total) {
         width: 100px;
         display: flex;
         justify-content: right;
     }
 
-    .el-table >>> .el-table__row:hover {
+    :deep(.el-table__row):hover {
         cursor: pointer;
     }
 </style>
