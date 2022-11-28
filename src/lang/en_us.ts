@@ -310,13 +310,14 @@ const en_us = {
     },
     message: {
         title: {
-            message: "Info",
             success: "Success",
+            information: "Information",
             warning: "Warning",
             error: "Error"
         },
         button: {
-            ok: "Save"
+            ok: "Ok",
+            cancel: "Cancel"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         uuidInvalid: "UUID invalid!",
