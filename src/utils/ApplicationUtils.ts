@@ -72,9 +72,13 @@ export default class ApplicationUtils {
         localStorage.clear();
     }
 
-    public static changeLocale(locale: typeof i18n.global.locale): void {
+    public static changeLocale(locale: typeof i18n.global.locale): boolean {
+        if (i18n.global.locale === locale) return false;
+
         i18n.global.locale = locale;
         LocalStorageUtils.setLocale(locale);
         this.locale = i18n.global.messages[i18n.global.locale];
+
+        return true;
     }
 }

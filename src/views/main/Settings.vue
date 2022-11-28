@@ -49,6 +49,7 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const lang = ApplicationUtils.locale.view.settings;
+    const message = ApplicationUtils.locale.message;
 
     const localeOptions = [];
 
@@ -63,7 +64,10 @@
     }
 
     function changeLocale() {
-        ApplicationUtils.changeLocale(currentLocale.value);
+        if (ApplicationUtils.changeLocale(currentLocale.value))
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        else
+            ApplicationUtils.showMessage(message.youNeedToSelectAnOptionDifferentFromTheCurrentOne, "warning");
     }
 
     function clearStorage() {

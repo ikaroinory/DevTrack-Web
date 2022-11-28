@@ -335,6 +335,7 @@ const en_us = {
         youDoNotNeedToResetForm: "You do not need to reset form!",
         youHaveNotModifiedAvatar: "You have not modified avatar!",
         youHaveNotModifiedForm: "You have not modified form!",
+        youNeedToSelectAnOptionDifferentFromTheCurrentOne: "You need to select an option different from the current one!",
         timeout: "Request timed out!",
         passwordError: "Password not exist!",
         welcomeUser: "Welcome %s !",
