@@ -30,7 +30,7 @@
                 <div class="item-settings">
                     <div class="label-title" v-text="lang.cancellation"/>
                     <div class="label-description" style="color: var(--color-red)" v-text="lang.cancellationDescription"/>
-                    <el-button type="danger">
+                    <el-button type="danger" disabled>
                         <div v-text="lang.cancel"/>
                     </el-button>
                 </div>
