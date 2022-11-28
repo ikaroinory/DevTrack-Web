@@ -7,7 +7,7 @@ const en_us = {
             search: "Search",
             preferenceSettings: "Preference Settings",
             helpAndSupport: "Help & Support",
-            message: "Message"
+            notifications: "Notifications"
         },
         projectFrame: {
             overview: "Overview",
@@ -167,6 +167,9 @@ const en_us = {
         },
         taskInformation: {
             title: "Task Information"
+        },
+        systemNotification: {
+            title: "System Notification"
         }
     },
     form: {
