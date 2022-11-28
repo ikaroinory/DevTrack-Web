@@ -71,8 +71,14 @@
     }
 
     function clearStorage() {
-        ApplicationUtils.clearStorage();
-        router.replace({ name: "signIn" });
+        ApplicationUtils.showMessageBox(
+            message.clearStorageWarning.replace("%btn", message.button.ok),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            ApplicationUtils.clearStorage();
+            router.replace({ name: "signIn" });
+        }).catch(() => {});
     }
 </script>
 
