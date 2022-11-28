@@ -30,7 +30,7 @@
                 <div class="item-settings">
                     <div class="label-title" v-text="lang.cancellation"/>
                     <div class="label-description" style="color: var(--color-red)" v-text="lang.cancellationDescription"/>
-                    <el-button type="danger">
+                    <el-button type="danger" disabled>
                         <div v-text="lang.cancel"/>
                     </el-button>
                 </div>
@@ -49,6 +49,7 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const lang = ApplicationUtils.locale.view.settings;
+    const message = ApplicationUtils.locale.message;
 
     const localeOptions = [];
 
@@ -63,12 +64,21 @@
     }
 
     function changeLocale() {
-        ApplicationUtils.changeLocale(currentLocale.value);
+        if (ApplicationUtils.changeLocale(currentLocale.value))
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        else
+            ApplicationUtils.showMessage(message.youNeedToSelectAnOptionDifferentFromTheCurrentOne, "warning");
     }
 
     function clearStorage() {
-        ApplicationUtils.clearStorage();
-        router.replace({ name: "signIn" });
+        ApplicationUtils.showMessageBox(
+            message.clearStorageWarning.replace("%btn", message.button.ok),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            ApplicationUtils.clearStorage();
+            router.replace({ name: "signIn" });
+        }).catch(() => {});
     }
 </script>
 
