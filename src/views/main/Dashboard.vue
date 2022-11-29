@@ -36,6 +36,7 @@
                             </el-icon>
                         </el-tooltip>
                     </div>
+                    <ScheduleTable></ScheduleTable>
                 </el-header>
                 <el-main class="main-right-bottom">
                     <div class="function-top">
@@ -64,6 +65,7 @@
     import { ref } from "vue";
     import { MoreFilled, Plus } from "@element-plus/icons-vue";
     import TaskTable from "@/components/tables/TaskTable.vue";
+    import ScheduleTable from "@/components/tables/ScheduleTable.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import NewTaskDialog from "@/components/dialogs/NewTaskDialog.vue";
 
@@ -114,23 +116,30 @@
     }
 
     .main-right {
-        flex-grow: 2;
+        width: 0;
+        flex-grow: 3;
         padding-left: 12px;
+        display: flex;
+        flex-direction: column;
     }
 
     .main-right .main-right-top {
+        height: 0;
         background-color: #ffffff;
         flex-grow: 1;
         border-radius: 5px;
         margin-bottom: 12px;
         --el-header-padding: 0;
+        padding: 0 15px 15px 15px;
     }
 
     .main-right .main-right-bottom {
+        height: 0;
         background-color: #ffffff;
         flex-grow: 1;
         border-radius: 5px;
         --el-main-padding: 0;
+        padding: 0 15px 15px 15px;
     }
 
     .date-title {

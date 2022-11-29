@@ -1,45 +1,29 @@
 <template>
-    <el-table
-        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-        style="width: 100%"
-        :row-class-name="tableRowClassName"
-        @row-click="openDetails"
-        :row-style="{height: actualHeight}">
-        <template v-for="item in tableHead">
-            <el-table-column :prop="item.data"
-                             :label="item.columnLabel"
-            />
-        </template>
-    </el-table>
-
-    <div class="pagination-box" style="margin-top:15px;">
-        <el-pagination
-            @current-change="handleCurrentChange"
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :background="true"
-            :total="tableData.length"
-            :hide-on-single-page="true"
-        >
-        </el-pagination>
-    </div>
-
-    <el-dialog v-model="tableDialogVisible" align-center width="70%">
-        <div class="taskDialogComponents">
-            <TaskTableDetailsDialog/>
-        </div>
-    </el-dialog>
+    <el-scrollbar>
+        <el-table
+            :data="tableData"
+            style="width: 100%;"
+            :height="actualHeight"
+            ref="tableRef"
+            :row-style="{height: tableHeight + 'px'}">
+           >
+            <template v-for="item in tableHead">
+                <el-table-column :prop="item.data" :label="item.columnLabel"/>
+            </template>
+        </el-table>
+    </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
-    import TaskTableDetailsDialog from "@/components/display/TaskInformationDisplay.vue";
+    import { onMounted, ref } from "vue";
 
-    const currentPage = ref(1);
-    const pageSize = ref(12);
-    const tableDialogVisible = ref(false);
     let windowHeight = window.innerHeight;
-    let actualHeight = (windowHeight - 231) / 12 + "px";
+    let actualHeight = (windowHeight - 74) / 2 - 78 + "px";
+    const tableRef = ref();
+    const tableHeight = ref(0);
+    onMounted(() => {
+        tableHeight.value = (tableRef.value.$el.clientHeight - 40) / 5;
+    })
 
     interface Tasks {
         id: number;
@@ -49,23 +33,6 @@
         endDate: string;
         status: string;
     }
-
-    const tableRowClassName = ({ row }: { row: Tasks }) => {
-        if (row.status === "进行中") {
-            return "warning-row";
-        } else if (row.status === "已完成") {
-            return "success-row";
-        }
-        return "";
-    };
-
-    const openDetails = (row: any) => {
-        tableDialogVisible.value = true;
-    };
-
-    const handleCurrentChange = (val: number) => {
-        currentPage.value = val;
-    };
 
     const tableData: Tasks[] = [
         {
@@ -214,50 +181,10 @@
         {
             data: "principal",
             columnLabel: "负责人"
-        },
-        {
-            data: "startDate",
-            columnLabel: "开始时间"
-        },
-        {
-            data: "endDate",
-            columnLabel: "截止时间"
-        },
-        {
-            data: "status",
-            columnLabel: "任务状态"
         }
     ];
 </script>
 
 <style scoped>
-    :deep(.warning-row) {
-        --el-table-tr-bg-color: var(--el-color-warning-light-9);
-    }
 
-    :deep(.success-row) {
-        --el-table-tr-bg-color: var(--el-color-success-light-9);
-    }
-
-    .taskDialogComponents {
-        height: 60vh;
-    }
-
-    .pagination-box {
-        position: absolute;
-        bottom: 7px;
-        transform: translate(-50%);
-        left: 50%;
-    }
-
-    /*调整分页样式*/
-    :deep(.el-pagination__total) {
-        width: 100px;
-        display: flex;
-        justify-content: right;
-    }
-
-    :deep(.el-table__row):hover {
-        cursor: pointer;
-    }
 </style>
