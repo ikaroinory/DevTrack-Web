@@ -322,7 +322,8 @@ const en_us = {
             ok: "Save",
             accept: "Accept",
             ignore: "Ignore",
-            read: "Read"
+            read: "Read",
+            delete: "Delete"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         uuidInvalid: "UUID invalid!",

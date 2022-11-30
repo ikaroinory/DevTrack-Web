@@ -13,14 +13,20 @@
                     <a :href="link">{{ linkText ?? link }}</a>
                 </div>
             </div>
-            <div style="margin-left: 20px">
-                <div style="color: var(--color-text-description)">{{ time }}</div>
+            <div class="time-and-function-zone">
+                <div class="time">{{ time }}</div>
+                <div class="function-button-group">
+                    <el-tooltip placement="bottom" :hide-after="0" :content="button.delete">
+                        <el-button type="danger" :icon="Delete" circle @click="readHandler"/>
+                    </el-tooltip>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+    import { Delete } from "@element-plus/icons-vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const props = defineProps<{
@@ -40,7 +46,7 @@
     .notification-flex {
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap;
+        align-items: center;
     }
 
     .vertical-margin {
@@ -49,5 +55,25 @@
 
     .vertical-margin:nth-last-child(1) {
         margin-bottom: 0;
+    }
+
+    .time-and-function-zone {
+        margin-left: 20px;
+    }
+
+    .time {
+        color: var(--color-text-description);
+    }
+
+    .time-and-function-zone:hover .function-button-group {
+        display: block;
+    }
+
+    .time-and-function-zone:hover .time {
+        display: none;
+    }
+
+    .function-button-group {
+        display: none;
     }
 </style>
