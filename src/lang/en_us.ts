@@ -319,7 +319,10 @@ const en_us = {
             error: "Error"
         },
         button: {
-            ok: "Save"
+            ok: "Save",
+            accept: "Accept",
+            ignore: "Ignore",
+            read: "Read"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         uuidInvalid: "UUID invalid!",
