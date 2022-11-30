@@ -43,12 +43,12 @@
     </div>
 
     <EditMemberInformationDialog v-model:show="showDialog"
-                                        :record-u-u-i-d="recordUUID"
-                                        :nickname-in-project="nicknameInProject"
-                                        :role="role"
+                                 :record-u-u-i-d="recordUUID"
+                                 :nickname-in-project="nicknameInProject"
+                                 :role="role"
     />
     <AddMembersDialog v-model:show="addMembersDialog"
-                             :uuid="uuid"
+                      :uuid="uuid"
     />
 </template>
 
