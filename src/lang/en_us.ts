@@ -351,7 +351,8 @@ const en_us = {
         requiredParamsIsNull: "Required params is null!",
         addWarning: "Add exception.\n%d1 member was added, %d2 members were added successfully.\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
         addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
-        clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue"
+        clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue",
+        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove %user from this project?"
     }
 };
 

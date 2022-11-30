@@ -160,6 +160,10 @@ export default class RequestUtils {
         return (await this.post(RequestUrl.updateProject, this.toFormData(form)));
     }
 
+    public static async removeProjectMember(recordUUID: string) {
+        return this.removeProjectMembers({ recordUUIDList: [recordUUID] });
+    }
+
     public static async removeProjectMembers(form: { recordUUIDList: Array<String> }): Promise<Result<undefined>> {
         return (await this.post(RequestUrl.removeProjectMembers, this.toFormData(form)));
     }

@@ -24,7 +24,7 @@
                         <el-button type="primary" @click="edit(scope.row)">
                             <div v-text="lang.edit"/>
                         </el-button>
-                        <el-button type="danger">
+                        <el-button type="danger" @click="remove(scope.row)">
                             <div v-text="lang.remove"/>
                         </el-button>
                     </template>
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
+    import { inject, ref } from "vue";
     import { Plus } from "@icon-park/vue-next";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import UserItem from "@/components/items/UserItem.vue";
@@ -61,10 +61,13 @@
     import AddMembersDialog from "@/components/dialogs/AddMembersDialog.vue";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
 
     const props = defineProps({
         uuid: { type: String, required: true }
     });
+
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.view.projectMembers;
     const message = ApplicationUtils.locale.message;
@@ -111,6 +114,22 @@
         nicknameInProject.value = members.nicknameInProject;
         role.value = members.roleName;
         showDialog.value = true;
+    }
+
+    function remove(member: ProjectMemberInformation) {
+        ApplicationUtils.showMessageBox(
+            message.doYouWantToRemoveTheUserFromThisProject
+                .replace("%user", member.nickname + "(" + member.username + ")"),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            RequestUtils.removeProjectMember(member.recordUUID).then(resp => {
+                if (resp.statusCode === StatusCode.success) {
+                    ApplicationUtils.showMessage(message.removeSuccessfully, "success");
+                    reload();
+                }
+            }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
+        }).catch(() => {});
     }
 
     init();
