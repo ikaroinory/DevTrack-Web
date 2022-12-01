@@ -71,6 +71,7 @@ class RequestUrl {
     public static readonly removeProjectMembers = this.baseUrl + this.projectController + "removeMembers";
     public static readonly getOnePageProjectMemberInfo = this.baseUrl + this.projectController + "getOnePageMembers";
     public static readonly getRoles = this.baseUrl + this.projectController + "getRoles";
+    public static readonly updateMemberRole = this.baseUrl + RequestUrl.projectController + "updateMemberRole";
 
     // Task Controller
     public static readonly getTasks = this.baseUrl + this.taskController + "getTasks";
@@ -172,6 +173,10 @@ export default class RequestUtils {
 
     public static async addProjectMembers(form: AddProjectMembersForm): Promise<Result<Number>> {
         return (await this.post(RequestUrl.addProjectMembers, this.toFormData(form)));
+    }
+
+    public static async updateMemberRole(recordUUID: string, roleUUID: string) {
+        await this.post(RequestUrl.updateMemberRole, this.toFormData({ recordUUID, roleUUID }));
     }
 
     //Task Controller

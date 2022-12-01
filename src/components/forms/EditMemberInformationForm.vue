@@ -1,7 +1,7 @@
 <template>
     <el-form label-position="left" label-width="100px">
         <el-form-item :label="lang.role">
-            <el-select style="width: 100%" v-model="newRole">
+            <el-select style="width: 100%" v-model="newRoleUUID">
                 <el-option v-for="item in roleList"
                            :key="item.uuid"
                            :label="item.name"
@@ -17,9 +17,10 @@
 </template>
 
 <script lang="ts" setup>
-    import { reactive, ref } from "vue";
+    import { inject, reactive, ref } from "vue";
     import Role from "@/utils/po/Role";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import RequestUtils from "@/utils/RequestUtils";
 
     defineExpose({ clearForm, init });
     const props = defineProps<{
@@ -28,25 +29,32 @@
         roleList: Array<Role>
     }>();
 
+    const reload: Function = inject("reload")!;
     const lang = ApplicationUtils.locale.form.editMemberInformation;
+    const message = ApplicationUtils.locale.message;
 
     const form = reactive({
         recordUUID: props.recordUUID
     });
 
-    const newRole = ref(props.roleUUID);
+    const newRoleUUID = ref(props.roleUUID);
 
     function init() {
-        newRole.value = props.roleUUID;
+        newRoleUUID.value = props.roleUUID;
     }
 
     function clearForm() {
         form.recordUUID = props.recordUUID;
 
-        newRole.value = props.roleUUID;
+        newRoleUUID.value = props.roleUUID;
     }
 
     function submit() {
-
+        RequestUtils.updateMemberRole(props.recordUUID, newRoleUUID.value).then(() => {
+            ApplicationUtils.showMessage(message.submitSuccessfully, "success");
+            reload();
+        }).catch(() => {
+            ApplicationUtils.showMessage(message.timeout, "error");
+        });
     }
 </script>
