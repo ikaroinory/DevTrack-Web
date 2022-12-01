@@ -1,4 +1,4 @@
-export interface Role {
+export default interface Role {
     uuid: string;
     project: string;
     name: string;

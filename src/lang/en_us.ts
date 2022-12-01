@@ -281,7 +281,9 @@ const en_us = {
             member: "Member"
         },
         editMemberInformation: {
-            title: "Edit Member Information"
+            title: "Edit Member Information",
+            role: "Role",
+            submit: "Submit"
         },
         addMembers: {
             title: "Add Members",

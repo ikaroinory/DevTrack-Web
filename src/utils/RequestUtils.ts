@@ -21,7 +21,7 @@ import TaskInformation from "@/utils/dto/TaskInformation";
 import SessionStorageUtils from "@/utils/SessionStorageUtils";
 import TokenUtils from "@/utils/TokenUtils";
 import router from "@/plugins/VueRouter";
-import { Role } from "@/utils/po/Role";
+import Role from "@/utils/po/Role";
 
 const source = axios.CancelToken.source();
 

@@ -44,8 +44,8 @@
 
     <EditMemberInformationDialog v-model:show="showDialog"
                                  :record-u-u-i-d="recordUUID"
-                                 :nickname-in-project="nicknameInProject"
-                                 :role="role"
+                                 :role-u-u-i-d="roleUUID"
+                                 :role-list="roles"
     />
     <AddMembersDialog v-model:show="addMembersDialog"
                       :uuid="uuid"
@@ -62,7 +62,7 @@
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import StatusCode from "@/utils/enums/StatusCode";
-    import { Role } from "@/utils/po/Role";
+    import Role from "@/utils/po/Role";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -81,8 +81,7 @@
     const recordCount = ref(1);
     const showDialog = ref(false);
     const recordUUID = ref("");
-    const nicknameInProject = ref("");
-    const role = ref("");
+    const roleUUID = ref("");
     const addMembersDialog = ref(false);
 
     function init() {
@@ -116,8 +115,7 @@
 
     function edit(members: ProjectMemberInformation) {
         recordUUID.value = members.recordUUID;
-        nicknameInProject.value = members.nicknameInProject;
-        role.value = members.roleName;
+        roleUUID.value = members.roleUUID;
         showDialog.value = true;
     }
 

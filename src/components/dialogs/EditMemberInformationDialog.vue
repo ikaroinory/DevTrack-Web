@@ -1,13 +1,14 @@
 <template>
     <el-dialog v-model="thisShow"
                :title="lang.title"
+               @open="openDialog"
                @closed="closedDialog"
                style="width: 800px" align-center
                :close-on-click-modal="false" :close-on-press-escape="false">
         <EditMemberInformationForm ref="formRef"
                                    :record-u-u-i-d="recordUUID"
-                                   :nickname-in-project="nicknameInProject"
-                                   :role="role"
+                                   :role-u-u-i-d="roleUUID"
+                                   :role-list="roleList"
         />
     </el-dialog>
 </template>
@@ -16,13 +17,14 @@
     import { computed, ref } from "vue";
     import EditMemberInformationForm from "@/components/forms/EditMemberInformationForm.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import Role from "@/utils/po/Role";
 
-    const props = defineProps({
-        show: { type: Boolean, required: true },
-        recordUUID: { type: String, required: true },
-        nicknameInProject: { type: String, required: true },
-        role: { type: String, required: true }
-    });
+    const props = defineProps<{
+        show: boolean,
+        recordUUID: string,
+        roleUUID: string,
+        roleList: Array<Role>
+    }>();
     const emits = defineEmits(["update:show"]);
     const thisShow = computed({
         get: () => props.show,
@@ -31,6 +33,8 @@
     const lang = ApplicationUtils.locale.form.editMemberInformation;
 
     const formRef = ref();
+
+    function openDialog() {formRef.value.init();}
 
     function closedDialog() {
         formRef.value.clearForm();
