@@ -62,6 +62,7 @@
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import StatusCode from "@/utils/enums/StatusCode";
+    import { Role } from "@/utils/po/Role";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -73,6 +74,7 @@
     const message = ApplicationUtils.locale.message;
 
     const loading = ref(false);
+    const roles = ref<Array<Role>>([]);
     const members = ref<Array<ProjectMemberInformation>>([]);
     const currentPage = ref(1);
     const pageSize = 10;
@@ -86,6 +88,9 @@
     function init() {
         ApplicationUtils.setTitle(lang.title);
         getPage(currentPage.value);
+        RequestUtils.getRoles(props.uuid)
+            .then(resp => roles.value = [...resp])
+            .catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
     }
 
     function clearTable() {

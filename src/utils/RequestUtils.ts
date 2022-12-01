@@ -21,6 +21,7 @@ import TaskInformation from "@/utils/dto/TaskInformation";
 import SessionStorageUtils from "@/utils/SessionStorageUtils";
 import TokenUtils from "@/utils/TokenUtils";
 import router from "@/plugins/VueRouter";
+import { Role } from "@/utils/po/Role";
 
 const source = axios.CancelToken.source();
 
@@ -69,6 +70,7 @@ class RequestUrl {
     public static readonly addProjectMembers = this.baseUrl + this.projectController + "addMembers";
     public static readonly removeProjectMembers = this.baseUrl + this.projectController + "removeMembers";
     public static readonly getOnePageProjectMemberInfo = this.baseUrl + this.projectController + "getOnePageMembers";
+    public static readonly getRoles = this.baseUrl + this.projectController + "getRoles";
 
     // Task Controller
     public static readonly getTasks = this.baseUrl + this.taskController + "getTasks";
@@ -187,5 +189,9 @@ export default class RequestUtils {
 
     public static async getOnePageProjectTasks(pageNum: number, pageSize: number, uuid: string): Promise<PageInformation<TaskInformation>> {
         return (await this.get(RequestUrl.getOnePaeProjectTasks, { pageNum, pageSize, uuid }));
+    }
+
+    public static async getRoles(projectUUID: string): Promise<Array<Role>> {
+        return (await this.get(RequestUrl.getRoles, { projectUUID }));
     }
 }

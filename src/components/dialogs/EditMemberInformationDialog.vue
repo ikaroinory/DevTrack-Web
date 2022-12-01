@@ -4,18 +4,17 @@
                @closed="closedDialog"
                style="width: 800px" align-center
                :close-on-click-modal="false" :close-on-press-escape="false">
-        <!--        <EditMemberInformationForm ref="formRef"-->
-        <!--                                   :record-u-u-i-d="recordUUID"-->
-        <!--                                   :nickname-in-project="nicknameInProject"-->
-        <!--                                   :role="role"-->
-        <!--        />-->
-        TODO......
+        <EditMemberInformationForm ref="formRef"
+                                   :record-u-u-i-d="recordUUID"
+                                   :nickname-in-project="nicknameInProject"
+                                   :role="role"
+        />
     </el-dialog>
 </template>
 
 <script lang="ts" setup>
     import { computed, ref } from "vue";
-    // import EditMemberInformationForm from "@/components/forms/EditMemberInformationForm.vue";
+    import EditMemberInformationForm from "@/components/forms/EditMemberInformationForm.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const props = defineProps({
