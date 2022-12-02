@@ -1,7 +1,7 @@
 <template>
     <div class="task-details-container">
         <div class="task-title">
-            <el-input v-model="taskForm.title" @focus="" input-style="font-size: 2rem; height: 3rem;"/>
+            <el-input v-model="taskForm.title" @focus=""/>
         </div>
         <div class="task-second-container">
             <div class="task-second-box">
@@ -236,17 +236,22 @@
         padding: 0 15px 15px 15px;
     }
 
-    /*隐藏input类型的边框*/
-    :deep(.el-input__wrapper) {
+
+    .task-title >>> .el-input__wrapper {
         box-shadow: 0 0 0 0;
     }
 
-    :deep(.el-input__wrapper):hover {
+    .task-title >>> .el-input__wrapper:hover {
         box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
     }
 
-    :deep(.el-input__wrapper):focus-within {
+    .task-title >>> .el-input__wrapper:focus-within {
         box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset;
+    }
+
+    .task-title >>> .el-input__inner {
+        font-size: 2rem;
+        height: 3rem;
     }
 
 
@@ -269,6 +274,18 @@
         margin-left: 5px;
     }
 
+    .task-second-box-column >>> .el-input__wrapper {
+        box-shadow: 0 0 0 0;
+    }
+
+    .task-second-box-column >>> .el-input__wrapper:hover {
+        box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
+    }
+
+    .task-second-box-column >>> .el-input__wrapper:focus-within {
+        box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset;
+    }
+
 
     .task-details {
         display: flex;
@@ -287,17 +304,28 @@
         margin-bottom: 5px;
     }
 
-    /*隐藏选择器的箭头*/
-    :deep(.el-select .el-input .el-select__caret) {
+    .details-item >>> .el-input__wrapper {
+        box-shadow: 0 0 0 0;
+    }
+
+    .details-item >>> .el-input__wrapper:hover {
+        box-shadow: 0 0 0 1px var(--el-input-border-color, var(--el-border-color)) inset;
+    }
+
+    .details-item >>> .el-input__wrapper:focus-within {
+        box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset;
+    }
+
+    .details-select >>> .el-select .el-input .el-select__caret {
         color: #ffffff;
     }
 
-    .details-select:hover:deep(.el-select .el-input .el-select__caret) {
+    .details-select:hover >>> .el-select .el-input .el-select__caret {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
     }
 
-    .details-select:focus-within:deep(.el-select .el-input .el-select__caret) {
+    .details-select:focus-within >>> .el-select .el-input .el-select__caret {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
     }
