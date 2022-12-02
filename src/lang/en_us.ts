@@ -307,10 +307,15 @@ const en_us = {
             title: "Edit Project Role",
             roleName: "Role Name",
             permission: "Permission",
-            invite: "Invite Members",
-            createTask: "Create task",
+            inviteMembers: "Invite Members",
+            updateMember: "Update Member",
+            removeMember: "Remove Member",
+            createTask: "Create Task",
             updateTask: "Update Task",
             deleteTask: "Delete Task",
+            createRole: "Create Role",
+            updateRole: "Update Role",
+            removeRole: "Remove Role",
             submit: "Submit"
         }
     },

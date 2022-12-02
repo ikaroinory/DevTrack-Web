@@ -8,11 +8,41 @@
     </div>
 
     <div style="margin-bottom: 8px">{{ lang.permission }}</div>
-    <div class="line" style="margin-bottom: 16px">
-        <el-checkbox v-model="newRole.invite" :label="lang.invite"/>
-        <el-checkbox v-model="newRole.createTask" :label="lang.createTask"/>
-        <el-checkbox v-model="newRole.updateTask" :label="lang.updateTask"/>
-        <el-checkbox v-model="newRole.deleteTask" :label="lang.deleteTask"/>
+
+    <div style="margin: 0 16px 8px 16px">
+        <el-row>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.invite" :label="lang.inviteMembers"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox disabled :label="lang.updateMember"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox disabled :label="lang.removeMember"/>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.createTask" :label="lang.createTask"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.updateTask" :label="lang.updateTask"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.deleteTask" :label="lang.deleteTask"/>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="8">
+                <el-checkbox disabled :label="lang.createRole"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox disabled :label="lang.updateRole"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox disabled :label="lang.removeRole"/>
+            </el-col>
+        </el-row>
     </div>
 
     <div>
