@@ -82,6 +82,7 @@ class RequestUrl {
 
     // Role Controller
     public static readonly getOnePageRoles = RequestUrl.baseUrl + RequestUrl.roleController + "getOnePageRoles";
+    public static readonly updateRole = RequestUrl.baseUrl + RequestUrl.roleController + "updateRole";
 }
 
 export default class RequestUtils {
@@ -207,5 +208,9 @@ export default class RequestUtils {
     // Role Controller
     public static async getOnePageRoles(projectUUID: string, pageNum: number, pageSize: number): Promise<PageInformation<Role>> {
         return (await this.get(RequestUrl.getOnePageRoles, { projectUUID, pageNum, pageSize }));
+    }
+
+    public static async updateRole(role: Role): Promise<void> {
+        await this.post(RequestUrl.updateRole, this.toFormData(role));
     }
 }

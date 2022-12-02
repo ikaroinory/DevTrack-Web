@@ -19,21 +19,27 @@
                 <el-table-column :label="lang.roleName" prop="name"/>
                 <el-table-column :label="lang.operations">
                     <template #default="scope">
-                        <el-button type="primary">{{ lang.edit }}</el-button>
+                        <el-button type="primary" @click="edit(scope.row)">{{ lang.edit }}</el-button>
                         <el-button type="danger">{{ lang.remove }}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
     </div>
+
+    <EditRoleDialog
+        v-model:show="showEditRoleDialog"
+        :role="currentRole"
+    />
 </template>
 
 <script lang="ts" setup>
     import { ref } from "vue";
     import { Plus } from "@icon-park/vue-next";
     import ApplicationUtils from "@/utils/ApplicationUtils.js";
-    import Role from "@/utils/po/Role";
+    import Role, { defaultRole } from "@/utils/po/Role";
     import RequestUtils from "@/utils/RequestUtils";
+    import EditRoleDialog from "@/components/dialogs/EditRoleDialog.vue";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -43,10 +49,12 @@
     const message = ApplicationUtils.locale.message;
 
     const tableLoading = ref(false);
+    const showEditRoleDialog = ref(false);
     const roleList = ref<Array<Role>>([]);
     const pageSize = 10;
     const currentPage = ref(1);
     const recordCount = ref(1);
+    const currentRole = ref<Role>(defaultRole);
 
     init();
 
@@ -72,5 +80,10 @@
     function changePage(val: number) {
         clearTable();
         getPage(val);
+    }
+
+    function edit(role: Role) {
+        currentRole.value = role;
+        showEditRoleDialog.value = true;
     }
 </script>

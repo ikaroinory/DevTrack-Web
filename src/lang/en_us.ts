@@ -302,6 +302,16 @@ const en_us = {
             enterUsernameToAddMembers: "Please enter username to add members",
             add: "Add",
             reset: "Reset"
+        },
+        editRole: {
+            title: "Edit Project Role",
+            roleName: "Role Name",
+            permission: "Permission",
+            invite: "Invite Members",
+            createTask: "Create task",
+            updateTask: "Update Task",
+            deleteTask: "Delete Task",
+            submit: "Submit"
         }
     },
     item: {
@@ -365,7 +375,8 @@ const en_us = {
         addWarning: "Add exception.\n%d1 member was added, %d2 members were added successfully.\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
         addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
         clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue",
-        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove %user from this project?"
+        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove %user from this project?",
+        theNameCannotBeEmpty: "The name cannot be empty!"
     }
 };
 
