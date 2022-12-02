@@ -38,7 +38,7 @@
         text-align: left;
         background-color: #ffffff;
         border: 1px solid #e4e7ed;
-        border-radius: 4px;
+        border-radius: var(--border-radius-item);
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
     }
 

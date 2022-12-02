@@ -67,9 +67,9 @@
                 {
                     type: "pie",
                     data: [
-                        { name: "未开始", value: props.notStartTask, itemStyle: { color: "#f56c6c" } },
-                        { name: "进行中", value: props.progressingTask, itemStyle: { color: "#fac858" } },
-                        { name: "已完成", value: props.completedTask, itemStyle: { color: "#67c23a" } }
+                        { name: lang.notStart, value: props.notStartTask, itemStyle: { color: "#f56c6c" } },
+                        { name: lang.inProgress, value: props.progressingTask, itemStyle: { color: "#fac858" } },
+                        { name: lang.completed, value: props.completedTask, itemStyle: { color: "#67c23a" } }
                     ],
                     radius: "90%",
                     label: { show: false }
@@ -77,12 +77,12 @@
             ]
         };
         const optionWithNoData = {
-            tooltip: { show: true, formatter: "无任务记录" },
+            tooltip: { show: true, formatter: lang.noRecords },
             series: [
                 {
                     type: "pie",
                     data: [
-                        { name: "任务", value: 1, itemStyle: { color: "#c8c9cc" } }
+                        { name: "Tasks", value: 1, itemStyle: { color: "#c8c9cc" } }
                     ],
                     radius: "90%",
                     label: { show: false }
@@ -105,7 +105,7 @@
         text-align: left;
         background-color: #ffffff;
         border: 1px solid #e4e7ed;
-        border-radius: 4px;
+        border-radius: var(--border-radius-item);
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
     }
 
