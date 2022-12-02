@@ -15,7 +15,10 @@ export default class StatusCode {
 
     public static readonly projectNotFound = 401;
 
-    public static readonly requiredParamIsNull = 801;
+    public static readonly roleRecordExists = 501;
+    public static readonly roleNotFound = 502;
+
+    public static readonly requiredParamsIsNull = 801;
     public static readonly valueNotUpdate = 802;
 
     public static readonly uuidConflict = 901;

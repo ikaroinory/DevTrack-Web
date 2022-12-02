@@ -21,6 +21,7 @@ import TaskInformation from "@/utils/dto/TaskInformation";
 import SessionStorageUtils from "@/utils/SessionStorageUtils";
 import TokenUtils from "@/utils/TokenUtils";
 import router from "@/plugins/VueRouter";
+import Role from "@/utils/po/Role";
 
 const source = axios.CancelToken.source();
 
@@ -46,6 +47,7 @@ class RequestUrl {
     private static readonly projectController = "projects/";
     private static readonly emailController = "email/";
     private static readonly taskController = "tasks/";
+    private static readonly roleController = "role/";
 
     // Account Controller
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
@@ -69,12 +71,20 @@ class RequestUrl {
     public static readonly addProjectMembers = this.baseUrl + this.projectController + "addMembers";
     public static readonly removeProjectMembers = this.baseUrl + this.projectController + "removeMembers";
     public static readonly getOnePageProjectMemberInfo = this.baseUrl + this.projectController + "getOnePageMembers";
+    public static readonly getRoles = this.baseUrl + this.projectController + "getRoles";
+    public static readonly updateMemberRole = this.baseUrl + RequestUrl.projectController + "updateMemberRole";
 
     // Task Controller
     public static readonly getTasks = this.baseUrl + this.taskController + "getTasks";
     public static readonly getHeatMap = this.baseUrl + this.taskController + "getHeatMap";
     public static readonly createTask = this.baseUrl + this.taskController + "newTask";
     public static readonly getOnePaeProjectTasks = this.baseUrl + this.taskController + "getOnePageTasks";
+
+    // Role Controller
+    public static readonly getOnePageRoles = RequestUrl.baseUrl + RequestUrl.roleController + "getOnePageRoles";
+    public static readonly updateRole = RequestUrl.baseUrl + RequestUrl.roleController + "updateRole";
+    public static readonly removeRole = RequestUrl.baseUrl + RequestUrl.roleController + "remove";
+    public static readonly newRole = RequestUrl.baseUrl + RequestUrl.roleController + "new";
 }
 
 export default class RequestUtils {
@@ -160,12 +170,20 @@ export default class RequestUtils {
         return (await this.post(RequestUrl.updateProject, this.toFormData(form)));
     }
 
+    public static async removeProjectMember(recordUUID: string) {
+        return this.removeProjectMembers({ recordUUIDList: [recordUUID] });
+    }
+
     public static async removeProjectMembers(form: { recordUUIDList: Array<String> }): Promise<Result<undefined>> {
         return (await this.post(RequestUrl.removeProjectMembers, this.toFormData(form)));
     }
 
     public static async addProjectMembers(form: AddProjectMembersForm): Promise<Result<Number>> {
         return (await this.post(RequestUrl.addProjectMembers, this.toFormData(form)));
+    }
+
+    public static async updateMemberRole(recordUUID: string, roleUUID: string) {
+        await this.post(RequestUrl.updateMemberRole, this.toFormData({ recordUUID, roleUUID }));
     }
 
     //Task Controller
@@ -183,5 +201,26 @@ export default class RequestUtils {
 
     public static async getOnePageProjectTasks(pageNum: number, pageSize: number, uuid: string): Promise<PageInformation<TaskInformation>> {
         return (await this.get(RequestUrl.getOnePaeProjectTasks, { pageNum, pageSize, uuid }));
+    }
+
+    public static async getRoles(projectUUID: string): Promise<Array<Role>> {
+        return (await this.get(RequestUrl.getRoles, { projectUUID }));
+    }
+
+    // Role Controller
+    public static async getOnePageRoles(projectUUID: string, pageNum: number, pageSize: number): Promise<PageInformation<Role>> {
+        return (await this.get(RequestUrl.getOnePageRoles, { projectUUID, pageNum, pageSize }));
+    }
+
+    public static async updateRole(role: Role): Promise<void> {
+        await this.post(RequestUrl.updateRole, this.toFormData(role));
+    }
+
+    public static async removeRole(roleUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.removeRole, this.toFormData({ roleUUID })));
+    }
+
+    public static async newRole(role: Role): Promise<number> {
+        return (await this.post(RequestUrl.newRole, this.toFormData(role)));
     }
 }
