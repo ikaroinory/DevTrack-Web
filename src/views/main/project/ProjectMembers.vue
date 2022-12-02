@@ -4,8 +4,12 @@
             <div class="global-frame-title global-vertical-margin" v-text="lang.memberList"/>
             <div>
                 <el-button type="primary" @click="addMembersDialog = true">
-                    <plus class="icon"/>
+                    <plus class="global-icon"/>
                     <span v-text="lang.inviteMembers"/>
+                </el-button>
+                <el-button type="danger" @click="showRemoveMembersDialog = true">
+                    <minus class="global-icon"/>
+                    <span v-text="lang.removeMembers"/>
                 </el-button>
             </div>
         </div>
@@ -50,14 +54,18 @@
     <AddMembersDialog v-model:show="addMembersDialog"
                       :uuid="uuid"
     />
+    <RemoveProjectMembersDialog v-model:show="showRemoveMembersDialog"
+                                :members="members"
+    />
 </template>
 
 <script lang="ts" setup>
     import { inject, ref } from "vue";
-    import { Plus } from "@icon-park/vue-next";
+    import { Minus, Plus } from "@icon-park/vue-next";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import UserItem from "@/components/items/UserItem.vue";
     import EditMemberInformationDialog from "@/components/dialogs/EditMemberInformationDialog.vue";
+    import RemoveProjectMembersDialog from "@/components/dialogs/RemoveProjectMembersDialog.vue";
     import AddMembersDialog from "@/components/dialogs/AddMembersDialog.vue";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -83,6 +91,7 @@
     const recordUUID = ref("");
     const roleUUID = ref("");
     const addMembersDialog = ref(false);
+    const showRemoveMembersDialog = ref(false);
 
     function init() {
         ApplicationUtils.setTitle(lang.title);

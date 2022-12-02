@@ -98,13 +98,13 @@ const en_us = {
             nickname: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
-            editProjectInformation: "Edit information",
-            deleteMembers: "Delete members"
+            editProjectInformation: "Edit information"
         },
         projectMembers: {
             title: "Members",
             memberList: "Member List",
-            inviteMembers: "Invite members",
+            inviteMembers: "Invite Members",
+            removeMembers: "Remove Members",
             nicknameAndUsername: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
