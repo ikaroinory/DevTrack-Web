@@ -33,6 +33,7 @@
     import { Plus } from "@icon-park/vue-next";
     import ApplicationUtils from "@/utils/ApplicationUtils.js";
     import Role from "@/utils/po/Role";
+    import RequestUtils from "@/utils/RequestUtils";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -51,9 +52,25 @@
 
     function init() {
         ApplicationUtils.setTitle(lang.title);
+        getPage(currentPage.value);
+    }
+
+    function clearTable() {roleList.value = [];}
+
+    function getPage(pageNum: number) {
+        tableLoading.value = true;
+        RequestUtils.getOnePageRoles(props.uuid, pageNum, pageSize).then(resp => {
+            roleList.value = resp.list;
+            recordCount.value = resp.recordCount;
+            tableLoading.value = false;
+        }).catch(() => {
+            ApplicationUtils.showMessage(message.timeout, "error");
+            tableLoading.value = false;
+        });
+    }
+
+    function changePage(val: number) {
+        clearTable();
+        getPage(val);
     }
 </script>
-
-<style scoped>
-
-</style>

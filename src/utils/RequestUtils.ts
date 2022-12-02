@@ -47,6 +47,7 @@ class RequestUrl {
     private static readonly projectController = "projects/";
     private static readonly emailController = "email/";
     private static readonly taskController = "tasks/";
+    private static readonly roleController = "role/";
 
     // Account Controller
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
@@ -78,6 +79,9 @@ class RequestUrl {
     public static readonly getHeatMap = this.baseUrl + this.taskController + "getHeatMap";
     public static readonly createTask = this.baseUrl + this.taskController + "newTask";
     public static readonly getOnePaeProjectTasks = this.baseUrl + this.taskController + "getOnePageTasks";
+
+    // Role Controller
+    public static readonly getOnePageRoles = RequestUrl.baseUrl + RequestUrl.roleController + "getOnePageRoles";
 }
 
 export default class RequestUtils {
@@ -198,5 +202,10 @@ export default class RequestUtils {
 
     public static async getRoles(projectUUID: string): Promise<Array<Role>> {
         return (await this.get(RequestUrl.getRoles, { projectUUID }));
+    }
+
+    // Role Controller
+    public static async getOnePageRoles(projectUUID: string, pageNum: number, pageSize: number): Promise<PageInformation<Role>> {
+        return (await this.get(RequestUrl.getOnePageRoles, { projectUUID, pageNum, pageSize }));
     }
 }
