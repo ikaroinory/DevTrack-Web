@@ -1,46 +1,18 @@
 <template>
     <div class="table-box">
         <el-table
-            :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-            style="height: 100%"
-            :row-class-name="tableRowClassName"
-            @row-click="openDetails"
+            :data="tableData"
+            style="height: 100%;"
             :row-style="{height: '7vh'}">
+            >
             <template v-for="item in tableHead">
-                <el-table-column :prop="item.data"
-                                 :label="item.columnLabel"
-                />
+                <el-table-column :prop="item.data" :label="item.columnLabel"/>
             </template>
         </el-table>
     </div>
-
-    <div class="pagination-box">
-        <el-pagination
-            @current-change="handleCurrentChange"
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :background="true"
-            :total="tableData.length"
-            :hide-on-single-page="true"
-        >
-        </el-pagination>
-    </div>
-
-    <el-dialog v-model="tableDialogVisible" align-center width="70%">
-        <div class="taskDialogComponents">
-            <TaskTableDetailsDialog/>
-        </div>
-    </el-dialog>
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
-    import TaskTableDetailsDialog from "@/components/display/TaskInformationDisplay.vue";
-
-    const currentPage = ref(1);
-    const pageSize = ref(15);
-    const tableDialogVisible = ref(false);
-
     interface Tasks {
         id: number;
         name: string;
@@ -49,23 +21,6 @@
         endDate: string;
         status: string;
     }
-
-    const tableRowClassName = ({ row }: { row: Tasks }) => {
-        if (row.status === "进行中") {
-            return "warning-row";
-        } else if (row.status === "已完成") {
-            return "success-row";
-        }
-        return "";
-    };
-
-    const openDetails = (row: any) => {
-        tableDialogVisible.value = true;
-    };
-
-    const handleCurrentChange = (val: number) => {
-        currentPage.value = val;
-    };
 
     const tableData: Tasks[] = [
         {
@@ -214,56 +169,14 @@
         {
             data: "principal",
             columnLabel: "负责人"
-        },
-        {
-            data: "startDate",
-            columnLabel: "开始时间"
-        },
-        {
-            data: "endDate",
-            columnLabel: "截止时间"
-        },
-        {
-            data: "status",
-            columnLabel: "任务状态"
         }
     ];
 </script>
 
 <style scoped>
-    :deep(.warning-row) {
-        --el-table-tr-bg-color: var(--el-color-warning-light-9);
-    }
-
-    :deep(.success-row) {
-        --el-table-tr-bg-color: var(--el-color-success-light-9);
-    }
-
-    .taskDialogComponents {
-        height: 60vh;
-    }
-
     .table-box {
         flex-grow: 1;
         height: 0;
         padding: 0 12px;
-    }
-
-    .pagination-box {
-        display: flex;
-        justify-content: center;
-        margin: 12px;
-        position: relative;
-    }
-
-    /*调整分页中total样式*/
-    :deep(.el-pagination__total) {
-        width: 100px;
-        position: absolute;
-        right: 15px;
-    }
-
-    :deep(.el-table__row):hover {
-        cursor: pointer;
     }
 </style>
