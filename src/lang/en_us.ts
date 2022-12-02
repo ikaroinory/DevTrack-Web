@@ -125,6 +125,15 @@ const en_us = {
             startTime: "Start Time",
             deadline: "Deadline"
         },
+        projectRoles: {
+            title: "Roles",
+            roleList: "Role List",
+            newRole: "New Role",
+            roleName: "Role Name",
+            operations: "Operations",
+            edit: "Edit",
+            remove: "Remove"
+        },
         settings: {
             title: "Settings",
             general: "General",
