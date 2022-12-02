@@ -4,7 +4,16 @@ export default interface Role {
     name: string;
     invite: boolean;
     createTask: boolean;
-    viewTask: boolean;
     updateTask: boolean;
     deleteTask: boolean;
 }
+
+export const defaultRole: Role = {
+    uuid: "",
+    project: "",
+    name: "",
+    invite: false,
+    createTask: false,
+    updateTask: false,
+    deleteTask: false
+};

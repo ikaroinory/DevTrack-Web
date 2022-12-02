@@ -47,6 +47,7 @@ class RequestUrl {
     private static readonly projectController = "projects/";
     private static readonly emailController = "email/";
     private static readonly taskController = "tasks/";
+    private static readonly roleController = "role/";
 
     // Account Controller
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
@@ -78,6 +79,12 @@ class RequestUrl {
     public static readonly getHeatMap = this.baseUrl + this.taskController + "getHeatMap";
     public static readonly createTask = this.baseUrl + this.taskController + "newTask";
     public static readonly getOnePaeProjectTasks = this.baseUrl + this.taskController + "getOnePageTasks";
+
+    // Role Controller
+    public static readonly getOnePageRoles = RequestUrl.baseUrl + RequestUrl.roleController + "getOnePageRoles";
+    public static readonly updateRole = RequestUrl.baseUrl + RequestUrl.roleController + "updateRole";
+    public static readonly removeRole = RequestUrl.baseUrl + RequestUrl.roleController + "remove";
+    public static readonly newRole = RequestUrl.baseUrl + RequestUrl.roleController + "new";
 }
 
 export default class RequestUtils {
@@ -198,5 +205,22 @@ export default class RequestUtils {
 
     public static async getRoles(projectUUID: string): Promise<Array<Role>> {
         return (await this.get(RequestUrl.getRoles, { projectUUID }));
+    }
+
+    // Role Controller
+    public static async getOnePageRoles(projectUUID: string, pageNum: number, pageSize: number): Promise<PageInformation<Role>> {
+        return (await this.get(RequestUrl.getOnePageRoles, { projectUUID, pageNum, pageSize }));
+    }
+
+    public static async updateRole(role: Role): Promise<void> {
+        await this.post(RequestUrl.updateRole, this.toFormData(role));
+    }
+
+    public static async removeRole(roleUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.removeRole, this.toFormData({ roleUUID })));
+    }
+
+    public static async newRole(role: Role): Promise<number> {
+        return (await this.post(RequestUrl.newRole, this.toFormData(role)));
     }
 }

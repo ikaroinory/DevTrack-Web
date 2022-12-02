@@ -3,7 +3,7 @@
         <el-form-item label-width="0">
             <div class="formTitle">
                 <span class="formRole" v-text="lang.role"/>
-                <span class="formPrivileges" v-text="lang.permission"/>
+                <span class="formPrivileges" v-text="lang.permissions"/>
             </div>
         </el-form-item>
         <div v-for="(item,index) in membersTest" :key="index">

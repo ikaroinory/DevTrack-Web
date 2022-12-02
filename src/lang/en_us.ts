@@ -125,6 +125,15 @@ const en_us = {
             startTime: "Start Time",
             deadline: "Deadline"
         },
+        projectRoles: {
+            title: "Roles",
+            roleList: "Role List",
+            newRole: "New Role",
+            roleName: "Role Name",
+            operations: "Operations",
+            edit: "Edit",
+            remove: "Remove"
+        },
         settings: {
             title: "Settings",
             general: "General",
@@ -275,7 +284,7 @@ const en_us = {
         setMembersRole: {
             title: "Set Role",
             role: "Role",
-            permission: "Permission",
+            permissions: "Permissions",
             invite: "Invite members",
             addMembers: "Add members",
             submit: "Submit",
@@ -293,6 +302,36 @@ const en_us = {
             enterUsernameToAddMembers: "Please enter username to add members",
             add: "Add",
             reset: "Reset"
+        },
+        editRole: {
+            title: "Edit Project Role",
+            roleName: "Role Name",
+            permission: "Permission",
+            inviteMembers: "Invite Members",
+            updateMember: "Update Member",
+            removeMember: "Remove Member",
+            createTask: "Create Task",
+            updateTask: "Update Task",
+            deleteTask: "Delete Task",
+            createRole: "Create Role",
+            updateRole: "Update Role",
+            removeRole: "Remove Role",
+            submit: "Submit"
+        },
+        newRole: {
+            title: "New Role",
+            name: "Role Name",
+            permissions: "Permissions",
+            inviteMembers: "Invite Members",
+            updateMember: "Update Member",
+            removeMember: "Remove Member",
+            createTask: "Create Task",
+            updateTask: "Update Task",
+            deleteTask: "Delete Task",
+            createRole: "Create Role",
+            updateRole: "Update Role",
+            removeRole: "Remove Role",
+            create: "Create"
         }
     },
     item: {
@@ -356,7 +395,11 @@ const en_us = {
         addWarning: "Add exception.\n%d1 member was added, %d2 members were added successfully.\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
         addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
         clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue",
-        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove %user from this project?"
+        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove '%user' from this project?",
+        theNameCannotBeEmpty: "The name cannot be empty!",
+        roleRecordExists: "Role record exists!",
+        roleNotFound: "Role not found!",
+        doYouWantToRemoveTheRole: "Do you want to remove '%role' from this project?"
     }
 };
 

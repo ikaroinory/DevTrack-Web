@@ -75,7 +75,7 @@
         ApplicationUtils.setTitle("Profile");
 
         await RequestUtils.getUserInformation(props.username).then(resp => {
-            if (resp.statusCode == StatusCode.requiredParamIsNull) {
+            if (resp.statusCode == StatusCode.requiredParamsIsNull) {
                 ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
                 userNotFound.value = true;
             }
@@ -103,7 +103,7 @@
         }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
 
         RequestUtils.getUserProjectList(info.uuid).then(resp => {
-            if (resp.statusCode === StatusCode.requiredParamIsNull)
+            if (resp.statusCode === StatusCode.requiredParamsIsNull)
                 ApplicationUtils.showMessage(message.uuidInvalid, "error");
 
             if (resp.statusCode === StatusCode.success) {
@@ -120,7 +120,7 @@
             loading.value = false;
         });
         RequestUtils.getUserTaskList(info.uuid).then(resp => {
-            if (resp.statusCode === StatusCode.requiredParamIsNull)
+            if (resp.statusCode === StatusCode.requiredParamsIsNull)
                 ApplicationUtils.showMessage(message.uuidInvalid, "error");
 
             if (resp.statusCode === StatusCode.success) {
