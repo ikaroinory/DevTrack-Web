@@ -1,30 +1,18 @@
 <template>
-    <el-scrollbar>
+    <div class="table-box">
         <el-table
             :data="tableData"
-            style="width: 100%;"
-            :height="actualHeight"
-            ref="tableRef"
-            :row-style="{height: tableHeight + 'px'}">
-           >
+            style="height: 100%;"
+            :row-style="{height: '7vh'}">
+            >
             <template v-for="item in tableHead">
                 <el-table-column :prop="item.data" :label="item.columnLabel"/>
             </template>
         </el-table>
-    </el-scrollbar>
+    </div>
 </template>
 
 <script lang="ts" setup>
-    import { onMounted, ref } from "vue";
-
-    let windowHeight = window.innerHeight;
-    let actualHeight = (windowHeight - 74) / 2 - 78 + "px";
-    const tableRef = ref();
-    const tableHeight = ref(0);
-    onMounted(() => {
-        tableHeight.value = (tableRef.value.$el.clientHeight - 40) / 5;
-    })
-
     interface Tasks {
         id: number;
         name: string;
@@ -186,5 +174,9 @@
 </script>
 
 <style scoped>
-
+    .table-box {
+        flex-grow: 1;
+        height: 0;
+        padding: 0 12px;
+    }
 </style>
