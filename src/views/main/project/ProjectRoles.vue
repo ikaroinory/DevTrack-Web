@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
+    import { inject, ref } from "vue";
     import { Plus } from "@icon-park/vue-next";
     import ApplicationUtils from "@/utils/ApplicationUtils.js";
     import Role, { defaultRole } from "@/utils/po/Role";
@@ -49,6 +49,7 @@
         uuid: { type: String, required: true }
     });
 
+    const reload: Function = inject("reload")!;
     const lang = ApplicationUtils.locale.view.projectRoles;
     const message = ApplicationUtils.locale.message;
 
@@ -113,6 +114,7 @@
                         ApplicationUtils.showMessage(message.removeSuccessfully, "success");
                         break;
                 }
+                reload();
             }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
         }).catch(() => {});
     }
