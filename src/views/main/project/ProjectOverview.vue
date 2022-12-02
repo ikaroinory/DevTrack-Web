@@ -15,16 +15,10 @@
                     <div class="project-information-label"
                          v-text="lang.projectInformation"
                     />
-                    <div>
-                        <el-button type="primary" @click="setMembersPrivileges=true">
-                            <edit class="icon"/>
-                            <span v-text="lang.setMemberRole"/>
-                        </el-button>
-                        <el-button type="primary" @click="modifyProjectInformation=true">
-                            <edit class="icon"/>
-                            <span v-text="lang.editProjectInformation"/>
-                        </el-button>
-                    </div>
+                    <el-button type="primary" @click="modifyProjectInformation = true">
+                        <edit class="icon"/>
+                        <span v-text="lang.editProjectInformation"/>
+                    </el-button>
                 </div>
             </div>
 
@@ -117,9 +111,6 @@
                                   :start-time="info.startTIme ?? ''"
                                   :members="members"
     />
-    <SetRoleDialog v-model:show="setMembersPrivileges"
-                   :uuid="uuid"
-    />
     <RemoveProjectMembersDialog v-model:show="removeMembersDialog"
                                 :members="members"
     />
@@ -134,7 +125,6 @@
     import EditProjectInformationDialog from "@/components/dialogs/EditProjectInformationDialog.vue";
     import RemoveProjectMembersDialog from "@/components/dialogs/RemoveProjectMembersDialog.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
-    import SetRoleDialog from "@/components/dialogs/SetRoleDialog.vue";
     import UserItem from "@/components/items/UserItem.vue";
 
     const props = defineProps({
@@ -160,7 +150,6 @@
     });
     const members = ref<Array<ProjectMemberInformation>>([]);
     const modifyProjectInformation = ref(false);
-    const setMembersPrivileges = ref(false);
     const removeMembersDialog = ref(false);
 
     function init() {
