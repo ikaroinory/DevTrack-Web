@@ -83,6 +83,7 @@ class RequestUrl {
     // Role Controller
     public static readonly getOnePageRoles = RequestUrl.baseUrl + RequestUrl.roleController + "getOnePageRoles";
     public static readonly updateRole = RequestUrl.baseUrl + RequestUrl.roleController + "updateRole";
+    public static readonly removeRole = RequestUrl.baseUrl + RequestUrl.roleController + "remove";
 }
 
 export default class RequestUtils {
@@ -212,5 +213,9 @@ export default class RequestUtils {
 
     public static async updateRole(role: Role): Promise<void> {
         await this.post(RequestUrl.updateRole, this.toFormData(role));
+    }
+
+    public static async removeRole(roleUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.removeRole, this.toFormData({ roleUUID })));
     }
 }

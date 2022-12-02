@@ -20,7 +20,7 @@
                 <el-table-column :label="lang.operations">
                     <template #default="scope">
                         <el-button type="primary" @click="edit(scope.row)">{{ lang.edit }}</el-button>
-                        <el-button type="danger">{{ lang.remove }}</el-button>
+                        <el-button type="danger" @click="remove(scope.row)">{{ lang.remove }}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -40,6 +40,7 @@
     import Role, { defaultRole } from "@/utils/po/Role";
     import RequestUtils from "@/utils/RequestUtils";
     import EditRoleDialog from "@/components/dialogs/EditRoleDialog.vue";
+    import StatusCode from "@/utils/enums/StatusCode";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -85,5 +86,30 @@
     function edit(role: Role) {
         currentRole.value = role;
         showEditRoleDialog.value = true;
+    }
+
+    function remove(role: Role) {
+        ApplicationUtils.showMessageBox(
+            message.doYouWantToRemoveTheRole.replace("%role", role.name),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            RequestUtils.removeRole(role.uuid).then(resp => {
+                switch (resp) {
+                    case StatusCode.requiredParamsIsNull:
+                        ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
+                        break;
+                    case StatusCode.roleRecordExists:
+                        ApplicationUtils.showMessage(message.roleRecordExists, "error");
+                        break;
+                    case StatusCode.roleNotFound:
+                        ApplicationUtils.showMessage(message.roleNotFound, "error");
+                        break;
+                    default:
+                        ApplicationUtils.showMessage(message.removeSuccessfully, "success");
+                        break;
+                }
+            }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
+        }).catch(() => {});
     }
 </script>
