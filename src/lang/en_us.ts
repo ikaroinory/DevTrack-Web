@@ -284,7 +284,7 @@ const en_us = {
         setMembersRole: {
             title: "Set Role",
             role: "Role",
-            permission: "Permission",
+            permissions: "Permissions",
             invite: "Invite members",
             addMembers: "Add members",
             submit: "Submit",
@@ -317,6 +317,21 @@ const en_us = {
             updateRole: "Update Role",
             removeRole: "Remove Role",
             submit: "Submit"
+        },
+        newRole: {
+            title: "New Role",
+            name: "Role Name",
+            permissions: "Permissions",
+            inviteMembers: "Invite Members",
+            updateMember: "Update Member",
+            removeMember: "Remove Member",
+            createTask: "Create Task",
+            updateTask: "Update Task",
+            deleteTask: "Delete Task",
+            createRole: "Create Role",
+            updateRole: "Update Role",
+            removeRole: "Remove Role",
+            create: "Create"
         }
     },
     item: {

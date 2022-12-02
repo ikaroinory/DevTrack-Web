@@ -5,7 +5,7 @@
                 <div class="global-frame-title">{{ lang.roleList }}</div>
 
                 <div>
-                    <el-button type="primary">
+                    <el-button type="primary" @click="showNewRoleDialog = true">
                         <plus class="global-icon"/>
                         <span>{{ lang.newRole }}</span>
                     </el-button>
@@ -27,9 +27,11 @@
         </div>
     </div>
 
-    <EditRoleDialog
-        v-model:show="showEditRoleDialog"
-        :role="currentRole"
+    <NewRoleDialog v-model:show="showNewRoleDialog"
+                   :project-uuid="uuid"
+    />
+    <EditRoleDialog v-model:show="showEditRoleDialog"
+                    :role="currentRole"
     />
 </template>
 
@@ -41,6 +43,7 @@
     import RequestUtils from "@/utils/RequestUtils";
     import EditRoleDialog from "@/components/dialogs/EditRoleDialog.vue";
     import StatusCode from "@/utils/enums/StatusCode";
+    import NewRoleDialog from "@/components/dialogs/NewRoleDialog.vue";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -50,6 +53,7 @@
     const message = ApplicationUtils.locale.message;
 
     const tableLoading = ref(false);
+    const showNewRoleDialog = ref(false);
     const showEditRoleDialog = ref(false);
     const roleList = ref<Array<Role>>([]);
     const pageSize = 10;
