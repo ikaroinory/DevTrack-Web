@@ -151,13 +151,15 @@ const en_us = {
             title: "Project Overview",
             notStart: "Not start",
             inProgress: "In progress",
-            completed: "Completed"
+            completed: "Completed",
+            noRecords: "No records"
         },
         tasks: {
             title: "Task Overview",
             notStart: "Not start",
             inProgress: "In progress",
-            completed: "Completed"
+            completed: "Completed",
+            noRecords: "No records"
         }
     },
     display: {
