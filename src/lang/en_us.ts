@@ -310,14 +310,13 @@ const en_us = {
     },
     message: {
         title: {
+            message: "Info",
             success: "Success",
-            information: "Information",
             warning: "Warning",
             error: "Error"
         },
         button: {
-            ok: "Ok",
-            cancel: "Cancel"
+            ok: "Save"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         uuidInvalid: "UUID invalid!",
@@ -336,7 +335,6 @@ const en_us = {
         youDoNotNeedToResetForm: "You do not need to reset form!",
         youHaveNotModifiedAvatar: "You have not modified avatar!",
         youHaveNotModifiedForm: "You have not modified form!",
-        youNeedToSelectAnOptionDifferentFromTheCurrentOne: "You need to select an option different from the current one!",
         timeout: "Request timed out!",
         passwordError: "Password not exist!",
         welcomeUser: "Welcome %s !",
@@ -350,8 +348,7 @@ const en_us = {
         signUpSuccessfully: "Sign up success!",
         requiredParamsIsNull: "Required params is null!",
         addWarning: "Add exception.\n%d1 member was added, %d2 members were added successfully.\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
-        addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
-        clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue"
+        addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project."
     }
 };
 

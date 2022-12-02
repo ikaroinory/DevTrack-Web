@@ -1,81 +1,152 @@
 <template>
-    <div class="dashboard-container">
-        <div class="left-container box-style box-flex">
-            <div class="top-title">
-                <span v-text="lang.tasks"/>
-            </div>
-            <TaskTable/>
-        </div>
-        <div class="right-container box-flex">
-            <div class="right-top-box box-style box-flex">
-                <div class="top-title">
-                    <span>我的日程</span>
+    <div class="main-box">
+        <el-container :style="{height:actualHeight}">
+            <el-aside class="main-left">
+                <div class="function-top">
+                    <span v-text="lang.tasks"/>
+                    <div style="flex-grow: 1"></div>
+                    <el-tooltip effect="dark" :content="lang.newTask" placement="top" :hide-after="0">
+                        <el-icon class="main-icon" @click="taskDialogVisible=true">
+                            <Plus/>
+                        </el-icon>
+                    </el-tooltip>
+                    <el-tooltip effect="dark" :content="lang.more" placement="top" :hide-after="0">
+                        <el-icon class="main-icon">
+                            <MoreFilled/>
+                        </el-icon>
+                    </el-tooltip>
                 </div>
-                <ScheduleTable/>
-            </div>
-            <div class="right-bottom-box box-style box-flex">
-                <div class="top-title">
-                    <span v-text="lang.projects"/>
-                </div>
-                <ProjectTable/>
-            </div>
-        </div>
+                <TaskTable></TaskTable>
+            </el-aside>
+            <el-container class="main-right">
+                <el-header class="main-right-top">
+                    <div class="function-top">
+                        <span class="date-title">我的日程</span>
+                        <el-date-picker v-model="date" type="date" placeholder="Pick a day" :clearable="false"
+                                        style="width: 130px;"/>
+                        <div style="flex-grow: 1"></div>
+                        <el-tooltip effect="dark" content="新建日程" placement="top" :hide-after="0">
+                            <el-icon class="main-icon">
+                                <Plus/>
+                            </el-icon>
+                        </el-tooltip>
+                        <el-tooltip effect="dark" :content="lang.more" placement="top" :hide-after="0">
+                            <el-icon class="main-icon">
+                                <MoreFilled/>
+                            </el-icon>
+                        </el-tooltip>
+                    </div>
+                </el-header>
+                <el-main class="main-right-bottom">
+                    <div class="function-top">
+                        <span v-text="lang.projects"/>
+                        <div style="flex-grow: 1"></div>
+                        <el-tooltip effect="dark" :content="lang.newProject" placement="top" :hide-after="0">
+                            <el-icon class="main-icon">
+                                <Plus/>
+                            </el-icon>
+                        </el-tooltip>
+                        <el-tooltip effect="dark" :content="lang.more" placement="top" :hide-after="0">
+                            <el-icon class="main-icon">
+                                <MoreFilled/>
+                            </el-icon>
+                        </el-tooltip>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>
     </div>
+
+    <NewTaskDialog v-model:show="taskDialogVisible"/>
 </template>
 
 <script lang="ts" setup>
+    import { ref } from "vue";
+    import { MoreFilled, Plus } from "@element-plus/icons-vue";
     import TaskTable from "@/components/tables/TaskTable.vue";
-    import ScheduleTable from "@/components/tables/ScheduleTable.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
-    import ProjectTable from "@/components/tables/ProjectTable.vue";
+    import NewTaskDialog from "@/components/dialogs/NewTaskDialog.vue";
 
     const lang = ApplicationUtils.locale.view.dashboard;
+    let windowHeight = window.innerHeight;
+    let actualHeight = windowHeight - 75 + "px";
+
+    const taskDialogVisible = ref(false);
+
+    let myDate = new Date();
+    const currentDate = myDate.toLocaleDateString();
+    const date = ref(currentDate);
+
+    const taskDialogRef = ref();
+
+    init();
+
+    function init() {
+        ApplicationUtils.setTitle("Dashboard");
+    }
+
+    function resetForm() {
+        taskDialogRef.value.reset();
+    }
 </script>
 
 <style scoped>
-    .dashboard-container {
-        display: flex;
-        height: 100%;
+    .main-box {
+        background-color: rgb(238, 243, 253);
         padding: 12px;
-        box-sizing: border-box;
     }
 
-    .left-container {
+    .main-left {
         flex-grow: 5;
-        width: 0;
+        background-color: #ffffff;
+        border-radius: 5px;
+        position: relative;
+        padding: 0 15px 15px 15px;
     }
 
-    .right-container {
-        flex-grow: 3;
-        width: 0;
-        margin-left: 12px;
-    }
-
-    .right-top-box {
-        flex-grow: 1;
-        height: 0;
-    }
-
-    .right-bottom-box {
-        flex-grow: 1;
-        height: 0;
-        margin-top: 12px;
-    }
-
-    .box-flex {
+    .function-top {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding: 12px;
+        height: 32px;
     }
 
-    .box-style {
-        border-radius: var(--border-radius-item);
-        box-shadow: var(--shadow-default);
+    .main-right {
+        flex-grow: 2;
+        padding-left: 12px;
     }
 
-    .top-title {
-        margin: 12px;
-        height: 30px;
-        padding: 0 12px;
-        box-sizing: border-box;
+    .main-right .main-right-top {
+        background-color: #ffffff;
+        flex-grow: 1;
+        border-radius: 5px;
+        margin-bottom: 12px;
+        --el-header-padding: 0;
+    }
+
+    .main-right .main-right-bottom {
+        background-color: #ffffff;
+        flex-grow: 1;
+        border-radius: 5px;
+        --el-main-padding: 0;
+    }
+
+    .date-title {
+        padding-right: 12px;
+    }
+
+    .main-icon {
+        color: #9eacc4;
+        font-size: 1.1rem;
+        padding: 4px 10px;
+    }
+
+    .main-icon:hover {
+        color: #348fe4;
+        background-color: rgba(52, 143, 228, .1);
+        border-radius: 0.25rem;
+        cursor: pointer;
     }
 </style>

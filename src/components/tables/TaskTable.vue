@@ -1,20 +1,18 @@
 <template>
-    <div class="table-box">
-        <el-table
-            :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-            style="height: 100%"
-            :row-class-name="tableRowClassName"
-            @row-click="openDetails"
-            :row-style="{height: '7vh'}">
-            <template v-for="item in tableHead">
-                <el-table-column :prop="item.data"
-                                 :label="item.columnLabel"
-                />
-            </template>
-        </el-table>
-    </div>
+    <el-table
+        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        style="width: 100%"
+        :row-class-name="tableRowClassName"
+        @row-click="openDetails"
+        :row-style="{height: actualHeight}">
+        <template v-for="(item,index) in tableHead">
+            <el-table-column :prop="item.data"
+                             :label="item.columnLabel"
+            />
+        </template>
+    </el-table>
 
-    <div class="pagination-box">
+    <div class="pagination-box" style="margin-top:15px;">
         <el-pagination
             @current-change="handleCurrentChange"
             v-model:current-page="currentPage"
@@ -38,8 +36,10 @@
     import TaskTableDetailsDialog from "@/components/display/TaskInformationDisplay.vue";
 
     const currentPage = ref(1);
-    const pageSize = ref(15);
+    const pageSize = ref(12);
     const tableDialogVisible = ref(false);
+    let windowHeight = window.innerHeight;
+    let actualHeight = (windowHeight - 231) / 12 + "px";
 
     interface Tasks {
         id: number;
@@ -231,11 +231,11 @@
 </script>
 
 <style scoped>
-    :deep(.warning-row) {
+    .el-table >>> .warning-row {
         --el-table-tr-bg-color: var(--el-color-warning-light-9);
     }
 
-    :deep(.success-row) {
+    .el-table >>> .success-row {
         --el-table-tr-bg-color: var(--el-color-success-light-9);
     }
 
@@ -243,27 +243,20 @@
         height: 60vh;
     }
 
-    .table-box {
-        flex-grow: 1;
-        height: 0;
-        padding: 0 12px;
-    }
-
     .pagination-box {
-        display: flex;
-        justify-content: center;
-        margin: 12px;
-        position: relative;
-    }
-
-    /*调整分页中total样式*/
-    :deep(.el-pagination__total) {
-        width: 100px;
         position: absolute;
-        right: 15px;
+        bottom: 7px;
+        transform: translate(-50%);
+        left: 50%;
     }
 
-    :deep(.el-table__row):hover {
+    .pagination-box >>> .el-pagination__total {
+        width: 100px;
+        display: flex;
+        justify-content: right;
+    }
+
+    .el-table >>> .el-table__row:hover {
         cursor: pointer;
     }
 </style>
