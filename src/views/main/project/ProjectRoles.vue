@@ -25,6 +25,16 @@
                 </el-table-column>
             </el-table>
         </div>
+
+        <div class="global-vertical-margin">
+            <el-pagination v-model:current-page="currentPage"
+                           v-model:page-size="pageSize"
+                           @current-change="changePage"
+                           :background="true"
+                           :total="recordCount"
+                           :hide-on-single-page="false"
+            />
+        </div>
     </div>
 
     <NewRoleDialog v-model:show="showNewRoleDialog"
