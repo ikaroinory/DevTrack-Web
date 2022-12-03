@@ -98,14 +98,13 @@ const en_us = {
             nickname: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
-            setMemberRole: "Set member role",
-            editProjectInformation: "Edit information",
-            deleteMembers: "Delete members"
+            editProjectInformation: "Edit information"
         },
         projectMembers: {
             title: "Members",
             memberList: "Member List",
-            inviteMembers: "Invite members",
+            inviteMembers: "Invite Members",
+            removeMembers: "Remove Members",
             nicknameAndUsername: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
@@ -280,16 +279,6 @@ const en_us = {
             removeList: "Remove list",
             remove: "Remove",
             reset: "Reset"
-        },
-        setMembersRole: {
-            title: "Set Role",
-            role: "Role",
-            permissions: "Permissions",
-            invite: "Invite members",
-            addMembers: "Add members",
-            submit: "Submit",
-            admin: "Admin",
-            member: "Member"
         },
         editMemberInformation: {
             title: "Edit Member Information",

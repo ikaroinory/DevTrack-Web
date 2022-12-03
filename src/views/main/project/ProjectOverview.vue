@@ -15,16 +15,10 @@
                     <div class="project-information-label"
                          v-text="lang.projectInformation"
                     />
-                    <div>
-                        <el-button type="primary" @click="setMembersPrivileges=true">
-                            <edit class="icon"/>
-                            <span v-text="lang.setMemberRole"/>
-                        </el-button>
-                        <el-button type="primary" @click="modifyProjectInformation=true">
-                            <edit class="icon"/>
-                            <span v-text="lang.editProjectInformation"/>
-                        </el-button>
-                    </div>
+                    <el-button type="primary" @click="modifyProjectInformation = true">
+                        <edit class="global-icon"/>
+                        <span v-text="lang.editProjectInformation"/>
+                    </el-button>
                 </div>
             </div>
 
@@ -58,38 +52,28 @@
                          v-text="lang.status"
                     />
                     <div v-if="info.status==='1'">
-                        <hourglass-full class="icon" size="19" fill="#f56c6c"/>
+                        <hourglass-full class="global-icon" size="19" fill="#f56c6c"/>
                         <span v-text="lang.notStart"/>
                     </div>
                     <div v-else-if="info.status==='2'">
-                        <pie-two class="icon" size="19" fill="#fac858"/>
+                        <pie-two class="global-icon" size="19" fill="#fac858"/>
                         <span v-text="lang.inProgress"/>
                     </div>
                     <div v-else-if="info.status==='3'">
-                        <success class="icon" size="19" fill="#67c23a"/>
+                        <success class="global-icon" size="19" fill="#67c23a"/>
                         <span v-text="lang.completed"/>
                     </div>
                     <div v-else>
-                        <caution class="icon" size="19" fill="#fac858"/>
+                        <caution class="global-icon" size="19" fill="#fac858"/>
                         <span v-text="lang.unknown"/>
                     </div>
                 </div>
             </div>
         </div>
         <div class="frame-project-information">
-            <div class="frame-project-information-header">
-                <div class="frame-project-information-flex-header">
-                    <div class="project-information-label"
-                         v-text="lang.memberRank"
-                    />
-                    <div>
-                        <el-button type="danger" @click="removeMembersDialog = true">
-                            <minus class="icon"/>
-                            <span v-text="lang.deleteMembers"/>
-                        </el-button>
-                    </div>
-                </div>
-            </div>
+            <div class="project-information-label"
+                 v-text="lang.memberRank"
+            />
             <div style="margin-top: 32px">
                 <el-table max-height="570" :data="members">
                     <el-table-column type="index" label="No" :index="1"/>
@@ -117,24 +101,16 @@
                                   :start-time="info.startTIme ?? ''"
                                   :members="members"
     />
-    <SetRoleDialog v-model:show="setMembersPrivileges"
-                   :uuid="uuid"
-    />
-    <RemoveProjectMembersDialog v-model:show="removeMembersDialog"
-                                :members="members"
-    />
 </template>
 
 <script lang="ts" setup>
     import { reactive, ref } from "vue";
-    import { Caution, Edit, HourglassFull, Minus, PieTwo, Success } from "@icon-park/vue-next";
+    import { Caution, Edit, HourglassFull, PieTwo, Success } from "@icon-park/vue-next";
     import ProjectInformation from "@/utils/dto/ProjectInformation";
     import RequestUtils from "@/utils/RequestUtils";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import EditProjectInformationDialog from "@/components/dialogs/EditProjectInformationDialog.vue";
-    import RemoveProjectMembersDialog from "@/components/dialogs/RemoveProjectMembersDialog.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
-    import SetRoleDialog from "@/components/dialogs/SetRoleDialog.vue";
     import UserItem from "@/components/items/UserItem.vue";
 
     const props = defineProps({
@@ -160,7 +136,6 @@
     });
     const members = ref<Array<ProjectMemberInformation>>([]);
     const modifyProjectInformation = ref(false);
-    const setMembersPrivileges = ref(false);
     const removeMembersDialog = ref(false);
 
     function init() {
@@ -259,9 +234,5 @@
         flex-shrink: 0;
         margin-right: 8px;
         width: 150px;
-    }
-
-    .icon {
-        margin-right: 4px;
     }
 </style>
