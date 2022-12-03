@@ -1,47 +1,61 @@
 <template>
-    <div class="task-details-container">
+    <div class="task-details-container task-flex-column">
         <div class="task-title">
             <el-input v-model="taskForm.title" @focus="" input-style="font-size: 2rem; height: 3rem;"/>
         </div>
-        <div class="task-second-container">
-            <div class="task-second-box">
-                <el-icon size="2.3rem">
+        <div class="task-second-container task-flex">
+            <div class="task-second-box task-flex">
+                <el-icon size="3rem" :style="{color: iconColor}">
                     <Clock/>
                 </el-icon>
                 <div class="task-second-main">
-                    <div class="task-second-text">进行中</div>
-                    <span class="little-tip">当前状态</span>
+                    <div class="task-select">
+                        <el-select v-model="taskForm.status">
+                            <el-option v-for="item in options.statusOptions"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                    <span class="little-text">当前状态</span>
                 </div>
             </div>
-            <div class="task-second-box">
-                <el-avatar/>
+            <div class="task-second-box task-flex">
+                <el-avatar :size="45" />
                 <div class="task-second-main">
-                    <div class="task-second-text">{{ taskForm.principal }}</div>
-                    <span class="little-tip">负责人</span>
+                    <div class="task-select">
+                        <el-select v-model="taskForm.principal">
+                            <el-option v-for="item in options.staffOptions"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                    <span class="little-text">负责人</span>
                 </div>
             </div>
-            <div class="task-second-box-column">
+            <div class="task-second-box-column task-flex-column">
                 <span class="task-second-text">开始时间</span>
                 <el-date-picker v-model="taskForm.startTime"
                                 type="datetime"
                                 :disabled-date="disableStartTime"
-                                size="small"
                 />
             </div>
-            <div class="task-second-box-column">
+            <div class="task-second-box-column task-flex-column">
                 <span class="task-second-text">截至时间</span>
                 <el-date-picker v-model="taskForm.deadline"
                                 type="datetime"
                                 :disabled-date="disableDeadline"
-                                size="small"
                 />
             </div>
         </div>
         <el-divider/>
-        <div class="task-details">
-            <div class="details-item">
-                <span class="details-label">优先级：</span>
-                <div class="details-select">
+        <div class="task-third-container task-flex">
+            <div class="text-third-box task-flex-column">
+                <span class="task-label">优先级：</span>
+                <div class="task-select">
                     <el-select v-model="taskForm.priority">
                         <el-option v-for="item in options.priorityOptions"
                                    :key="item.value"
@@ -51,9 +65,9 @@
                     </el-select>
                 </div>
             </div>
-            <div class="details-item">
-                <span class="details-label">需求来源：</span>
-                <div class="details-select">
+            <div class="text-third-box task-flex-column">
+                <span class="task-label">需求来源：</span>
+                <div class="task-select">
                     <el-select v-model="taskForm.sourceOfDemand">
                         <el-option v-for="item in options.sourceOfDemandOptions"
                                    :key="item.value"
@@ -64,9 +78,9 @@
                 </div>
             </div>
 
-            <div class="details-item">
-                <span class="details-label">类型：</span>
-                <div class="details-select">
+            <div class="text-third-box task-flex-column">
+                <span class="task-label">类型：</span>
+                <div class="task-select">
                     <el-select v-model="taskForm.type">
                         <el-option v-for="item in options.typeOptions"
                                    :key="item.value"
@@ -76,9 +90,9 @@
                     </el-select>
                 </div>
             </div>
-            <div class="details-item">
-                <span class="details-label">参与人员：</span>
-                <div class="details-select">
+            <div class="text-third-box task-flex-column">
+                <span class="task-label">参与人员：</span>
+                <div class="task-select">
                     <el-select v-model="taskForm.members">
                         <el-option v-for="item in options.staffOptions"
                                    :key="item.value"
@@ -89,20 +103,20 @@
                 </div>
             </div>
         </div>
-        <div class="task-description">
-            <span class="details-label">描述：</span>
+        <div class="task-fourthly-container task-flex-column">
+            <span class="task-label">描述：</span>
             <el-input v-model="taskForm.description"
                       type="textarea" resize="none" maxlength="100" show-word-limit
             />
         </div>
         <div class="task-create-container">
-            <div class="task-create-info little-tip">{{ taskForm.creator }} 创建于 2022-11-21 23:51:12</div>
+            <div class="task-create-info little-text">{{ taskForm.creator }} 创建于 2022-11-21 23:51:12</div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { reactive } from "vue";
+    import { computed, reactive, ref } from "vue";
     import { Clock } from "@element-plus/icons-vue";
 
     const taskForm = reactive({
@@ -116,7 +130,17 @@
         description: "",
         startTime: "",
         deadline: "",
+        status: "未开始",
         members: new Array<string>()
+    });
+
+    const iconColor = computed(() => {
+        if (taskForm.status == "未开始")
+            return "#FF8888";
+        else if (taskForm.status == "进行中")
+            return "#F6C659";
+        else if (taskForm.status == "已完成")
+            return "#40E0C3";
     });
 
     //禁用当前时间之前的时间
@@ -225,15 +249,91 @@
                 value: "运营",
                 label: "运营"
             }
+        ],
+        statusOptions: [
+            {
+                value: "未开始",
+                label: "未开始"
+            },
+            {
+                value: "进行中",
+                label: "进行中"
+            },
+            {
+                value: "已完成",
+                label: "已完成"
+            }
         ]
     };
 </script>
 
 <style scoped>
-    .task-details-container {
+    .task-flex {
+        display: flex;
+    }
+
+    .task-flex-column {
         display: flex;
         flex-direction: column;
+    }
+
+    /*完整容器*/
+    .task-details-container {
         padding: 0 15px 15px 15px;
+    }
+
+    /*第二个盒子容器*/
+    .task-second-container {
+        justify-content: space-between;
+        margin: 16px 0 0 0;
+    }
+
+    /*第二个盒子容器内的单个盒子*/
+    .task-second-box {
+        width: 248px;
+        align-items: center;
+    }
+
+    /*第二个盒子容器内的单个盒子，垂直布局*/
+    .task-second-box-column {
+    }
+
+    /*第二个盒子容器的主要内容部分*/
+    .task-second-main {
+        width: 200px;
+    }
+
+    .task-second-text {
+        padding-left: 11px;
+    }
+
+    /*第三个盒子容器*/
+    .task-third-container {
+        justify-content: space-between;
+    }
+
+    /*第三个盒子容器内的单个盒子*/
+    .text-third-box {
+        width: 200px;
+        margin-bottom: 15px;
+    }
+
+    /*选择器和描述的标签*/
+    .task-label {
+        color: #5f6e8e;
+        margin-bottom: 5px;
+    }
+
+    /*第四个盒子容器*/
+    .task-fourthly-container {
+        margin: 15px 0;
+    }
+
+    /*较小样式的文字*/
+    .little-text {
+        color: var(--color-text-remark);
+        font-size: 13px;
+        padding-left: 11px;
     }
 
     /*隐藏input类型的边框*/
@@ -249,69 +349,18 @@
         box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset;
     }
 
-
-    .task-second-container {
-        display: flex;
-        justify-content: space-between;
-        margin: 16px 0 0 0;
-    }
-
-    .task-second-box {
-        display: flex;
-    }
-
-    .task-second-box-column {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .task-second-main {
-        margin-left: 5px;
-    }
-
-
-    .task-details {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .details-item {
-        display: flex;
-        flex-direction: column;
-        width: 200px;
-        margin-bottom: 15px;
-    }
-
-    .details-label {
-        color: #5f6e8e;
-        margin-bottom: 5px;
-    }
-
     /*隐藏选择器的箭头*/
     :deep(.el-select .el-input .el-select__caret) {
         color: #ffffff;
     }
 
-    .details-select:hover:deep(.el-select .el-input .el-select__caret) {
+    .task-select:hover:deep(.el-select .el-input .el-select__caret) {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
     }
 
-    .details-select:focus-within:deep(.el-select .el-input .el-select__caret) {
+    .task-select:focus-within:deep(.el-select .el-input .el-select__caret) {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
-    }
-
-
-    .task-description {
-        margin: 15px 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .little-tip {
-        color: var(--color-text-remark);
-        font-size: 13px;
     }
 </style>
