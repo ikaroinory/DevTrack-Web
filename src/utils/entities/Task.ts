@@ -8,8 +8,8 @@ export default interface Task {
     principal: string;
     priority: number;
     sourceOfDemand: number;
+    description: string;
     taskStatus: number;
-    finished: boolean;
     deleted: boolean;
     creationTime: string;
     startTime: string;

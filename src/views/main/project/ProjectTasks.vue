@@ -92,7 +92,9 @@
 
     <NewTaskDialog v-model:show="showNewTaskDialog" :project-uuid="uuid"/>
 
-    <TaskInformationDialog v-model:show="showTaskInformationDialog"/>
+    <TaskInformationDialog v-model:show="showTaskInformationDialog"
+                           :task="currentTask"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -116,6 +118,7 @@
     const showNewTaskDialog = ref(false);
     const showTaskInformationDialog = ref(false);
     const tasks = ref<Array<TaskInformation>>([]);
+    const currentTask = ref<TaskInformation>();
     const currentPage = ref(1);
     const pageSize = 10;
     const recordCount = ref(1);
@@ -148,7 +151,8 @@
         getPage(val);
     }
 
-    function showDialog() {
+    function showDialog(row: TaskInformation) {
+        currentTask.value = row;
         showTaskInformationDialog.value = true;
     }
 </script>

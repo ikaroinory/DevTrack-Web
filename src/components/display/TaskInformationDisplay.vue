@@ -1,7 +1,10 @@
 <template>
     <div class="task-details-container task-flex-column">
         <div class="task-title">
-            <el-input v-model="taskForm.title" @focus="" input-style="font-size: 2rem; height: 3rem;"/>
+            <el-input v-model="curTaskInformation.taskName"
+                      @focus=""
+                      input-style="font-size: 2rem; height: 3rem;"
+            />
         </div>
         <div class="task-second-container task-flex">
             <div class="task-second-box task-flex">
@@ -9,23 +12,16 @@
                     <Clock/>
                 </el-icon>
                 <div class="task-second-main">
-                    <div class="task-select">
-                        <el-select v-model="taskForm.status">
-                            <el-option v-for="item in options.statusOptions"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value"
-                            />
-                        </el-select>
-                    </div>
-                    <span class="little-text">当前状态</span>
+                    <span class="little-text">{{ lang.status }}</span>
+                    <div style="padding-left: 11px">{{ status }}</div>
                 </div>
             </div>
             <div class="task-second-box task-flex">
-                <el-avatar :size="45" />
+                <el-avatar :size="45" :src="'data:image/jpeg;base64,' + curTaskInformation.principalAvatar"/>
                 <div class="task-second-main">
                     <div class="task-select">
-                        <el-select v-model="taskForm.principal">
+                        <span class="little-text">{{ lang.principal }}</span>
+                        <el-select v-model="curTaskInformation.principalNickname">
                             <el-option v-for="item in options.staffOptions"
                                        :key="item.value"
                                        :label="item.label"
@@ -33,19 +29,18 @@
                             />
                         </el-select>
                     </div>
-                    <span class="little-text">负责人</span>
                 </div>
             </div>
             <div class="task-second-box-column task-flex-column">
-                <span class="task-second-text">开始时间</span>
-                <el-date-picker v-model="taskForm.startTime"
+                <span class="task-second-text">{{ lang.startTime }}</span>
+                <el-date-picker v-model="curTaskInformation.startTime"
                                 type="datetime"
                                 :disabled-date="disableStartTime"
                 />
             </div>
             <div class="task-second-box-column task-flex-column">
-                <span class="task-second-text">截至时间</span>
-                <el-date-picker v-model="taskForm.deadline"
+                <span class="task-second-text">{{ lang.deadline }}</span>
+                <el-date-picker v-model="curTaskInformation.deadline"
                                 type="datetime"
                                 :disabled-date="disableDeadline"
                 />
@@ -54,10 +49,10 @@
         <el-divider/>
         <div class="task-third-container task-flex">
             <div class="text-third-box task-flex-column">
-                <span class="task-label">优先级：</span>
+                <span class="task-label">{{ lang.priority }}</span>
                 <div class="task-select">
-                    <el-select v-model="taskForm.priority">
-                        <el-option v-for="item in options.priorityOptions"
+                    <el-select v-model="curTaskInformation.priority">
+                        <el-option v-for="item in priorityList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -66,10 +61,10 @@
                 </div>
             </div>
             <div class="text-third-box task-flex-column">
-                <span class="task-label">需求来源：</span>
+                <span class="task-label">{{ lang.sourceOfDemand }}</span>
                 <div class="task-select">
-                    <el-select v-model="taskForm.sourceOfDemand">
-                        <el-option v-for="item in options.sourceOfDemandOptions"
+                    <el-select v-model="curTaskInformation.sourceOfDemand">
+                        <el-option v-for="item in sourceOfDemandList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -79,10 +74,10 @@
             </div>
 
             <div class="text-third-box task-flex-column">
-                <span class="task-label">类型：</span>
+                <span class="task-label">{{ lang.taskType }}</span>
                 <div class="task-select">
-                    <el-select v-model="taskForm.type">
-                        <el-option v-for="item in options.typeOptions"
+                    <el-select v-model="curTaskInformation.taskType">
+                        <el-option v-for="item in taskTypeList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -91,9 +86,9 @@
                 </div>
             </div>
             <div class="text-third-box task-flex-column">
-                <span class="task-label">参与人员：</span>
+                <span class="task-label">{{ lang.members }}</span>
                 <div class="task-select">
-                    <el-select v-model="taskForm.members">
+                    <el-select v-model="curTaskInformation.members">
                         <el-option v-for="item in options.staffOptions"
                                    :key="item.value"
                                    :label="item.label"
@@ -104,54 +99,105 @@
             </div>
         </div>
         <div class="task-fourthly-container task-flex-column">
-            <span class="task-label">描述：</span>
-            <el-input v-model="taskForm.description"
+            <span class="task-label">{{ lang.description }}</span>
+            <el-input v-model="curTaskInformation.taskDescription"
                       type="textarea" resize="none" maxlength="100" show-word-limit
             />
         </div>
         <div class="task-create-container">
-            <div class="task-create-info little-text">{{ taskForm.creator }} 创建于 2022-11-21 23:51:12</div>
+            <div class="task-create-info little-text">
+                {{ curTaskInformation.creatorNickname }} {{ lang.createAt }} {{ curTaskInformation.creationTime }}
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { computed, reactive, ref } from "vue";
+    import { computed, ref } from "vue";
     import { Clock } from "@element-plus/icons-vue";
+    import TaskInformation from "@/utils/dto/TaskInformation";
+    import ApplicationUtils from "@/utils/ApplicationUtils";
 
-    const taskForm = reactive({
-        fromProject: "",
-        type: "",
-        title: "test1",
-        creator: "hhhh",
-        principal: "yzp",
-        priority: "",
-        sourceOfDemand: "",
-        description: "",
-        startTime: "",
+    const props = defineProps<{
+        task: TaskInformation
+    }>();
+
+    const lang = ApplicationUtils.locale.form.taskInformation;
+    const enumLang = ApplicationUtils.locale.enum;
+
+    const taskTypeList = ref([
+        { value: 0, label: enumLang.unknown },
+        { value: 1, label: enumLang.newFeature },
+        { value: 2, label: enumLang.bugfix }
+    ]);
+    const priorityList = ref([
+        { value: 0, label: enumLang.unknown },
+        { value: 1, label: enumLang.general },
+        { value: 2, label: enumLang.normal },
+        { value: 3, label: enumLang.important },
+        { value: 4, label: enumLang.urgent },
+        { value: 5, label: enumLang.mostUrgent }
+    ]);
+    const sourceOfDemandList = ref([
+        { value: 0, label: enumLang.unknown },
+        { value: 1, label: enumLang.rdPost },
+        { value: 2, label: enumLang.testPost }
+    ]);
+
+    const curTaskInformation = ref<TaskInformation>({
+        creationTime: "",
+        creatorAvatar: "",
+        creatorNickname: "",
+        creatorUUID: "",
+        creatorUsername: "",
         deadline: "",
-        status: "未开始",
-        members: new Array<string>()
+        finishTime: "",
+        fromProjectUUID: "",
+        principalAvatar: "",
+        principalNickname: "",
+        principalUUID: "",
+        principalUsername: "",
+        priority: 0,
+        sourceOfDemand: 0,
+        startTime: "",
+        taskDescription: "",
+        taskName: "",
+        taskType: 0,
+        taskUUID: ""
     });
 
     const iconColor = computed(() => {
-        if (taskForm.status == "未开始")
-            return "#FF8888";
-        else if (taskForm.status == "进行中")
-            return "#F6C659";
-        else if (taskForm.status == "已完成")
-            return "#40E0C3";
+        if (curTaskInformation.value.finishTime)
+            return "#40e0c3";
+        else if (!curTaskInformation.value.startTime || new Date(curTaskInformation.value.startTime).getTime() > Date.now())
+            return "#ff8888";
+        else
+            return "#f6c659";
+    });
+    const status = computed(() => {
+        if (curTaskInformation.value.finishTime)
+            return enumLang.completed;
+        else if (!curTaskInformation.value.startTime || new Date(curTaskInformation.value.startTime).getTime() > Date.now())
+            return enumLang.notStart;
+        else
+            return enumLang.inProgress;
     });
 
+    init();
+
+    function init() {
+        curTaskInformation.value = props.task;
+    }
+
     //禁用当前时间之前的时间
-    const disableStartTime = (current: Date) => {
+    function disableStartTime(current: Date) {
         const now = new Date();
         return current.getTime() < new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
     };
 
     //禁用开始时间之前的时间
-    const disableDeadline = (current: Date) => {
-        let startTimeToDate = new Date(taskForm.startTime);
+    function disableDeadline(current: Date) {
+        let startTimeToDate = new Date(curTaskInformation.startTime);
         return current < startTimeToDate;
     };
 
