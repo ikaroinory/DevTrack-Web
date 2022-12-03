@@ -2,6 +2,8 @@ export default class StatusCode {
     public static readonly unknownError = 0;
 
     public static readonly success = 100;
+    public static readonly dataNotUpdate = 101;
+    public static readonly permissionDenied = 102;
 
     public static readonly userExists = 201;
     public static readonly userNotExists = 202;

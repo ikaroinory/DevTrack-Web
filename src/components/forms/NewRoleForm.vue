@@ -67,13 +67,16 @@
     const message = ApplicationUtils.locale.message;
 
     const role = ref<Role>({
-        createTask: false,
-        deleteTask: false,
-        invite: false,
-        name: "",
+        uuid: "",
         project: "",
+        name: "",
+        invite: false,
+        createTask: false,
         updateTask: false,
-        uuid: ""
+        deleteTask: false,
+        createRole: false,
+        updateRole: false,
+        removeRole: false
     });
 
     init();
@@ -84,13 +87,16 @@
 
     function resetForm() {
         role.value = {
-            createTask: false,
-            deleteTask: false,
-            invite: false,
-            name: "",
+            uuid: "",
             project: "",
+            name: "",
+            invite: false,
+            createTask: false,
             updateTask: false,
-            uuid: ""
+            deleteTask: false,
+            createRole: false,
+            updateRole: false,
+            removeRole: false
         };
         role.value.project = props.projectUuid;
         console.log(13);
@@ -106,14 +112,20 @@
                 case StatusCode.requiredParamsIsNull:
                     ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
                     break;
+                case StatusCode.permissionDenied:
+                    ApplicationUtils.showMessage(message.permissionDenied, "error");
+                    break;
                 case StatusCode.uuidConflict:
                     ApplicationUtils.showMessage(message.uuidConflict, "error");
                     break;
-                default:
+                case StatusCode.success:
                     ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                    reload();
+                    break;
+                default:
+                    ApplicationUtils.showMessage(message.unknownException, "warning");
                     break;
             }
-            reload();
         }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
     }
 </script>

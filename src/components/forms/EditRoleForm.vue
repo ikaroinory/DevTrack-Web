@@ -34,13 +34,13 @@
         </el-row>
         <el-row>
             <el-col :span="8">
-                <el-checkbox disabled :label="lang.createRole"/>
+                <el-checkbox v-model="newRole.createRole" :label="lang.createRole"/>
             </el-col>
             <el-col :span="8">
-                <el-checkbox disabled :label="lang.updateRole"/>
+                <el-checkbox v-model="newRole.updateRole" :label="lang.updateRole"/>
             </el-col>
             <el-col :span="8">
-                <el-checkbox disabled :label="lang.removeRole"/>
+                <el-checkbox v-model="newRole.removeRole" :label="lang.removeRole"/>
             </el-col>
         </el-row>
     </div>
@@ -55,6 +55,7 @@
     import Role, { defaultRole } from "@/utils/po/Role";
     import { defineExpose, inject, ref } from "vue";
     import RequestUtils from "@/utils/RequestUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
 
     defineExpose({ init });
     const props = defineProps<{
@@ -74,6 +75,9 @@
         newRole.value.createTask = props.role.createTask;
         newRole.value.updateTask = props.role.updateTask;
         newRole.value.deleteTask = props.role.deleteTask;
+        newRole.value.createRole = props.role.createRole;
+        newRole.value.updateRole = props.role.updateRole;
+        newRole.value.removeRole = props.role.removeRole;
     }
 
     function submit() {
@@ -82,9 +86,22 @@
             return;
         }
 
-        RequestUtils.updateRole(newRole.value).then(() => {
-            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
-            reload();
+        RequestUtils.updateRole(newRole.value).then(resp => {
+            switch (resp) {
+                case StatusCode.permissionDenied:
+                    ApplicationUtils.showMessage(message.permissionDenied, "error");
+                    break;
+                case StatusCode.dataNotUpdate:
+                    ApplicationUtils.showMessage(message.dataNotUpdate, "error");
+                    break;
+                case StatusCode.success:
+                    ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+                    reload();
+                    break;
+                default:
+                    ApplicationUtils.showMessage(message.unknownException, "warning");
+                    break;
+            }
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
         });

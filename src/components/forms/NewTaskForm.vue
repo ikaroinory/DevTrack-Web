@@ -120,6 +120,7 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import NewTaskForm from "@/utils/forms/NewTaskForm";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import StatusCode from "@/utils/enums/StatusCode";
 
     defineExpose({ clearForm: reset });
 
@@ -183,8 +184,21 @@
             if (!valid) return;
 
             requestingServe.value = true;
-            RequestUtils.newTask(taskForm.value).then(() => {
-                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+            RequestUtils.newTask(taskForm.value).then(resp => {
+                switch (resp) {
+                    case StatusCode.permissionDenied:
+                        ApplicationUtils.showMessage(message.permissionDenied, "error");
+                        break;
+                    case StatusCode.uuidConflict:
+                        ApplicationUtils.showMessage(message.uuidConflict, "error");
+                        break;
+                    case StatusCode.success:
+                        ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                        break;
+                    default:
+                        ApplicationUtils.showMessage(message.unknownException, "warning");
+                        break;
+                }
                 requestingServe.value = false;
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");

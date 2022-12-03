@@ -104,17 +104,23 @@
                     case StatusCode.requiredParamsIsNull:
                         ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
                         break;
+                    case StatusCode.permissionDenied:
+                        ApplicationUtils.showMessage(message.permissionDenied, "error");
+                        break;
                     case StatusCode.roleRecordExists:
                         ApplicationUtils.showMessage(message.roleRecordExists, "error");
                         break;
                     case StatusCode.roleNotFound:
                         ApplicationUtils.showMessage(message.roleNotFound, "error");
                         break;
-                    default:
+                    case StatusCode.success:
                         ApplicationUtils.showMessage(message.removeSuccessfully, "success");
+                        reload();
+                        break;
+                    default:
+                        ApplicationUtils.showMessage(message.unknownException, "warning");
                         break;
                 }
-                reload();
             }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
         }).catch(() => {});
     }
