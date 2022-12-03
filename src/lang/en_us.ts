@@ -388,7 +388,10 @@ const en_us = {
         theNameCannotBeEmpty: "The name cannot be empty!",
         roleRecordExists: "Role record exists!",
         roleNotFound: "Role not found!",
-        doYouWantToRemoveTheRole: "Do you want to remove '%role' from this project?"
+        doYouWantToRemoveTheRole: "Do you want to remove '%role' from this project?",
+        dataNotUpdate: "Data not update, maybe new data is the same as original data.",
+        unknownException: "Unknown exception.",
+        permissionDenied: "Permission denied."
     }
 };
 

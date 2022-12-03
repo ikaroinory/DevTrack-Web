@@ -26,7 +26,7 @@
     import TasksChart from "@/components/charts/TasksChart.vue";
     import Heatmap from "@/components/charts/Heatmap.vue";
     import RequestUtils from "@/utils/RequestUtils";
-    import TaskCountStatistics from "@/utils/dto/TaskCountStatistics";
+    import HeatMapData from "@/utils/dto/HeatMapData";
 
     const props = defineProps<{
         username: string
@@ -66,7 +66,7 @@
         completedTask: -1
     });
     const heatmapChartInfo = reactive({
-        data: new Array<TaskCountStatistics>()
+        data: new Array<HeatMapData>()
     });
 
     init();
@@ -142,7 +142,7 @@
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
-            heatmapChartInfo.data = new Array<TaskCountStatistics>();
+            heatmapChartInfo.data = new Array<HeatMapData>();
             loading.value = false;
         });
     }
