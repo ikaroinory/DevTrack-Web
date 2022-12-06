@@ -91,7 +91,7 @@
                 case StatusCode.permissionDenied:
                     ApplicationUtils.showMessage(message.permissionDenied, "error");
                     break;
-                case StatusCode.dataNotUpdate:
+                case StatusCode.notUpdate:
                     ApplicationUtils.showMessage(message.dataNotUpdate, "error");
                     break;
                 case StatusCode.success:

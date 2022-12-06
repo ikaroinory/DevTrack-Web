@@ -46,9 +46,9 @@
     import type { FormInstance, FormRules } from "element-plus";
     import router from "@/plugins/VueRouter";
     import RequestUtils from "@/utils/RequestUtils";
-    import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import NewProjectForm from "@/utils/forms/NewProjectForm";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     const lang = ApplicationUtils.locale.form.newProject;
     const message = ApplicationUtils.locale.message;
@@ -57,7 +57,7 @@
     const requestingServe = ref(false);
     const newProjectForm = reactive<NewProjectForm>({
         name: "",
-        creator: SessionStorageUtils.getUserUUID(),
+        creator: LocalStorageUtils.getUserUUIDFromToken(),
         principal: "",
         publicProject: false,
         description: "",
@@ -80,7 +80,7 @@
                 ApplicationUtils.showMessage(message.createSuccessfully, "success");
 
                 requestingServe.value = false;
-                router.push({ name: "project", params: { uuid: resp.resultData } });
+                router.push({ name: "project", params: { uuid: resp.responseData } });
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingServe.value = false;
@@ -92,8 +92,8 @@
 
     const staffOptions = [
         {
-            value: SessionStorageUtils.getUserUUID(),
-            label: SessionStorageUtils.getUserNickname() + "(" + SessionStorageUtils.getUserUsername() + ")"
+            value: LocalStorageUtils.getUserUUIDFromToken(),
+            label: LocalStorageUtils.getUsernameFromToken() + "(" + LocalStorageUtils.getUsernameFromToken() + ")"
         }
     ];
 

@@ -10,7 +10,7 @@
                        :on-change="onChange" :http-request="uploadRequest" :on-success="uploadSuccessHandler">
                 <el-avatar class="image-upload"
                            v-if="avatar"
-                           :src="avatar"
+                           :src="'data:image/jpeg;base64,' + avatar"
                 />
                 <el-icon class="image-upload"
                          v-else
@@ -88,7 +88,7 @@
     import StatusCode from "@/utils/enums/StatusCode";
     import RequestUtils from "@/utils/RequestUtils";
     import EditProfileForm from "@/utils/forms/EditProfileForm";
-    import Result from "@/utils/dto/Result";
+    import Response from "@/utils/dto/Response";
 
     defineExpose({ clearForm: resetFormTool });
 
@@ -146,7 +146,7 @@
             uploadRef.value?.submit();
     }
 
-    function uploadSuccessHandler(response: Result<string>) {
+    function uploadSuccessHandler(response: Response<string>) {
         if (response.statusCode === StatusCode.success) {
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
             reload();
@@ -191,11 +191,8 @@
     }
 
     function submitForm() {
-        RequestUtils.editProfile(form).then(resp => {
-            if (resp.statusCode === StatusCode.valueNotUpdate)
-                ApplicationUtils.showMessage(message.youHaveNotModifiedForm, "warning");
-
-            if (resp.statusCode === StatusCode.success) {
+        RequestUtils.updateProfile(form).then(resp => {
+            if (resp === StatusCode.success) {
                 ApplicationUtils.showMessage(message.submitSuccessfully, "success");
                 reload();
             }

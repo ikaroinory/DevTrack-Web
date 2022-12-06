@@ -109,7 +109,7 @@
         }
         RequestUtils.newRole(role.value).then(resp => {
             switch (resp) {
-                case StatusCode.requiredParamsIsNull:
+                case StatusCode.requiredParamsIsEmpty:
                     ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
                     break;
                 case StatusCode.permissionDenied:

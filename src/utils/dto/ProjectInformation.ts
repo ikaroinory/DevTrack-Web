@@ -11,6 +11,8 @@ export default interface ProjectInformation {
     principalAvatar: String;
     description: String;
     creationTime: String;
-    startTIme: String;
-    status: String;
+    startTime: String;
+    finishTime: String;
+    status: number;
+    progress: number;
 }
