@@ -29,9 +29,10 @@
         }
 
         RequestUtils.autoSignIn().then(resp => {
-            if (resp === StatusCode.success) {
+            if (resp.statusCode === StatusCode.success) {
                 ApplicationUtils.showMessage(message.welcomeBack, "success");
                 SessionStorageUtils.setAccessMode("user");
+                SessionStorageUtils.setUserAvatar(resp.responseData);
                 reloadPage();
                 routerInterceptor(LocalStorageUtils.getUsernameFromToken());
             }

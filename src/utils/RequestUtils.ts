@@ -6,8 +6,6 @@ import SignUpForm from "@/utils/forms/SignUpForm";
 import UserInformation from "@/utils/dto/UserInformation";
 import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
 import NewTaskForm from "@/utils/forms/NewTaskForm";
-import ProjectList from "@/utils/dto/ProjectList";
-import TaskList from "@/utils/dto/TaskList";
 import HeatMapData from "@/utils/dto/HeatMapData";
 import AvatarForm from "@/utils/forms/AvatarForm";
 import EditProfileForm from "@/utils/forms/EditProfileForm";
@@ -193,7 +191,7 @@ export default class RequestUtils {
     }
 
     // Account Controller
-    public static async autoSignIn(): Promise<number> {
+    public static async autoSignIn(): Promise<Response<string>> {
         return (await this.post(RequestUrl.autoSignIn, null));
     }
 
