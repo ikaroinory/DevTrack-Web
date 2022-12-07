@@ -12,13 +12,21 @@
     <div style="margin: 0 16px 8px 16px">
         <el-row>
             <el-col :span="8">
-                <el-checkbox v-model="newRole.inviteMember" :label="lang.inviteMembers"/>
+                <el-checkbox v-model="newRole.inviteMember" :label="lang.inviteMember"/>
             </el-col>
             <el-col :span="8">
-                <el-checkbox disabled :label="lang.updateMember"/>
+                <el-checkbox v-model="newRole.updateMember" :label="lang.updateMember"/>
             </el-col>
             <el-col :span="8">
-                <el-checkbox disabled :label="lang.removeMember"/>
+                <el-checkbox v-model="newRole.removeMember" :label="lang.removeMember"/>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.updateProject" :label="lang.updateProject"/>
+            </el-col>
+            <el-col :span="8">
+                <el-checkbox v-model="newRole.deleteProject" :label="lang.deleteProject"/>
             </el-col>
         </el-row>
         <el-row>
@@ -72,6 +80,10 @@
         newRole.value.name = props.role.name;
 
         newRole.value.inviteMember = props.role.inviteMember;
+        newRole.value.updateMember = props.role.updateMember;
+        newRole.value.removeMember = props.role.removeMember;
+        newRole.value.updateProject = props.role.updateProject;
+        newRole.value.deleteProject = props.role.deleteProject;
         newRole.value.createTask = props.role.createTask;
         newRole.value.updateTask = props.role.updateTask;
         newRole.value.deleteTask = props.role.deleteTask;
@@ -87,20 +99,9 @@
         }
 
         RequestUtils.updateRole(newRole.value).then(resp => {
-            switch (resp) {
-                case StatusCode.permissionDenied:
-                    ApplicationUtils.showMessage(message.permissionDenied, "error");
-                    break;
-                case StatusCode.notUpdate:
-                    ApplicationUtils.showMessage(message.dataNotUpdate, "error");
-                    break;
-                case StatusCode.success:
-                    ApplicationUtils.showMessage(message.updateSuccessfully, "success");
-                    reload();
-                    break;
-                default:
-                    ApplicationUtils.showMessage(message.unknownException, "warning");
-                    break;
+            if (resp === StatusCode.success) {
+                ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+                reload();
             }
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
