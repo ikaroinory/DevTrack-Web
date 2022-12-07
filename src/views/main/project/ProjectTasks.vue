@@ -94,6 +94,7 @@
 
     <TaskInformationDialog v-model:show="showTaskInformationDialog"
                            :task="currentTask"
+                           :project-member-list="projectMemberList"
     />
 </template>
 
@@ -105,6 +106,8 @@
     import TaskInformationDialog from "@/components/dialogs/TaskInformationDialog.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -122,12 +125,19 @@
     const currentPage = ref(1);
     const pageSize = 10;
     const recordCount = ref(1);
+    const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
 
     init();
 
     function init() {
         ApplicationUtils.setTitle(lang.title);
         getPage(currentPage.value);
+
+        RequestUtils.getProjectMemberInformation(props.uuid).then(resp => {
+            if (resp.statusCode !== StatusCode.success) return;
+
+            projectMemberList.value = resp.responseData;
+        });
     }
 
     function clearTable() {

@@ -29,4 +29,6 @@ export default class StatusCode {
 
     public static readonly roleNotFound = 602;
     public static readonly roleRecordExists = 603;
+
+    public static readonly taskNotFound = 802;
 }

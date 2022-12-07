@@ -352,7 +352,7 @@ const en_us = {
         urgent: "Urgent",
         mostUrgent: "Most urgent",
         rdPost: "R&D post",
-        testPost: "test post",
+        testPost: "Test post",
         notStart: "Not start",
         inProgress: "In progress",
         completed: "Completed"

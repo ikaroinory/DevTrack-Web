@@ -21,6 +21,7 @@ import Role from "@/utils/po/Role";
 import AddProjectMembersForm from "@/utils/forms/AddProjectMembersForm";
 import StatusCode from "@/utils/enums/StatusCode";
 import ApplicationUtils from "@/utils/ApplicationUtils";
+import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
 
 const source = axios.CancelToken.source();
 
@@ -153,10 +154,14 @@ class RequestUrl {
     public static readonly getProjectMemberInformation = this.baseUrl + this.memberController + "getAllFromProject";
 
     // Task Controller
-    public static readonly getTasks = this.baseUrl + this.taskController + "getAllByUser";
     public static readonly getHeatMap = this.baseUrl + this.taskController + "getHeatMap";
     public static readonly newTask = this.baseUrl + this.taskController + "new";
     public static readonly getOnePaeProjectTasks = this.baseUrl + this.taskController + "getOnePageFromProject";
+    public static readonly getTaskMembers = this.baseUrl + this.taskController + "getTaskMembers";
+    public static readonly updateTitle = this.baseUrl + this.taskController + "updateTitle";
+    public static readonly updatePrincipal = this.baseUrl + this.taskController + "updatePrincipal";
+    public static readonly updateStartTime = this.baseUrl + this.taskController + "updateStartTime";
+    public static readonly updateDeadline = this.baseUrl + this.taskController + "updateDeadline";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -273,11 +278,35 @@ export default class RequestUtils {
     }
 
     public static async newTask(form: NewTaskForm): Promise<number> {
+        if (form.startTime !== "")
+            (form.startTime as Date).setHours((form.startTime as Date).getHours() + 8);
+        if (form.deadline !== "")
+            (form.deadline as Date).setHours((form.deadline as Date).getHours() + 8);
         return (await this.post(RequestUrl.newTask, form));
     }
 
     public static async getOnePageProjectTasks(pageNum: number, pageSize: number, projectUUID: string): Promise<Response<PageInformation<TaskInformation>>> {
         return (await this.get(RequestUrl.getOnePaeProjectTasks, { pageNum, pageSize, projectUUID }));
+    }
+
+    public static async getTaskMembers(taskUUID: string): Promise<Response<Array<TaskMemberInformation>>> {
+        return (await this.get(RequestUrl.getTaskMembers, { taskUUID }));
+    }
+
+    public static async updateTitle(taskUUID: string, title: string): Promise<number> {
+        return (await this.post(RequestUrl.updateTitle, this.toFormData({ taskUUID, title })));
+    }
+
+    public static async updatePrincipal(taskUUID: string, principalUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.updatePrincipal, this.toFormData({ taskUUID, principalUUID })));
+    }
+
+    public static async updateStartTime(taskUUID: string, startTime: string): Promise<number> {
+        return (await this.post(RequestUrl.updateStartTime, this.toFormData({ taskUUID, startTime })));
+    }
+
+    public static async updateDeadline(taskUUID: string, deadline: string): Promise<number> {
+        return (await this.post(RequestUrl.updateDeadline, this.toFormData({ taskUUID, deadline })));
     }
 
     // Role Controller
