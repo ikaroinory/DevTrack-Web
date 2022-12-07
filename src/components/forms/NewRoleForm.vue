@@ -10,7 +10,7 @@
             <div style="width: 100%">
                 <el-row>
                     <el-col :span="8">
-                        <el-checkbox v-model="role.invite" :label="lang.inviteMembers"/>
+                        <el-checkbox v-model="role.inviteMember" :label="lang.inviteMembers"/>
                     </el-col>
                     <el-col :span="8">
                         <el-checkbox disabled :label="lang.updateMember"/>
@@ -70,7 +70,7 @@
         uuid: "",
         project: "",
         name: "",
-        invite: false,
+        inviteMember: false,
         createTask: false,
         updateTask: false,
         deleteTask: false,
@@ -90,7 +90,7 @@
             uuid: "",
             project: "",
             name: "",
-            invite: false,
+            inviteMember: false,
             createTask: false,
             updateTask: false,
             deleteTask: false,

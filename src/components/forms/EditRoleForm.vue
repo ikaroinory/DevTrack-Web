@@ -12,7 +12,7 @@
     <div style="margin: 0 16px 8px 16px">
         <el-row>
             <el-col :span="8">
-                <el-checkbox v-model="newRole.invite" :label="lang.inviteMembers"/>
+                <el-checkbox v-model="newRole.inviteMember" :label="lang.inviteMembers"/>
             </el-col>
             <el-col :span="8">
                 <el-checkbox disabled :label="lang.updateMember"/>
@@ -71,7 +71,7 @@
         newRole.value.uuid = props.role.uuid;
         newRole.value.name = props.role.name;
 
-        newRole.value.invite = props.role.invite;
+        newRole.value.inviteMember = props.role.inviteMember;
         newRole.value.createTask = props.role.createTask;
         newRole.value.updateTask = props.role.updateTask;
         newRole.value.deleteTask = props.role.deleteTask;
