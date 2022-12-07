@@ -375,7 +375,6 @@ const en_us = {
             roleRecordExists: "Role record exists!"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
-        uuidInvalid: "UUID invalid!",
         userNotFound: "User not found!",
         userExists: "User already exists!",
         projectNotFound: "Project not found!",

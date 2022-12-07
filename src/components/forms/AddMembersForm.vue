@@ -66,7 +66,7 @@
 
             if (resp.statusCode === StatusCode.success) {
                 if (resp.responseData === form.usernameList.length) {
-                    ApplicationUtils.showMessageBox(
+                    ApplicationUtils.showMessage(
                         message.addSuccessfully
                             .replace("%d", resp.responseData.toString()),
                         "success"
@@ -74,7 +74,7 @@
                     reload();
                 }
                 if (resp.responseData < form.usernameList.length && resp.responseData > 0) {
-                    ApplicationUtils.showMessageBox(
+                    ApplicationUtils.showMessage(
                         message.addWarning
                             .replace("%d1", form.usernameList.length.toString())
                             .replace("%d2", resp.responseData.toString()),
@@ -83,7 +83,7 @@
                     reload();
                 }
                 if (resp.responseData === 0)
-                    ApplicationUtils.showMessageBox(
+                    ApplicationUtils.showMessage(
                         message.addFailed
                             .replace("%d", resp.responseData.toString()),
                         "error"
