@@ -32,14 +32,14 @@
                 </div>
             </div>
             <div class="task-second-box-column task-flex-column">
-                <span class="task-second-text">{{ lang.startTime }}</span>
+                <span class="little-text">{{ lang.startTime }}</span>
                 <el-date-picker v-model="curTaskInformation.startTime"
                                 type="datetime"
                                 :disabled-date="disableStartTime"
                 />
             </div>
             <div class="task-second-box-column task-flex-column">
-                <span class="task-second-text">{{ lang.deadline }}</span>
+                <span class="little-text">{{ lang.deadline }}</span>
                 <el-date-picker v-model="curTaskInformation.deadline"
                                 type="datetime"
                                 :disabled-date="disableDeadline"
@@ -49,7 +49,7 @@
         <el-divider/>
         <div class="task-third-container task-flex">
             <div class="text-third-box task-flex-column">
-                <span class="task-label">{{ lang.priority }}</span>
+                <span class="little-text">{{ lang.priority }}</span>
                 <div class="task-select">
                     <el-select v-model="curTaskInformation.priority">
                         <el-option v-for="item in priorityList"
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="text-third-box task-flex-column">
-                <span class="task-label">{{ lang.sourceOfDemand }}</span>
+                <span class="little-text">{{ lang.sourceOfDemand }}</span>
                 <div class="task-select">
                     <el-select v-model="curTaskInformation.sourceOfDemand">
                         <el-option v-for="item in sourceOfDemandList"
@@ -74,7 +74,7 @@
             </div>
 
             <div class="text-third-box task-flex-column">
-                <span class="task-label">{{ lang.taskType }}</span>
+                <span class="little-text">{{ lang.taskType }}</span>
                 <div class="task-select">
                     <el-select v-model="curTaskInformation.taskType">
                         <el-option v-for="item in taskTypeList"
@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="text-third-box task-flex-column">
-                <span class="task-label">{{ lang.members }}</span>
+                <span class="little-text">{{ lang.members }}</span>
                 <div class="task-select">
                     <el-select v-model="curTaskInformation.members">
                         <el-option v-for="item in options.staffOptions"
