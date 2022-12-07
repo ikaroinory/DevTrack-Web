@@ -15,7 +15,7 @@
             </el-col>
             <el-col :span="12">
                 <el-form-item prop="principal" :label="lang.principal">
-                    <el-select style="width: 100%" v-model="newProjectForm.principal" :placeholder="lang.selectPrincipal">
+                    <el-select style="width: 100%" v-model="newProjectForm.principalUUID" :placeholder="lang.selectPrincipal">
                         <el-option v-for="item in staffOptions"
                                    :key="item.value"
                                    :label="item.label"
@@ -46,9 +46,9 @@
     import type { FormInstance, FormRules } from "element-plus";
     import router from "@/plugins/VueRouter";
     import RequestUtils from "@/utils/RequestUtils";
-    import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import NewProjectForm from "@/utils/forms/NewProjectForm";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     const lang = ApplicationUtils.locale.form.newProject;
     const message = ApplicationUtils.locale.message;
@@ -57,8 +57,8 @@
     const requestingServe = ref(false);
     const newProjectForm = reactive<NewProjectForm>({
         name: "",
-        creator: SessionStorageUtils.getUserUUID(),
-        principal: "",
+        creatorUUID: LocalStorageUtils.getUserUUIDFromToken(),
+        principalUUID: "",
         publicProject: false,
         description: "",
         adminName: lang.admin,
@@ -66,7 +66,7 @@
     });
     const newProjectFormRules: FormRules = {
         name: [{ required: true, message: lang.enterName, trigger: "blur" }],
-        principal: [{ required: true, message: lang.selectPrincipal, trigger: "blur" }]
+        principalUUID: [{ required: true, message: lang.selectPrincipal, trigger: "blur" }]
     };
 
     function submitNewProjectForm() {
@@ -80,10 +80,7 @@
                 ApplicationUtils.showMessage(message.createSuccessfully, "success");
 
                 requestingServe.value = false;
-                router.push({ name: "project", params: { uuid: resp.resultData } });
-            }).catch(() => {
-                ApplicationUtils.showMessage(message.timeout, "error");
-                requestingServe.value = false;
+                router.push({ name: "project", params: { uuid: resp.responseData } });
             });
         });
     }
@@ -92,8 +89,8 @@
 
     const staffOptions = [
         {
-            value: SessionStorageUtils.getUserUUID(),
-            label: SessionStorageUtils.getUserNickname() + "(" + SessionStorageUtils.getUserUsername() + ")"
+            value: LocalStorageUtils.getUserUUIDFromToken(),
+            label: LocalStorageUtils.getUsernameFromToken() + "(" + LocalStorageUtils.getUsernameFromToken() + ")"
         }
     ];
 

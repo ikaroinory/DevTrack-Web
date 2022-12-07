@@ -9,6 +9,7 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
     import router from "@/plugins/VueRouter";
+    import StatusCode from "@/utils/enums/StatusCode";
 
     const message = ApplicationUtils.locale.message;
     const isRouterAlive = ref(true);
@@ -28,11 +29,13 @@
         }
 
         RequestUtils.autoSignIn().then(resp => {
-            ApplicationUtils.showMessage(message.welcomeUser.replace("%s", resp.resultData.nickname), "success");
-            SessionStorageUtils.setUserInformation(resp.resultData);
-            SessionStorageUtils.setAccessMode("user");
-            reloadPage();
-            routerInterceptor(resp.resultData.username);
+            if (resp.statusCode === StatusCode.success) {
+                ApplicationUtils.showMessage(message.welcomeBack, "success");
+                SessionStorageUtils.setAccessMode("user");
+                SessionStorageUtils.setUserAvatar(resp.responseData);
+                reloadPage();
+                routerInterceptor(LocalStorageUtils.getUsernameFromToken());
+            }
         });
     }
 

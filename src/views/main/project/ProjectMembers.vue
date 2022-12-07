@@ -96,9 +96,7 @@
     function init() {
         ApplicationUtils.setTitle(lang.title);
         getPage(currentPage.value);
-        RequestUtils.getRoles(props.uuid)
-            .then(resp => roles.value = [...resp])
-            .catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
+        RequestUtils.getRoles(props.uuid).then(resp => roles.value = [...resp.responseData]);
     }
 
     function clearTable() {
@@ -108,8 +106,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageProjectMemberInformation(pageNum, pageSize, props.uuid).then(resp => {
-            members.value = resp.list;
-            recordCount.value = resp.recordCount;
+            members.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
@@ -136,7 +134,7 @@
             "OkCancel"
         ).then(() => {
             RequestUtils.removeProjectMember(member.recordUUID).then(resp => {
-                if (resp.statusCode === StatusCode.success) {
+                if (resp === StatusCode.success) {
                     ApplicationUtils.showMessage(message.removeSuccessfully, "success");
                     reload();
                 }
