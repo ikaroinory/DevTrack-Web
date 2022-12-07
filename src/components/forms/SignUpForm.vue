@@ -158,18 +158,18 @@
             delete newSignUpForm.confirmPassword;
             console.log(newSignUpForm);
             RequestUtils.signUp(newSignUpForm).then(resp => {
-                if (resp.statusCode === StatusCode.userExists)
+                if (resp === StatusCode.userExists)
                     ApplicationUtils.showMessage(message.userExists, "error");
-                if (resp.statusCode === StatusCode.vCodeError)
+                if (resp === StatusCode.vCodeError)
                     ApplicationUtils.showMessage(message.vCodeError, "error");
-                if (resp.statusCode === StatusCode.vCodeInvalid)
+                if (resp === StatusCode.invalidVCode)
                     ApplicationUtils.showMessage(message.vCodeInvalid, "error");
-                if (resp.statusCode === StatusCode.vCodeNoRecord)
+                if (resp === StatusCode.vCodeRecordNotFound)
                     ApplicationUtils.showMessage(message.noVCodeRecord, "error");
-                if (resp.statusCode === StatusCode.uuidConflict)
+                if (resp === StatusCode.uuidConflict)
                     ApplicationUtils.showMessage(message.uuidConflict, "error");
 
-                if (resp.statusCode === StatusCode.success) {
+                if (resp === StatusCode.success) {
                     ApplicationUtils.showMessage(message.signUpSuccessfully, "success");
                     router.push({ name: "signIn" });
                 }

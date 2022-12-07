@@ -11,4 +11,10 @@ export default interface UserInformation {
     introduction: string;
     signUpTime: string;
     lastSignInTime: string;
+    notStartProject: number;
+    inProgressProject: number;
+    finishedProject: number;
+    notStartTask: number;
+    inProgressTask: number;
+    finishedTask: number;
 }

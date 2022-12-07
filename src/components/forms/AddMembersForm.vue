@@ -65,27 +65,27 @@
                 ApplicationUtils.showMessage(message.projectNotFound, "error");
 
             if (resp.statusCode === StatusCode.success) {
-                if (resp.resultData === form.usernameList.length) {
-                    ApplicationUtils.showMessageBox(
+                if (resp.responseData === form.usernameList.length) {
+                    ApplicationUtils.showMessage(
                         message.addSuccessfully
-                            .replace("%d", resp.resultData.toString()),
+                            .replace("%d", resp.responseData.toString()),
                         "success"
                     );
                     reload();
                 }
-                if (resp.resultData < form.usernameList.length && resp.resultData > 0) {
-                    ApplicationUtils.showMessageBox(
+                if (resp.responseData < form.usernameList.length && resp.responseData > 0) {
+                    ApplicationUtils.showMessage(
                         message.addWarning
                             .replace("%d1", form.usernameList.length.toString())
-                            .replace("%d2", resp.resultData.toString()),
+                            .replace("%d2", resp.responseData.toString()),
                         "warning"
                     );
                     reload();
                 }
-                if (resp.resultData === 0)
-                    ApplicationUtils.showMessageBox(
+                if (resp.responseData === 0)
+                    ApplicationUtils.showMessage(
                         message.addFailed
-                            .replace("%d", resp.resultData.toString()),
+                            .replace("%d", resp.responseData.toString()),
                         "error"
                     );
             }

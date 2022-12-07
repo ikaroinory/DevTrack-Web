@@ -173,7 +173,7 @@
 
     function init() {
         RequestUtils.getProjectMemberInformation(props.projectUuid).then(resp => {
-            members.value = resp;
+            members.value = resp.responseData;
         });
     }
 

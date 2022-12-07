@@ -10,7 +10,7 @@
                        :on-change="onChange" :http-request="uploadRequest" :on-success="uploadSuccessHandler">
                 <el-avatar class="image-upload"
                            v-if="avatar"
-                           :src="avatar"
+                           :src="showAvatar"
                 />
                 <el-icon class="image-upload"
                          v-else
@@ -88,7 +88,6 @@
     import StatusCode from "@/utils/enums/StatusCode";
     import RequestUtils from "@/utils/RequestUtils";
     import EditProfileForm from "@/utils/forms/EditProfileForm";
-    import Result from "@/utils/dto/Result";
 
     defineExpose({ clearForm: resetFormTool });
 
@@ -108,7 +107,7 @@
     const lang = ApplicationUtils.locale.form.editProfile;
     const message = ApplicationUtils.locale.message;
 
-    const avatar = ref(props.avatar);
+    const showAvatar = ref("data:image/jpeg;base64," + props.avatar);
     const form = reactive<EditProfileForm>({
         username: props.username,
         nickname: props.nickname,
@@ -122,7 +121,7 @@
     const uploadRef = ref<UploadInstance>();
 
     function onChange(uploadFile: UploadFile) {
-        avatar.value = URL.createObjectURL(uploadFile.raw!);
+        showAvatar.value = URL.createObjectURL(uploadFile.raw!);
     }
 
     function uploadRequest(options: UploadRequestOptions) {
@@ -130,24 +129,24 @@
     }
 
     function resetAvatar() {
-        if (avatar.value === props.avatar) {
+        if (showAvatar.value === props.avatar) {
             ApplicationUtils.showMessage(message.youDoNotNeedToResetAvatar, "warning");
             return;
         }
         uploadRef.value?.clearFiles();
-        avatar.value = props.avatar;
+        showAvatar.value = "data:image/jpeg;base64," + props.avatar;
         ApplicationUtils.showMessage(message.resetSuccessfully, "success");
     }
 
     function uploadAvatar() {
-        if (avatar.value === props.avatar)
+        if (showAvatar.value === props.avatar)
             ApplicationUtils.showMessage(message.youHaveNotModifiedAvatar, "warning");
         else
             uploadRef.value?.submit();
     }
 
-    function uploadSuccessHandler(response: Result<string>) {
-        if (response.statusCode === StatusCode.success) {
+    function uploadSuccessHandler(response: number) {
+        if (response === StatusCode.success) {
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
             reload();
         } else
@@ -191,11 +190,8 @@
     }
 
     function submitForm() {
-        RequestUtils.editProfile(form).then(resp => {
-            if (resp.statusCode === StatusCode.valueNotUpdate)
-                ApplicationUtils.showMessage(message.youHaveNotModifiedForm, "warning");
-
-            if (resp.statusCode === StatusCode.success) {
+        RequestUtils.updateProfile(form).then(resp => {
+            if (resp === StatusCode.success) {
                 ApplicationUtils.showMessage(message.submitSuccessfully, "success");
                 reload();
             }

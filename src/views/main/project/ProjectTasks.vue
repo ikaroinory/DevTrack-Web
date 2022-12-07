@@ -134,8 +134,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageProjectTasks(pageNum, pageSize, props.uuid).then(resp => {
-            tasks.value = resp.list;
-            recordCount.value = resp.recordCount;
+            tasks.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");

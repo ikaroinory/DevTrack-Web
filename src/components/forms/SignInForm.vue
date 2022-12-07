@@ -76,13 +76,8 @@
             requestingService.value = true;
             let username: string = "";
             await RequestUtils.signIn(signInForm).then(resp => {
-                if (resp.statusCode === StatusCode.userNotExists)
-                    ApplicationUtils.showMessage(message.userNotFound, "error");
-                if (resp.statusCode === StatusCode.passwordError)
-                    ApplicationUtils.showMessage(message.passwordError, "error");
-
                 if (resp.statusCode === StatusCode.success) {
-                    LocalStorageUtils.setToken(resp.resultData);
+                    LocalStorageUtils.setToken(resp.responseData);
                     username = LocalStorageUtils.getUsernameFromToken();
                     ApplicationUtils.showMessage(message.welcomeUser.replace("%s", username), "success");
                 }
@@ -91,11 +86,14 @@
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingService.value = false;
             });
-            RequestUtils.getUserInformation(username).then(resp => {
-                SessionStorageUtils.setUserInformation(resp.resultData);
-                SessionStorageUtils.setAccessMode("user");
-                router.push({ name: "dashboard" });
-                requestingService.value = false;
+
+            RequestUtils.getAvatar(username).then(resp => {
+                if (resp.statusCode === StatusCode.success) {
+                    SessionStorageUtils.setUserAvatar(resp.responseData);
+                    SessionStorageUtils.setAccessMode("user");
+                    router.push({ name: "dashboard" });
+                    requestingService.value = false;
+                }
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingService.value = false;

@@ -10,7 +10,7 @@
                     <div style="font-size: 24px; font-weight: bold; margin-right: 20px; color: var(--color-blue)">DevTrack</div>
                 </div>
                 <div style="display: flex">
-                    <div v-if="SessionStorageUtils.getUserUsername() === ''">
+                    <div v-if="LocalStorageUtils.getUsernameFromToken() === ''">
                         <el-link style="margin-right: 20px" href="/signIn" :underline="false">
                             <div v-text="lang.signIn"/>
                         </el-link>
@@ -159,6 +159,7 @@
     import router from "@/plugins/VueRouter";
     import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     const lang = ApplicationUtils.locale.view.home;
 
@@ -179,7 +180,7 @@
     }
 
     function goToProfile() {
-        router.push({ name: "profile", params: { username: SessionStorageUtils.getUserUsername() } });
+        router.push({ name: "profile", params: { username: LocalStorageUtils.getUsernameFromToken() } });
     }
 </script>
 
