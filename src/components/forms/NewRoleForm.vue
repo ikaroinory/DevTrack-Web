@@ -10,13 +10,21 @@
             <div style="width: 100%">
                 <el-row>
                     <el-col :span="8">
-                        <el-checkbox v-model="role.invite" :label="lang.inviteMembers"/>
+                        <el-checkbox v-model="role.inviteMember" :label="lang.inviteMember"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.updateMember"/>
+                        <el-checkbox v-model="role.updateMember" :label="lang.updateMember"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.removeMember"/>
+                        <el-checkbox v-model="role.removeMember" :label="lang.removeMember"/>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-checkbox v-model="role.updateProject" :label="lang.updateProject"/>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-checkbox v-model="role.deleteProject" :label="lang.deleteProject"/>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -32,13 +40,13 @@
                 </el-row>
                 <el-row>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.createRole"/>
+                        <el-checkbox v-model="role.createRole" :label="lang.createRole"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.updateRole"/>
+                        <el-checkbox v-model="role.updateRole" :label="lang.updateRole"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.removeRole"/>
+                        <el-checkbox v-model="role.removeRole" :label="lang.removeRole"/>
                     </el-col>
                 </el-row>
             </div>
@@ -70,7 +78,7 @@
         uuid: "",
         project: "",
         name: "",
-        invite: false,
+        inviteMember: false,
         createTask: false,
         updateTask: false,
         deleteTask: false,
@@ -90,7 +98,7 @@
             uuid: "",
             project: "",
             name: "",
-            invite: false,
+            inviteMember: false,
             createTask: false,
             updateTask: false,
             deleteTask: false,
