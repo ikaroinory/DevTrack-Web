@@ -107,7 +107,6 @@
             removeRole: false
         };
         role.value.project = props.projectUuid;
-        console.log(13);
     }
 
     function create() {

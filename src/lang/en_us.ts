@@ -174,9 +174,6 @@ const en_us = {
         profile: {
             editProfile: "Edit profile",
             follow: "Follow"
-        },
-        taskInformation: {
-            title: "Task Information"
         }
     },
     form: {
@@ -325,6 +322,22 @@ const en_us = {
             updateRole: "Update role",
             removeRole: "Remove role",
             create: "Create"
+        },
+        taskInformation: {
+            title: "Task Information",
+            status: "Status",
+            principal: "Principal",
+            startTime: "Start time",
+            deadline: "Deadline",
+            taskType: "Type",
+            priority: "Priority",
+            sourceOfDemand: "Source of demand",
+            members: "Members",
+            description: "Description",
+            createAt: "create at",
+            finish: "Finish",
+            unfinished: "Unfinished",
+            delete: "Delete"
         }
     },
     item: {
@@ -342,7 +355,10 @@ const en_us = {
         urgent: "Urgent",
         mostUrgent: "Most urgent",
         rdPost: "R&D post",
-        testPost: "test post"
+        testPost: "Test post",
+        notStart: "Not start",
+        inProgress: "In progress",
+        completed: "Completed"
     },
     message: {
         title: {
