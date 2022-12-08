@@ -63,6 +63,20 @@
         <el-row>
             <el-col :span="8">
                 <div class="task-flex-column">
+                    <span class="little-text">{{ lang.taskType }}</span>
+                    <div class="task-select">
+                        <el-select v-model="curTaskInformation.taskType">
+                            <el-option v-for="item in taskTypeList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="8">
+                <div class="task-flex-column">
                     <span class="little-text">{{ lang.priority }}</span>
                     <div class="task-select">
                         <el-select v-model="curTaskInformation.priority">
@@ -81,20 +95,6 @@
                     <div class="task-select">
                         <el-select v-model="curTaskInformation.sourceOfDemand">
                             <el-option v-for="item in sourceOfDemandList"
-                                       :key="item.value"
-                                       :label="item.label"
-                                       :value="item.value"
-                            />
-                        </el-select>
-                    </div>
-                </div>
-            </el-col>
-            <el-col :span="8">
-                <div class="task-flex-column">
-                    <span class="little-text">{{ lang.taskType }}</span>
-                    <div class="task-select">
-                        <el-select v-model="curTaskInformation.taskType">
-                            <el-option v-for="item in taskTypeList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value"
