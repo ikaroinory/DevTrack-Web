@@ -3,6 +3,7 @@ import ProjectOverview from "@/views/main/project/ProjectOverview.vue";
 import ProjectMembers from "@/views/main/project/ProjectMembers.vue";
 import ProjectTask from "@/views/main/project/ProjectTasks.vue";
 import ProjectRoles from "@/views/main/project/ProjectRoles.vue";
+import TableReport from "@/views/main/project/TableReport.vue";
 import NotFound from "@/views/error/NotFound.vue";
 
 const projectRouter: Array<RouteRecordRaw> = [
@@ -28,6 +29,12 @@ const projectRouter: Array<RouteRecordRaw> = [
         path: "/project/:uuid/roles",
         name: "projectRoles",
         component: ProjectRoles,
+        props: true
+    },
+    {
+        path: "/project/:uuid/tableReport",
+        name: "tableReport",
+        component: TableReport,
         props: true
     },
     {
