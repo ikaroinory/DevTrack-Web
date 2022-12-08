@@ -162,6 +162,9 @@ class RequestUrl {
     public static readonly updatePrincipal = this.baseUrl + this.taskController + "updatePrincipal";
     public static readonly updateStartTime = this.baseUrl + this.taskController + "updateStartTime";
     public static readonly updateDeadline = this.baseUrl + this.taskController + "updateDeadline";
+    public static readonly updateTaskType = this.baseUrl + this.taskController + "updateType";
+    public static readonly updateTaskPriority = this.baseUrl + this.taskController + "updatePriority";
+    public static readonly updateTaskSourceOfDemand = this.baseUrl + this.taskController + "updateSourceOfDemand";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -311,6 +314,18 @@ export default class RequestUtils {
         (deadline as Date).setHours((deadline as Date).getHours() + 8);
 
         return (await this.post(RequestUrl.updateDeadline, { taskUUID, time: deadline }));
+    }
+
+    public static async updateTaskType(taskUUID: string, taskType: number): Promise<number> {
+        return (await this.post(RequestUrl.updateTaskType, this.toFormData({ taskUUID, taskType })));
+    }
+
+    public static async updateTaskPriority(taskUUID: string, priority: number): Promise<number> {
+        return (await this.post(RequestUrl.updateTaskPriority, this.toFormData({ taskUUID, priority })));
+    }
+
+    public static async updateTaskSourceOfDemand(taskUUID: string, sourceOfDemand: number): Promise<number> {
+        return (await this.post(RequestUrl.updateTaskSourceOfDemand, this.toFormData({ taskUUID, sourceOfDemand })));
     }
 
     // Role Controller

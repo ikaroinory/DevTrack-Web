@@ -65,7 +65,7 @@
                 <div class="task-flex-column">
                     <span class="little-text">{{ lang.taskType }}</span>
                     <div class="task-select">
-                        <el-select v-model="curTaskInformation.taskType">
+                        <el-select v-model="curTaskInformation.taskType" @change="updateType">
                             <el-option v-for="item in taskTypeList"
                                        :key="item.value"
                                        :label="item.label"
@@ -79,7 +79,7 @@
                 <div class="task-flex-column">
                     <span class="little-text">{{ lang.priority }}</span>
                     <div class="task-select">
-                        <el-select v-model="curTaskInformation.priority">
+                        <el-select v-model="curTaskInformation.priority" @change="updatePriority">
                             <el-option v-for="item in priorityList"
                                        :key="item.value"
                                        :label="item.label"
@@ -93,7 +93,7 @@
                 <div class="task-flex-column">
                     <span class="little-text">{{ lang.sourceOfDemand }}</span>
                     <div class="task-select">
-                        <el-select v-model="curTaskInformation.sourceOfDemand">
+                        <el-select v-model="curTaskInformation.sourceOfDemand" @change="updateSourceOfDemand">
                             <el-option v-for="item in sourceOfDemandList"
                                        :key="item.value"
                                        :label="item.label"
@@ -284,6 +284,30 @@
 
     function updateDeadline() {
         RequestUtils.updateTaskDeadline(props.task.taskUUID, curTaskInformation.value.deadline).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateType() {
+        RequestUtils.updateTaskType(props.task.taskUUID, curTaskInformation.value.taskType).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updatePriority() {
+        RequestUtils.updateTaskPriority(props.task.taskUUID, curTaskInformation.value.priority).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateSourceOfDemand() {
+        RequestUtils.updateTaskSourceOfDemand(props.task.taskUUID, curTaskInformation.value.sourceOfDemand).then(resp => {
             if (resp !== StatusCode.success) return;
 
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
