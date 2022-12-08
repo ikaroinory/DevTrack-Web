@@ -132,7 +132,7 @@ class RequestUrl {
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
     public static readonly signUp = this.baseUrl + this.accountController + "signUp";
     public static readonly autoSignIn = this.baseUrl + this.accountController + "autoSignIn";
-    public static readonly getAvatar = RequestUrl.baseUrl + RequestUrl.accountController + "getAvatar";
+    public static readonly getAvatar = this.baseUrl + this.accountController + "getAvatar";
     public static readonly updateAvatar = this.baseUrl + this.accountController + "updateAvatar";
     public static readonly updateProfile = this.baseUrl + this.accountController + "updateProfile";
     public static readonly getUserInformation = this.baseUrl + this.accountController + "getUserInfo";

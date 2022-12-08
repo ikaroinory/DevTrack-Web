@@ -25,7 +25,7 @@
                     <div class="task-second-main">
                         <div class="task-select">
                             <span class="little-text">{{ lang.principal }}</span>
-                            <el-select v-model="curTaskInformation.principalUUID">
+                            <el-select v-model="curTaskInformation.principalUUID" @change="updatePrincipal">
                                 <el-option v-for="item in projectMembers"
                                            :key="item.value"
                                            :label="item.label"
@@ -194,6 +194,7 @@
         taskType: 0,
         taskUUID: ""
     });
+    const projectMemberAvatarList = ref<{ [key: string]: string }>({});
     const projectMembers = ref<Array<{ value: string, label: string }>>([]);
     const taskMembers = ref<Array<string>>([]);
 
@@ -226,6 +227,7 @@
                 value: v.userUUID,
                 label: v.nickname + (v.nickname !== v.username ? "(" + v.username + ")" : "")
             });
+            projectMemberAvatarList.value[v.userUUID] = v.avatar;
         });
 
         RequestUtils.getTaskMembers(props.task.taskUUID).then(resp => {
@@ -244,17 +246,27 @@
         return current.getTime() < new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
     }
 
-    function updateTitle(event: FocusEvent) {
-        RequestUtils.updateTitle(props.task.taskUUID, curTaskInformation.value.taskName).then(resp => {
-            if (resp !== StatusCode.success) return;
-            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
-        });
-    }
-
     //禁用开始时间之前的时间
     function disableDeadline(current: Date) {
         let startTimeToDate = new Date(curTaskInformation.value.startTime);
         return current < startTimeToDate;
+    }
+
+    function updateTitle() {
+        RequestUtils.updateTitle(props.task.taskUUID, curTaskInformation.value.taskName).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updatePrincipal() {
+        curTaskInformation.value.principalAvatar = projectMemberAvatarList.value[curTaskInformation.value.principalUUID];
+        RequestUtils.updatePrincipal(props.task.taskUUID, curTaskInformation.value.principalUUID).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
     }
 </script>
 
