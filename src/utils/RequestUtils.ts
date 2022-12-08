@@ -182,7 +182,7 @@ export default class RequestUtils {
         })).data;
     }
 
-    private static async post(url: string, form: any, timeout?: number): Promise<Response<any> | any> {
+    private static async post(url: string, form: any | FormData, timeout?: number): Promise<Response<any> | any> {
         return (await axios.post(url, form, {
             headers: { Authorization: LocalStorageUtils.getToken() },
             timeout: timeout || this.defaultTimeout
@@ -293,20 +293,24 @@ export default class RequestUtils {
         return (await this.get(RequestUrl.getTaskMembers, { taskUUID }));
     }
 
-    public static async updateTitle(taskUUID: string, title: string): Promise<number> {
+    public static async updateTaskTitle(taskUUID: string, title: string): Promise<number> {
         return (await this.post(RequestUrl.updateTitle, this.toFormData({ taskUUID, title })));
     }
 
-    public static async updatePrincipal(taskUUID: string, principalUUID: string): Promise<number> {
+    public static async updateTaskPrincipal(taskUUID: string, principalUUID: string): Promise<number> {
         return (await this.post(RequestUrl.updatePrincipal, this.toFormData({ taskUUID, principalUUID })));
     }
 
-    public static async updateStartTime(taskUUID: string, startTime: string): Promise<number> {
-        return (await this.post(RequestUrl.updateStartTime, this.toFormData({ taskUUID, startTime })));
+    public static async updateTaskStartTime(taskUUID: string, startTime: string | Date): Promise<number> {
+        (startTime as Date).setHours((startTime as Date).getHours() + 8);
+
+        return (await this.post(RequestUrl.updateStartTime, { taskUUID: taskUUID, time: startTime }));
     }
 
-    public static async updateDeadline(taskUUID: string, deadline: string): Promise<number> {
-        return (await this.post(RequestUrl.updateDeadline, this.toFormData({ taskUUID, deadline })));
+    public static async updateTaskDeadline(taskUUID: string, deadline: string | Date): Promise<number> {
+        (deadline as Date).setHours((deadline as Date).getHours() + 8);
+
+        return (await this.post(RequestUrl.updateDeadline, { taskUUID, time: deadline }));
     }
 
     // Role Controller

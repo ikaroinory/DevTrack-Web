@@ -42,6 +42,7 @@
                     <el-date-picker v-model="curTaskInformation.startTime"
                                     type="datetime"
                                     :disabled-date="disableStartTime"
+                                    @change="updateStartTime"
                     />
                 </div>
             </el-col>
@@ -51,6 +52,7 @@
                     <el-date-picker v-model="curTaskInformation.deadline"
                                     type="datetime"
                                     :disabled-date="disableDeadline"
+                                    @change="updateDeadline"
                     />
                 </div>
             </el-col>
@@ -219,7 +221,7 @@
         projectMembers.value = [];
         taskMembers.value = [];
 
-        curTaskInformation.value = props.task;
+        curTaskInformation.value = JSON.parse(JSON.stringify(props.task));
 
         props.projectMemberList.map(value => {
             const v = value as ProjectMemberInformation;
@@ -253,7 +255,9 @@
     }
 
     function updateTitle() {
-        RequestUtils.updateTitle(props.task.taskUUID, curTaskInformation.value.taskName).then(resp => {
+        if (curTaskInformation.value.taskName === props.task.taskName) return;
+
+        RequestUtils.updateTaskTitle(props.task.taskUUID, curTaskInformation.value.taskName).then(resp => {
             if (resp !== StatusCode.success) return;
 
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
@@ -262,7 +266,24 @@
 
     function updatePrincipal() {
         curTaskInformation.value.principalAvatar = projectMemberAvatarList.value[curTaskInformation.value.principalUUID];
-        RequestUtils.updatePrincipal(props.task.taskUUID, curTaskInformation.value.principalUUID).then(resp => {
+
+        RequestUtils.updateTaskPrincipal(props.task.taskUUID, curTaskInformation.value.principalUUID).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateStartTime() {
+        RequestUtils.updateTaskStartTime(props.task.taskUUID, curTaskInformation.value.startTime).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateDeadline() {
+        RequestUtils.updateTaskDeadline(props.task.taskUUID, curTaskInformation.value.deadline).then(resp => {
             if (resp !== StatusCode.success) return;
 
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
