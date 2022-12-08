@@ -22,6 +22,7 @@ import AddProjectMembersForm from "@/utils/forms/AddProjectMembersForm";
 import StatusCode from "@/utils/enums/StatusCode";
 import ApplicationUtils from "@/utils/ApplicationUtils";
 import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
+import TaskStatisticsVO from "@/utils/vo/TaskStatisticsVO";
 
 const source = axios.CancelToken.source();
 
@@ -169,6 +170,7 @@ class RequestUrl {
     public static readonly updateTaskMembers = this.baseUrl + this.taskController + "updateMembers";
     public static readonly finishTask = this.baseUrl + this.taskController + "finish";
     public static readonly deleteTask = this.baseUrl + this.taskController + "delete";
+    public static readonly getTaskStatistics = this.baseUrl + this.taskController + "getTaskStatistics";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -346,6 +348,10 @@ export default class RequestUtils {
 
     public static async deleteTask(taskUUID: string): Promise<number> {
         return (await this.post(RequestUrl.deleteTask, this.toFormData({ taskUUID })));
+    }
+
+    public static async getTaskStatistics(projectUUID: string): Promise<Response<TaskStatisticsVO>> {
+        return (await this.get(RequestUrl.getTaskStatistics, { projectUUID }));
     }
 
     // Role Controller

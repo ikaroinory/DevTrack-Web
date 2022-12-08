@@ -168,6 +168,11 @@ const en_us = {
             inProgress: "In progress",
             completed: "Completed",
             noRecords: "No records"
+        },
+        taskStatistics: {
+            title: "Task Statistics",
+            creation: "Creation",
+            completion: "Completion"
         }
     },
     display: {
