@@ -334,7 +334,10 @@ const en_us = {
             sourceOfDemand: "Source of demand",
             members: "Members",
             description: "Description",
-            createAt: "create at"
+            createAt: "create at",
+            finish: "Finish",
+            unfinished: "Unfinished",
+            delete: "Delete"
         }
     },
     item: {

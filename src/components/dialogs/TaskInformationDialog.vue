@@ -2,6 +2,7 @@
     <el-dialog v-model="thisShow"
                :title="lang.title"
                @open="openDialog"
+               @closed="closedDialog"
                style="width: 1000px" align-center
                :close-on-click-modal="false" :close-on-press-escape="false">
         <TaskInformationDisplay ref="displayRef"
@@ -12,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-    import { computed, ref } from "vue";
+    import { computed, inject, ref } from "vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import TaskInformationDisplay from "@/components/display/TaskInformationDisplay.vue";
     import TaskInformation from "@/utils/dto/TaskInformation";
@@ -28,10 +29,17 @@
         get: () => props.show,
         set: val => emits("update:show", val)
     });
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.form.taskInformation;
 
     const displayRef = ref();
 
-    function openDialog() {displayRef.value.init();}
+    function openDialog() {
+        displayRef.value.init();
+    }
+
+    function closedDialog() {
+        reload();
+    }
 </script>

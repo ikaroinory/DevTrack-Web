@@ -165,6 +165,10 @@ class RequestUrl {
     public static readonly updateTaskType = this.baseUrl + this.taskController + "updateType";
     public static readonly updateTaskPriority = this.baseUrl + this.taskController + "updatePriority";
     public static readonly updateTaskSourceOfDemand = this.baseUrl + this.taskController + "updateSourceOfDemand";
+    public static readonly updateTaskDescription = this.baseUrl + this.taskController + "updateDescription";
+    public static readonly updateTaskMembers = this.baseUrl + this.taskController + "updateMembers";
+    public static readonly finishTask = this.baseUrl + this.taskController + "finish";
+    public static readonly deleteTask = this.baseUrl + this.taskController + "delete";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -326,6 +330,22 @@ export default class RequestUtils {
 
     public static async updateTaskSourceOfDemand(taskUUID: string, sourceOfDemand: number): Promise<number> {
         return (await this.post(RequestUrl.updateTaskSourceOfDemand, this.toFormData({ taskUUID, sourceOfDemand })));
+    }
+
+    public static async updateTaskDescription(taskUUID: string, description: string): Promise<number> {
+        return (await this.post(RequestUrl.updateTaskDescription, this.toFormData({ taskUUID, description })));
+    }
+
+    public static async updateTaskMembers(taskUUID: string, memberUUIDList: Array<string>): Promise<number> {
+        return (await this.post(RequestUrl.updateTaskMembers, this.toFormData({ taskUUID, memberUUIDList })));
+    }
+
+    public static async finishTask(taskUUID: string, finished: boolean): Promise<number> {
+        return (await this.post(RequestUrl.finishTask, this.toFormData({ taskUUID, finished })));
+    }
+
+    public static async deleteTask(taskUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.deleteTask, this.toFormData({ taskUUID })));
     }
 
     // Role Controller

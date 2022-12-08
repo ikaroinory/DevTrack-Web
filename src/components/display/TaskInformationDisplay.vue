@@ -110,7 +110,9 @@
                 <div class="task-flex-column">
                     <span class="little-text">{{ lang.members }}</span>
                     <div class="task-select">
-                        <el-select style="width: 100%" v-model="taskMembers" multiple>
+                        <el-select style="width: 100%" v-model="taskMembers" multiple
+                                   @visible-change="updateMembers"
+                                   @remove-tag="updateMembers(false)">
                             <el-option v-for="item in projectMembers"
                                        :key="item.value"
                                        :label="item.label"
@@ -126,9 +128,17 @@
             <span class="little-text">{{ lang.description }}</span>
             <el-input v-model="curTaskInformation.taskDescription"
                       type="textarea" resize="none" maxlength="100" show-word-limit
+                      @blur="updateDescription"
             />
         </div>
-        <div class="task-create-container">
+
+        <div>
+            <el-button v-if="!isFinished" type="success" @click="finishTask(true)">{{ lang.finish }}</el-button>
+            <el-button v-else type="info" @click="finishTask(false)">{{ lang.unfinished }}</el-button>
+            <el-button type="danger" @click="deleteTask">{{ lang.delete }}</el-button>
+        </div>
+
+        <div style="margin-top: 15px">
             <div class="task-create-info little-text">
                 {{ curTaskInformation.creatorNickname }} {{ lang.createAt }} {{ curTaskInformation.creationTime }}
             </div>
@@ -137,7 +147,7 @@
 </template>
 
 <script lang="ts" setup>
-    import { computed, ref } from "vue";
+    import { computed, inject, ref } from "vue";
     import { Clock } from "@element-plus/icons-vue";
     import TaskInformation from "@/utils/dto/TaskInformation";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -151,6 +161,7 @@
         task: TaskInformation,
         projectMemberList: Array<ProjectMemberInformation>
     }>();
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.form.taskInformation;
     const message = ApplicationUtils.locale.message;
@@ -198,6 +209,7 @@
     });
     const projectMemberAvatarList = ref<{ [key: string]: string }>({});
     const projectMembers = ref<Array<{ value: string, label: string }>>([]);
+    const oldTaskMembers = ref<Array<string>>([]);
     const taskMembers = ref<Array<string>>([]);
 
     const iconColor = computed(() => {
@@ -216,6 +228,7 @@
         else
             return enumLang.inProgress;
     });
+    const isFinished = computed(() => typeof (curTaskInformation.value.finishTime as string | null) === "string");
 
     function init() {
         projectMembers.value = [];
@@ -238,6 +251,7 @@
             resp.responseData.map(value => {
                 const v = value as TaskMemberInformation;
                 taskMembers.value.push(v.userUUID);
+                oldTaskMembers.value.push(v.userUUID);
             });
         });
     }
@@ -311,6 +325,48 @@
             if (resp !== StatusCode.success) return;
 
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateDescription() {
+        if (curTaskInformation.value.taskDescription === props.task.taskDescription) return;
+
+        RequestUtils.updateTaskDescription(props.task.taskUUID, curTaskInformation.value.taskDescription).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateMembers(val: boolean) {
+        if (val) return;
+
+        if (taskMembers.value.sort().toString() === oldTaskMembers.value.sort().toString()) return;
+
+        RequestUtils.updateTaskMembers(props.task.taskUUID, taskMembers.value).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+
+            oldTaskMembers.value = [...taskMembers.value];
+        });
+
+    }
+
+    function finishTask(val: boolean) {
+        RequestUtils.finishTask(props.task.taskUUID, val).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function deleteTask() {
+        RequestUtils.deleteTask(props.task.taskUUID).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+            reload();
         });
     }
 </script>
