@@ -1,7 +1,7 @@
 export default interface UpdateProjectForm {
-    uuid: String;
+    projectUUID: String;
     name: String;
-    principal: String;
+    principalUUID: String;
     description: String;
     startTime: String;
 }

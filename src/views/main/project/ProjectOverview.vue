@@ -45,21 +45,22 @@
                     <div class="project-start-time-label"
                          v-text="lang.startTime"
                     />
-                    <div>{{ info.startTIme ?? lang.unspecified }}</div>
+                    <div>{{ info.startTime ?? lang.unspecified }}
+                    </div>
                 </div>
                 <div class="frame-project-information-flex-status">
                     <div class="project-status-label"
                          v-text="lang.status"
                     />
-                    <div v-if="info.status==='1'">
+                    <div v-if="info.status === 1">
                         <hourglass-full class="global-icon" size="19" fill="#f56c6c"/>
                         <span v-text="lang.notStart"/>
                     </div>
-                    <div v-else-if="info.status==='2'">
+                    <div v-else-if="info.status === 2">
                         <pie-two class="global-icon" size="19" fill="#fac858"/>
                         <span v-text="lang.inProgress"/>
                     </div>
-                    <div v-else-if="info.status==='3'">
+                    <div v-else-if="info.status === 3">
                         <success class="global-icon" size="19" fill="#67c23a"/>
                         <span v-text="lang.completed"/>
                     </div>
@@ -98,13 +99,13 @@
                                   :name="info.name"
                                   :principal="info.principalUUID"
                                   :description="info.description ?? ''"
-                                  :start-time="info.startTIme ?? ''"
+                                  :start-time="info.startTime ?? ''"
                                   :members="members"
     />
 </template>
 
 <script lang="ts" setup>
-    import { reactive, ref } from "vue";
+    import { ref } from "vue";
     import { Caution, Edit, HourglassFull, PieTwo, Success } from "@icon-park/vue-next";
     import ProjectInformation from "@/utils/dto/ProjectInformation";
     import RequestUtils from "@/utils/RequestUtils";
@@ -118,7 +119,7 @@
     });
     const lang = ApplicationUtils.locale.view.projectOverview;
     const loading = ref(false);
-    const info = reactive<ProjectInformation>({
+    const info = ref<ProjectInformation>({
         uuid: "",
         name: "",
         creatorUUID: "",
@@ -131,36 +132,24 @@
         principalAvatar: "",
         description: "",
         creationTime: "",
-        startTIme: "",
-        status: ""
+        startTime: "",
+        finishTime: "",
+        status: 0,
+        progress: 0
     });
     const members = ref<Array<ProjectMemberInformation>>([]);
     const modifyProjectInformation = ref(false);
-    const removeMembersDialog = ref(false);
 
     function init() {
         ApplicationUtils.setTitle(lang.title);
         loading.value = true;
         RequestUtils.getProjectInformation(props.uuid).then(resp => {
-            info.uuid = resp.resultData.uuid;
-            info.name = resp.resultData.name;
-            info.creatorUUID = resp.resultData.creatorUUID;
-            info.creatorUsername = resp.resultData.creatorUsername;
-            info.creatorNickname = resp.resultData.creatorNickname;
-            info.creatorAvatar = resp.resultData.creatorAvatar;
-            info.principalUUID = resp.resultData.principalUUID;
-            info.principalUsername = resp.resultData.principalUsername;
-            info.principalNickname = resp.resultData.principalNickname;
-            info.principalAvatar = resp.resultData.principalAvatar;
-            info.description = resp.resultData.description;
-            info.creationTime = resp.resultData.creationTime;
-            info.startTIme = resp.resultData.startTIme;
-            info.status = resp.resultData.status;
+            info.value = resp.responseData;
             loading.value = false;
         }).catch(() => {
             loading.value = false;
         });
-        RequestUtils.getOnePageProjectMemberInformation(1, 10, props.uuid).then(resp => members.value = resp.list);
+        RequestUtils.getOnePageProjectMemberInformation(1, 10, props.uuid).then(resp => members.value = resp.responseData.list);
     }
 
     init();

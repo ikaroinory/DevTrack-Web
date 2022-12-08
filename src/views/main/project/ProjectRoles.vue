@@ -25,6 +25,16 @@
                 </el-table-column>
             </el-table>
         </div>
+
+        <div class="global-vertical-margin">
+            <el-pagination v-model:current-page="currentPage"
+                           v-model:page-size="pageSize"
+                           @current-change="changePage"
+                           :background="true"
+                           :total="recordCount"
+                           :hide-on-single-page="false"
+            />
+        </div>
     </div>
 
     <NewRoleDialog v-model:show="showNewRoleDialog"
@@ -74,8 +84,8 @@
     function getPage(pageNum: number) {
         tableLoading.value = true;
         RequestUtils.getOnePageRoles(props.uuid, pageNum, pageSize).then(resp => {
-            roleList.value = resp.list;
-            recordCount.value = resp.recordCount;
+            roleList.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             tableLoading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
@@ -101,8 +111,11 @@
         ).then(() => {
             RequestUtils.removeRole(role.uuid).then(resp => {
                 switch (resp) {
-                    case StatusCode.requiredParamsIsNull:
+                    case StatusCode.requiredParamsIsEmpty:
                         ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
+                        break;
+                    case StatusCode.permissionDenied:
+                        ApplicationUtils.showMessage(message.permissionDenied, "error");
                         break;
                     case StatusCode.roleRecordExists:
                         ApplicationUtils.showMessage(message.roleRecordExists, "error");
@@ -110,11 +123,14 @@
                     case StatusCode.roleNotFound:
                         ApplicationUtils.showMessage(message.roleNotFound, "error");
                         break;
-                    default:
+                    case StatusCode.success:
                         ApplicationUtils.showMessage(message.removeSuccessfully, "success");
+                        reload();
+                        break;
+                    default:
+                        ApplicationUtils.showMessage(message.unknownException, "warning");
                         break;
                 }
-                reload();
             }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
         }).catch(() => {});
     }

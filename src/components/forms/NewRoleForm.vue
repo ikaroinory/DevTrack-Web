@@ -10,13 +10,21 @@
             <div style="width: 100%">
                 <el-row>
                     <el-col :span="8">
-                        <el-checkbox v-model="role.invite" :label="lang.inviteMembers"/>
+                        <el-checkbox v-model="role.inviteMember" :label="lang.inviteMember"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.updateMember"/>
+                        <el-checkbox v-model="role.updateMember" :label="lang.updateMember"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.removeMember"/>
+                        <el-checkbox v-model="role.removeMember" :label="lang.removeMember"/>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-checkbox v-model="role.updateProject" :label="lang.updateProject"/>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-checkbox v-model="role.deleteProject" :label="lang.deleteProject"/>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -32,13 +40,13 @@
                 </el-row>
                 <el-row>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.createRole"/>
+                        <el-checkbox v-model="role.createRole" :label="lang.createRole"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.updateRole"/>
+                        <el-checkbox v-model="role.updateRole" :label="lang.updateRole"/>
                     </el-col>
                     <el-col :span="8">
-                        <el-checkbox disabled :label="lang.removeRole"/>
+                        <el-checkbox v-model="role.removeRole" :label="lang.removeRole"/>
                     </el-col>
                 </el-row>
             </div>
@@ -67,13 +75,16 @@
     const message = ApplicationUtils.locale.message;
 
     const role = ref<Role>({
-        createTask: false,
-        deleteTask: false,
-        invite: false,
-        name: "",
+        uuid: "",
         project: "",
+        name: "",
+        inviteMember: false,
+        createTask: false,
         updateTask: false,
-        uuid: ""
+        deleteTask: false,
+        createRole: false,
+        updateRole: false,
+        removeRole: false
     });
 
     init();
@@ -84,16 +95,18 @@
 
     function resetForm() {
         role.value = {
-            createTask: false,
-            deleteTask: false,
-            invite: false,
-            name: "",
+            uuid: "",
             project: "",
+            name: "",
+            inviteMember: false,
+            createTask: false,
             updateTask: false,
-            uuid: ""
+            deleteTask: false,
+            createRole: false,
+            updateRole: false,
+            removeRole: false
         };
         role.value.project = props.projectUuid;
-        console.log(13);
     }
 
     function create() {
@@ -103,17 +116,23 @@
         }
         RequestUtils.newRole(role.value).then(resp => {
             switch (resp) {
-                case StatusCode.requiredParamsIsNull:
+                case StatusCode.requiredParamsIsEmpty:
                     ApplicationUtils.showMessage(message.requiredParamsIsNull, "error");
+                    break;
+                case StatusCode.permissionDenied:
+                    ApplicationUtils.showMessage(message.permissionDenied, "error");
                     break;
                 case StatusCode.uuidConflict:
                     ApplicationUtils.showMessage(message.uuidConflict, "error");
                     break;
-                default:
+                case StatusCode.success:
                     ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                    reload();
+                    break;
+                default:
+                    ApplicationUtils.showMessage(message.unknownException, "warning");
                     break;
             }
-            reload();
         }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
     }
 </script>

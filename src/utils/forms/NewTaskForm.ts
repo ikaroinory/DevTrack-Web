@@ -6,7 +6,7 @@ export default interface NewTaskForm {
     priority: number;
     sourceOfDemand: number;
     description: string;
-    startTime: string;
-    deadline: string;
+    startTime: string | Date;
+    deadline: string | Date;
     members: Array<string>;
 }

@@ -92,7 +92,10 @@
 
     <NewTaskDialog v-model:show="showNewTaskDialog" :project-uuid="uuid"/>
 
-    <TaskInformationDialog v-model:show="showTaskInformationDialog"/>
+    <TaskInformationDialog v-model:show="showTaskInformationDialog"
+                           :task="currentTask"
+                           :project-member-list="projectMemberList"
+    />
 </template>
 
 <script lang="ts" setup>
@@ -103,6 +106,8 @@
     import TaskInformationDialog from "@/components/dialogs/TaskInformationDialog.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -116,15 +121,23 @@
     const showNewTaskDialog = ref(false);
     const showTaskInformationDialog = ref(false);
     const tasks = ref<Array<TaskInformation>>([]);
+    const currentTask = ref<TaskInformation>();
     const currentPage = ref(1);
     const pageSize = 10;
     const recordCount = ref(1);
+    const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
 
     init();
 
     function init() {
         ApplicationUtils.setTitle(lang.title);
         getPage(currentPage.value);
+
+        RequestUtils.getProjectMemberInformation(props.uuid).then(resp => {
+            if (resp.statusCode !== StatusCode.success) return;
+
+            projectMemberList.value = resp.responseData;
+        });
     }
 
     function clearTable() {
@@ -134,8 +147,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageProjectTasks(pageNum, pageSize, props.uuid).then(resp => {
-            tasks.value = resp.list;
-            recordCount.value = resp.recordCount;
+            tasks.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
@@ -148,7 +161,8 @@
         getPage(val);
     }
 
-    function showDialog() {
+    function showDialog(row: TaskInformation) {
+        currentTask.value = row;
         showTaskInformationDialog.value = true;
     }
 </script>

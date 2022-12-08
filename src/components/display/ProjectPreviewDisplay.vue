@@ -4,7 +4,7 @@
                      :uuid="item.uuid"
                      :name="item.name"
                      :description="item.description"
-                     :progress="0"
+                     :progress="item.progress"
                      :creator="item.creatorNickname"
                      :creation-time="item.creationTime"
         />
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
     import { ref } from "vue";
-    import ProjectItem from "@/components/items/ProjectItem.vue"
+    import ProjectItem from "@/components/items/ProjectItem.vue";
     import RequestUtils from "@/utils/RequestUtils";
     import ProjectInformation from "@/utils/dto/ProjectInformation";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -46,8 +46,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageUserProjects(pageNum, pageSize).then(resp => {
-            list.value = resp.list;
-            recordCount.value = resp.recordCount;
+            list.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
