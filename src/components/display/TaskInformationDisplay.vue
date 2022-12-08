@@ -15,13 +15,13 @@
                     </el-icon>
                     <div class="task-second-main">
                         <span class="little-text">{{ lang.status }}</span>
-                        <div style="padding-left: 11px">{{ status }}</div>
+                        <div style="padding-left: 11px; margin-top: 6px">{{ status }}</div>
                     </div>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="task-flex">
-                    <el-avatar :size="45" :src="'data:image/jpeg;base64,' + curTaskInformation.principalAvatar"/>
+                    <el-avatar :size="48" :src="'data:image/jpeg;base64,' + curTaskInformation.principalAvatar"/>
                     <div class="task-second-main">
                         <div class="task-select">
                             <span class="little-text">{{ lang.principal }}</span>
