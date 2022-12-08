@@ -122,7 +122,9 @@ const en_us = {
             priority: "Priority",
             sourceOfDemand: "Source of Demand",
             startTime: "Start Time",
-            deadline: "Deadline"
+            deadline: "Deadline",
+            status: "Status",
+            principal: "Principal"
         },
         projectRoles: {
             title: "Roles",

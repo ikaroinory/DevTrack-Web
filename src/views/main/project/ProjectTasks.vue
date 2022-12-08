@@ -15,10 +15,39 @@
         </div>
 
         <div class="global-vertical-margin">
-            <el-table v-loading="loading" max-height="570" :data="tasks" @row-click="showDialog">
-                <el-table-column label="No" type="index" :index="1"/>
-                <el-table-column :label="lang.name" prop="taskName"/>
-                <el-table-column :label="lang.type">
+            <el-table v-loading="loading" max-height="570" :data="tasks" @row-click="showDialog" fit>
+                <el-table-column :label="lang.name" prop="taskName" width="300px"/>
+                <el-table-column :label="lang.principal" width="200px">
+                    <template #default="scope">
+                        <el-avatar :size="'small'" :src="'data:image/jpeg;base64,' + scope.row.principalAvatar"
+                                   style="margin-right: 6px"/>
+                        <div v-text="scope.row.principalNickname"/>
+                    </template>
+                </el-table-column>
+                <el-table-column :label="lang.status" width="180px">
+                    <template #default="scope">
+                        <div v-if="scope.row.finishTime" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="#40e0c3" style="margin-right: 6px">
+                                <Clock/>
+                            </el-icon>
+                            <div v-text="enums.completed"/>
+                        </div>
+                        <div v-else-if="!scope.row.startTime || new Date(scope.row.startTime).getTime() > Date.now()"
+                             style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="#ff8888" style="margin-right: 6px">
+                                <Clock/>
+                            </el-icon>
+                            <div v-text="enums.notStart"/>
+                        </div>
+                        <div v-else style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="#f6c659" style="margin-right: 6px">
+                                <Clock/>
+                            </el-icon>
+                            <div v-text="enums.inProgress"/>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column :label="lang.type" width="180px">
                     <template #default="scope">
                         <div v-if="scope.row.taskType === 1"
                              v-text="enums.newFeature"
@@ -31,29 +60,47 @@
                         />
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.priority">
+                <el-table-column :label="lang.priority" width="180px">
                     <template #default="scope">
-                        <div v-if="scope.row.priority === 1"
-                             v-text="enums.general"
-                        />
-                        <div v-else-if="scope.row.priority === 2"
-                             v-text="enums.normal"
-                        />
-                        <div v-else-if="scope.row.priority === 3"
-                             v-text="enums.important"
-                        />
-                        <div v-else-if="scope.row.priority === 4"
-                             v-text="enums.urgent"
-                        />
-                        <div v-else-if="scope.row.priority === 5"
-                             v-text="enums.mostUrgent"
-                        />
-                        <div v-else
-                             v-text="enums.unknown"
-                        />
+                        <div v-if="scope.row.priority === 1" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="rgb(93, 207, 255)" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.general"/>
+                        </div>
+                        <div v-else-if="scope.row.priority === 2" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="rgb(64, 224, 195)" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.normal"/>
+                        </div>
+                        <div v-else-if="scope.row.priority === 3" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="rgb(244, 214, 109)" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.important"/>
+                        </div>
+                        <div v-else-if="scope.row.priority === 4" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="rgb(251, 127, 183)" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.urgent"/>
+                        </div>
+                        <div v-else-if="scope.row.priority === 5" style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" color="rgb(250, 136, 136)" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.mostUrgent"/>
+                        </div>
+                        <div v-else style="display:flex; align-items: center">
+                            <el-icon size="1.2rem" style="margin-right: 6px">
+                                <Warning/>
+                            </el-icon>
+                            <div v-text="enums.unknown"/>
+                        </div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.sourceOfDemand">
+                <el-table-column :label="lang.sourceOfDemand" width="200px">
                     <template #default="scope">
                         <div v-if="scope.row.sourceOfDemand === 1"
                              v-text="enums.rdPost"
@@ -66,12 +113,12 @@
                         />
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.startTime">
+                <el-table-column :label="lang.startTime" width="200px">
                     <template #default="scope">
                         <div v-text="(scope.row.startTime ?? '').replace('T',' ')"/>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.deadline">
+                <el-table-column :label="lang.deadline" width="200px">
                     <template #default="scope">
                         <div v-text="(scope.row.deadline ?? '').replace('T',' ')"/>
                     </template>
@@ -101,6 +148,7 @@
 <script lang="ts" setup>
     import { ref } from "vue";
     import { Plus } from "@icon-park/vue-next";
+    import { Clock, Warning } from "@element-plus/icons-vue";
     import NewTaskDialog from "@/components/dialogs/NewTaskDialog.vue";
     import TaskInformation from "@/utils/dto/TaskInformation";
     import TaskInformationDialog from "@/components/dialogs/TaskInformationDialog.vue";
