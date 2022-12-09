@@ -135,6 +135,9 @@ const en_us = {
             edit: "Edit",
             remove: "Remove"
         },
+        projectTableReport: {
+            title: "Table Report"
+        },
         settings: {
             title: "Settings",
             general: "General",
@@ -170,6 +173,22 @@ const en_us = {
             inProgress: "In progress",
             completed: "Completed",
             noRecords: "No records"
+        },
+        taskStatistics: {
+            title: "Task Statistics",
+            creation: "Creation",
+            completion: "Completion"
+        },
+        taskOverview: {
+            title: "Overview",
+            notStart: "Not Start",
+            inProgress: "In Progress",
+            completed: "Completed"
+        },
+        plannedCompletion: {
+            title: "Planned Completion",
+            withinDeadlines: "Within Deadlines",
+            withoutDeadlines: "Without Deadlines"
         }
     },
     display: {

@@ -114,7 +114,7 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-    import { reactive, ref } from "vue";
+    import { inject, reactive, ref } from "vue";
     import type { FormInstance, FormRules } from "element-plus";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -127,6 +127,7 @@
     const props = defineProps({
         projectUuid: { type: String, required: true }
     });
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.form.newTask;
     const enumLang = ApplicationUtils.locale.enum;
@@ -185,21 +186,11 @@
 
             requestingServe.value = true;
             RequestUtils.newTask(taskForm.value).then(resp => {
-                switch (resp) {
-                    case StatusCode.permissionDenied:
-                        ApplicationUtils.showMessage(message.permissionDenied, "error");
-                        break;
-                    case StatusCode.uuidConflict:
-                        ApplicationUtils.showMessage(message.uuidConflict, "error");
-                        break;
-                    case StatusCode.success:
-                        ApplicationUtils.showMessage(message.createSuccessfully, "success");
-                        break;
-                    default:
-                        ApplicationUtils.showMessage(message.unknownException, "warning");
-                        break;
-                }
                 requestingServe.value = false;
+                if (resp !== StatusCode.success) return;
+
+                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                reload();
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingServe.value = false;
