@@ -158,7 +158,8 @@ const en_us = {
         heatmap: {
             title: "Heatmap",
             noData: "No data",
-            finishSomeTasks: "Finish %d tasks: %x"
+            completedTask: "Completed 1 task on %date",
+            completedTasks: "Completed %cnt tasks on %date"
         },
         projects: {
             title: "Project Overview",

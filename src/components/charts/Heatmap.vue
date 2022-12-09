@@ -33,8 +33,13 @@
         const date = year + "-" +
             (month < 10 ? "0" + month : month) + "-" +
             (day < 10 ? "0" + day : day);
-        return lang.finishSomeTasks.replace("%d", (item.count ?? 0).toString())
-            .replace("%x", date);
+        const count = item.count ?? 0;
+
+        if (count === 0 || count > 1)
+            return lang.completedTasks.replace("%cnt", count.toString())
+                .replace("%date", date);
+        else
+            return lang.completedTask.replace("%date", date);
     };
 </script>
 
