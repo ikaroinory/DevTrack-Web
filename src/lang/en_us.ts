@@ -358,7 +358,8 @@ const en_us = {
             createAt: "create at",
             finish: "Finish",
             unfinished: "Unfinished",
-            delete: "Delete"
+            delete: "Delete",
+            finishedAt: "finished at"
         }
     },
     item: {
