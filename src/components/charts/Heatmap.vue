@@ -12,12 +12,15 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const props = defineProps<{
-        data: Array<{ date: string, count: number }>
+        data: Array<{ date: string, count: number | null }>
     }>();
 
     const lang = ApplicationUtils.locale.chart.heatmap;
 
-    const rangeColor = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39", "#0e4429"];
+    const rangeColor = [
+        "#ebedf0", "#9be9a8", "#40c463",
+        "#30a14e", "#216e39", "#0e4429"
+    ];
     const tooltipFormatter = (item: CalendarItem, unit: string) => {
         const year = item.date.getFullYear();
         const month = item.date.getMonth() + 1;
