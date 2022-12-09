@@ -30,10 +30,10 @@
                         <div v-text="scope.row.taskName" v-else></div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.principal" width="200px">
+                <el-table-column :label="lang.principal" width="220px">
                     <template #default="scope">
                         <UserItem :username="scope.row.principalUsername" :nickname="scope.row.principalNickname"
-                                  :avatar="scope.row.principalAvatar" :nicknameInProject="scope.row.principalNickname"
+                                  :avatar="scope.row.principalAvatar"
                                   router/>
                     </template>
                 </el-table-column>

@@ -22,7 +22,6 @@
         username: String,
         avatar: String,
         nickname: String,
-        nicknameInProject: String,
         router: { type: Boolean, default: false }
     });
 
@@ -34,5 +33,5 @@
         }
     });
     const avatarSrc = computed(() => props.avatar === undefined ? "" : "data:image/jpeg;base64," + props.avatar);
-    const displayLabel = computed(() => props.nicknameInProject || props.nickname + "(" + props.username + ")");
+    const displayLabel = computed(() => props.nickname + "(" + props.username + ")");
 </script>
