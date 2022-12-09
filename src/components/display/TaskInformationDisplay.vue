@@ -80,11 +80,27 @@
                     <span class="little-text">{{ lang.priority }}</span>
                     <div class="task-select">
                         <el-select v-model="curTaskInformation.priority" @change="updatePriority">
+                            <template #prefix>
+                                <el-icon size="1.2rem" :style="{color: selectIconColor}">
+                                    <Warning/>
+                                </el-icon>
+                            </template>
                             <el-option v-for="item in priorityList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value"
-                            />
+                                       :color="item.iconColor"
+                            >
+                                <div style="display: flex; align-items: center">
+                                    <span style="display: flex">
+                                        <el-icon size="1.2rem" :style="{color: item.iconColor}"
+                                                 style="margin-right: 6px">
+                                            <Warning/>
+                                        </el-icon>
+                                    </span>
+                                    <span>{{ item.label }}</span>
+                                </div>
+                            </el-option>
                         </el-select>
                     </div>
                 </div>
@@ -148,7 +164,7 @@
 
 <script lang="ts" setup>
     import { computed, inject, ref } from "vue";
-    import { Clock } from "@element-plus/icons-vue";
+    import { Clock, Warning } from "@element-plus/icons-vue";
     import TaskInformation from "@/utils/dto/TaskInformation";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
@@ -173,12 +189,12 @@
         { value: 2, label: enumLang.bugfix }
     ]);
     const priorityList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.general },
-        { value: 2, label: enumLang.normal },
-        { value: 3, label: enumLang.important },
-        { value: 4, label: enumLang.urgent },
-        { value: 5, label: enumLang.mostUrgent }
+        { value: 0, label: enumLang.unknown, iconColor: ""},
+        { value: 1, label: enumLang.general, iconColor: "#5DCFFF"},
+        { value: 2, label: enumLang.normal, iconColor: "#40E0C3" },
+        { value: 3, label: enumLang.important, iconColor: "#F4D66D" },
+        { value: 4, label: enumLang.urgent, iconColor: "#FB7FB7" },
+        { value: 5, label: enumLang.mostUrgent, iconColor: "#FA8888" }
     ]);
     const sourceOfDemandList = ref([
         { value: 0, label: enumLang.unknown },
@@ -219,6 +235,20 @@
             return "#ff8888";
         else
             return "#f6c659";
+    });
+    const selectIconColor = computed(() => {
+        if (curTaskInformation.value.priority === 5)
+            return "#FA8888";
+        else if (curTaskInformation.value.priority === 4)
+            return "#FB7FB7";
+        else if (curTaskInformation.value.priority === 3)
+            return "#F4D66D";
+        else if (curTaskInformation.value.priority === 2)
+            return "#40E0C3";
+        else if (curTaskInformation.value.priority === 1)
+            return "#5DCFFF";
+        else
+            return;
     });
     const status = computed(() => {
         if (curTaskInformation.value.finishTime)
