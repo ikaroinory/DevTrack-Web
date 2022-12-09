@@ -184,6 +184,11 @@ const en_us = {
             notStart: "Not Start",
             inProgress: "In Progress",
             completed: "Completed"
+        },
+        plannedCompletion: {
+            title: "Planned Completion",
+            withinDeadlines: "Within Deadlines",
+            withoutDeadlines: "Without Deadlines"
         }
     },
     display: {

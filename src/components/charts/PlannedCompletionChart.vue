@@ -1,7 +1,7 @@
 <template>
     <div class="global-frame-fillet" style="min-width: 450px; height: 240px">
         <div class="global-chart-title">{{ lang.title }}</div>
-        <div style="width: 100%; height: 100%" id="chart-task-overview"/>
+        <div style="width: 100%; height: 100%" id="chart-task-planned-completion"/>
     </div>
 </template>
 
@@ -16,22 +16,20 @@
         uuid: string
     }>();
 
-    const lang = ApplicationUtils.locale.chart.taskOverview;
+    const lang = ApplicationUtils.locale.chart.plannedCompletion;
 
-    const notStart = ref(0);
-    const inProgress = ref(0);
-    const completed = ref(0);
+    const withinDeadlines = ref(0);
+    const withoutDeadlines = ref(0);
 
     async function init() {
-        await RequestUtils.getTaskOverview(props.uuid).then(resp => {
+        await RequestUtils.getPlannedCompletion(props.uuid).then(resp => {
             if (resp.statusCode !== StatusCode.success) return;
 
-            notStart.value = resp.responseData.notStart;
-            inProgress.value = resp.responseData.inProgress;
-            completed.value = resp.responseData.completed;
+            withinDeadlines.value = resp.responseData.withinDeadlines;
+            withoutDeadlines.value = resp.responseData.withoutDeadlines;
         });
 
-        const chart = echarts.init(document.getElementById("chart-task-overview")!);
+        const chart = echarts.init(document.getElementById("chart-task-planned-completion")!);
 
         const option = {
             tooltip: { trigger: "item" },
@@ -40,9 +38,8 @@
                     type: "pie",
                     radius: "50%",
                     data: [
-                        { value: notStart.value, name: lang.notStart, itemStyle: { color: "#f56c6c" } },
-                        { value: inProgress.value, name: lang.inProgress, itemStyle: { color: "#fac858" } },
-                        { value: completed.value, name: lang.completed, itemStyle: { color: "#67c23a" } }
+                        { value: withoutDeadlines.value, name: lang.withoutDeadlines, itemStyle: { color: "#f56c6c" } },
+                        { value: withinDeadlines.value, name: lang.withinDeadlines, itemStyle: { color: "#67c23a" } }
                     ],
                     emphasis: {
                         itemStyle: {

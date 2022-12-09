@@ -1,5 +1,5 @@
 <template>
-    <div class="global-frame-fillet" style="width: 1000px; height: 450px">
+    <div class="global-frame-fillet" style="width: 1000px; height: 550px">
         <div class="global-chart-title">{{ lang.title }}</div>
         <div style="width: 100%; height: 100%" id="chart-task-completion-statistics"/>
     </div>
