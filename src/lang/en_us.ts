@@ -175,6 +175,12 @@ const en_us = {
             title: "Task Statistics",
             creation: "Creation",
             completion: "Completion"
+        },
+        taskOverview: {
+            title: "Overview",
+            notStart: "Not Start",
+            inProgress: "In Progress",
+            completed: "Completed"
         }
     },
     display: {

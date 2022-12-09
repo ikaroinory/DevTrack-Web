@@ -1,5 +1,5 @@
 <template>
-    <div class="global-frame-fillet" style="max-width: 1000px; height: 450px">
+    <div class="global-frame-fillet" style="width: 1000px; height: 450px">
         <div class="global-chart-title">{{ lang.title }}</div>
         <div style="width: 100%; height: 100%" id="chart-task-completion-statistics"/>
     </div>
@@ -19,8 +19,8 @@
     const lang = ApplicationUtils.locale.chart.taskStatistics;
 
     const dateList = ref<Array<string>>([]);
-    const creationList = ref<Array<number>>([]);
-    const completionList = ref<Array<number>>([]);
+    const creationList = ref<Array<number | null>>([]);
+    const completionList = ref<Array<number | null>>([]);
 
     async function init() {
         await RequestUtils.getTaskStatistics(props.uuid).then(resp => {
@@ -47,13 +47,15 @@
                     name: lang.creation,
                     data: creationList.value,
                     type: "line",
-                    smooth: true
+                    smooth: true,
+                    connectNulls: true
                 },
                 {
                     name: lang.completion,
                     data: completionList.value,
                     type: "line",
-                    smooth: true
+                    smooth: true,
+                    connectNulls: true
                 }
             ],
             legend: {
@@ -67,7 +69,3 @@
 
     onMounted(() => init());
 </script>
-
-<style scoped>
-
-</style>

@@ -1,5 +1,5 @@
 export default interface TaskStatisticsVO {
     dateList: Array<string>;
-    creationList: Array<number>;
-    completionList: Array<number>;
+    creationList: Array<number | null>;
+    completionList: Array<number | null>;
 }
