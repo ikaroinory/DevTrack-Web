@@ -189,12 +189,12 @@
         { value: 2, label: enumLang.bugfix }
     ]);
     const priorityList = ref([
-        { value: 0, label: enumLang.unknown, iconColor: ""},
-        { value: 1, label: enumLang.general, iconColor: "#5DCFFF"},
-        { value: 2, label: enumLang.normal, iconColor: "#40E0C3" },
-        { value: 3, label: enumLang.important, iconColor: "#F4D66D" },
-        { value: 4, label: enumLang.urgent, iconColor: "#FB7FB7" },
-        { value: 5, label: enumLang.mostUrgent, iconColor: "#FA8888" }
+        { value: 0, label: enumLang.unknown, iconColor: "" },
+        { value: 1, label: enumLang.general, iconColor: "#5dcfff" },
+        { value: 2, label: enumLang.normal, iconColor: "#40e0c3" },
+        { value: 3, label: enumLang.important, iconColor: "#f4d66d" },
+        { value: 4, label: enumLang.urgent, iconColor: "#fb7fb7" },
+        { value: 5, label: enumLang.mostUrgent, iconColor: "#fa8888" }
     ]);
     const sourceOfDemandList = ref([
         { value: 0, label: enumLang.unknown },
@@ -238,15 +238,15 @@
     });
     const selectIconColor = computed(() => {
         if (curTaskInformation.value.priority === 5)
-            return "#FA8888";
+            return "#fa8888";
         else if (curTaskInformation.value.priority === 4)
-            return "#FB7FB7";
+            return "#fb7fb7";
         else if (curTaskInformation.value.priority === 3)
-            return "#F4D66D";
+            return "#f4d66d";
         else if (curTaskInformation.value.priority === 2)
-            return "#40E0C3";
+            return "#40e0c3";
         else if (curTaskInformation.value.priority === 1)
-            return "#5DCFFF";
+            return "#5dcfff";
         else
             return;
     });
@@ -388,6 +388,7 @@
             if (resp !== StatusCode.success) return;
 
             ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+            reload();
         });
     }
 
