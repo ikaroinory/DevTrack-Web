@@ -1,8 +1,13 @@
 <template>
     <div class="block-features">
         <div class="block-title" v-text="lang.title"/>
-        <calendar-heatmap class="chart-heatmap" :tooltip-formatter="tooltipFormatter" :range-color="rangeColor" :values="props.data"
-                          :end-date="Date.now()" :no-data-text="lang.noData"/>
+        <calendar-heatmap class="chart-heatmap"
+                          :tooltip-formatter="tooltipFormatter"
+                          :range-color="rangeColor" :values="props.data"
+                          :end-date="Date.now()"
+                          :no-data-text="lang.noData"
+                          :round="2"
+        />
     </div>
 </template>
 
