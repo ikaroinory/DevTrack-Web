@@ -117,9 +117,10 @@
                 isUserHimself.value = true;
         }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
         RequestUtils.getHeatMap(info.value.uuid).then(resp => {
-            if (resp.statusCode === StatusCode.success)
-                heatmapChartInfo.data = resp.responseData;
             loading.value = false;
+            if (resp.statusCode !== StatusCode.success) return;
+
+            heatmapChartInfo.data = resp.responseData;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
             heatmapChartInfo.data = new Array<HeatMapData>();

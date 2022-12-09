@@ -1,8 +1,13 @@
 <template>
     <div class="block-features">
         <div class="block-title" v-text="lang.title"/>
-        <calendar-heatmap class="chart-heatmap" :tooltip-formatter="tooltipFormatter" :range-color="rangeColor" :values="props.data"
-                          :end-date="Date.now()" :no-data-text="lang.noData"/>
+        <calendar-heatmap class="chart-heatmap"
+                          :tooltip-formatter="tooltipFormatter"
+                          :range-color="rangeColor" :values="props.data"
+                          :end-date="Date.now()"
+                          :no-data-text="lang.noData"
+                          :round="2"
+        />
     </div>
 </template>
 
@@ -12,12 +17,15 @@
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const props = defineProps<{
-        data: Array<{ date: string, count: number }>
+        data: Array<{ date: string, count: number | null }>
     }>();
 
     const lang = ApplicationUtils.locale.chart.heatmap;
 
-    const rangeColor = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39", "#0e4429"];
+    const rangeColor = [
+        "#ebedf0", "#9be9a8", "#40c463",
+        "#30a14e", "#216e39", "#0e4429"
+    ];
     const tooltipFormatter = (item: CalendarItem, unit: string) => {
         const year = item.date.getFullYear();
         const month = item.date.getMonth() + 1;
@@ -25,8 +33,13 @@
         const date = year + "-" +
             (month < 10 ? "0" + month : month) + "-" +
             (day < 10 ? "0" + day : day);
-        return lang.finishSomeTasks.replace("%d", (item.count ?? 0).toString())
-            .replace("%x", date);
+        const count = item.count ?? 0;
+
+        if (count === 0 || count > 1)
+            return lang.completedTasks.replace("%cnt", count.toString())
+                .replace("%date", date);
+        else
+            return lang.completedTask.replace("%date", date);
     };
 </script>
 
