@@ -135,6 +135,9 @@ const en_us = {
             edit: "Edit",
             remove: "Remove"
         },
+        projectTableReport: {
+            title: "Table Report"
+        },
         settings: {
             title: "Settings",
             general: "General",

@@ -24,7 +24,7 @@
                         <div v-text="scope.row.principalNickname"/>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.status" width="180px">
+                <el-table-column :label="lang.status" min-width="180px">
                     <template #default="scope">
                         <div v-if="scope.row.finishTime" style="display:flex; align-items: center">
                             <el-icon size="1.2rem" color="#40e0c3" style="margin-right: 6px">
@@ -47,7 +47,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.type" width="180px">
+                <el-table-column :label="lang.type" min-width="180px">
                     <template #default="scope">
                         <div v-if="scope.row.taskType === 1"
                              v-text="enums.newFeature"
@@ -60,7 +60,7 @@
                         />
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.priority" width="180px">
+                <el-table-column :label="lang.priority" min-width="180px">
                     <template #default="scope">
                         <div v-if="scope.row.priority === 1" style="display:flex; align-items: center">
                             <el-icon size="1.2rem" color="rgb(93, 207, 255)" style="margin-right: 6px">
@@ -100,7 +100,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.sourceOfDemand" width="200px">
+                <el-table-column :label="lang.sourceOfDemand" min-width="200px">
                     <template #default="scope">
                         <div v-if="scope.row.sourceOfDemand === 1"
                              v-text="enums.rdPost"
@@ -113,12 +113,12 @@
                         />
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.startTime" width="200px">
+                <el-table-column :label="lang.startTime" min-width="200px">
                     <template #default="scope">
                         <div v-text="(scope.row.startTime ?? '').replace('T',' ')"/>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.deadline" width="200px">
+                <el-table-column :label="lang.deadline" min-width="200px">
                     <template #default="scope">
                         <div v-text="(scope.row.deadline ?? '').replace('T',' ')"/>
                     </template>

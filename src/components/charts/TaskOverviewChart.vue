@@ -1,5 +1,5 @@
 <template>
-    <div class="global-frame-fillet" style="height: 450px">
+    <div class="global-frame-fillet" style="min-width: 450px; height: 450px">
         <div class="global-chart-title">{{ lang.title }}</div>
         <div style="width: 100%; height: 100%" id="chart-task-overview"/>
     </div>
@@ -35,11 +35,6 @@
 
         const option = {
             tooltip: { trigger: "item" },
-            legend: {
-                orient: "vertical",
-                left: "left",
-                top: "center"
-            },
             series: [
                 {
                     type: "pie",
