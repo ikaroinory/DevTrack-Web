@@ -22,6 +22,9 @@ import AddProjectMembersForm from "@/utils/forms/AddProjectMembersForm";
 import StatusCode from "@/utils/enums/StatusCode";
 import ApplicationUtils from "@/utils/ApplicationUtils";
 import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
+import TaskStatisticsVO from "@/utils/vo/TaskStatisticsVO";
+import TaskOverviewVO from "@/utils/vo/TaskOverviewVO";
+import PlannedCompletionVO from "@/utils/vo/PlannedCompletionVO";
 
 const source = axios.CancelToken.source();
 
@@ -169,6 +172,9 @@ class RequestUrl {
     public static readonly updateTaskMembers = this.baseUrl + this.taskController + "updateMembers";
     public static readonly finishTask = this.baseUrl + this.taskController + "finish";
     public static readonly deleteTask = this.baseUrl + this.taskController + "delete";
+    public static readonly getTaskStatistics = this.baseUrl + this.taskController + "getTaskStatistics";
+    public static readonly getTaskOverview = this.baseUrl + this.taskController + "getTaskOverview";
+    public static readonly getPlannedCompletion = this.baseUrl + this.taskController + "getPlannedCompletion";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -346,6 +352,18 @@ export default class RequestUtils {
 
     public static async deleteTask(taskUUID: string): Promise<number> {
         return (await this.post(RequestUrl.deleteTask, this.toFormData({ taskUUID })));
+    }
+
+    public static async getTaskStatistics(projectUUID: string): Promise<Response<TaskStatisticsVO>> {
+        return (await this.get(RequestUrl.getTaskStatistics, { projectUUID }));
+    }
+
+    public static async getTaskOverview(projectUUID: string): Promise<Response<TaskOverviewVO>> {
+        return (await this.get(RequestUrl.getTaskOverview, { projectUUID }));
+    }
+
+    public static async getPlannedCompletion(projectUUID: string): Promise<Response<PlannedCompletionVO>> {
+        return (await this.get(RequestUrl.getPlannedCompletion, { projectUUID }));
     }
 
     // Role Controller
