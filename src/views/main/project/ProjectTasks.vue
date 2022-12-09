@@ -15,13 +15,26 @@
         </div>
 
         <div class="global-vertical-margin">
-            <el-table v-loading="loading" max-height="570" :data="tasks" @row-click="showDialog" fit>
-                <el-table-column :label="lang.name" prop="taskName" width="300px"/>
+            <el-table v-loading="loading" max-height="570" :data="tasks" @row-click="showDialog" fit
+                      :row-class-name="tableRowClassName">
+                <el-table-column :label="lang.name" prop="taskName" width="300px">
+                    <template #default="scope">
+                        <el-tooltip effect="dark" v-if="scope.row.taskDescription">
+                            <template #content>
+                                <template v-for="item in toList(scope.row.taskDescription)">
+                                    {{ item }} <br/>
+                                </template>
+                            </template>
+                            <div v-text="scope.row.taskName"></div>
+                        </el-tooltip>
+                        <div v-text="scope.row.taskName" v-else></div>
+                    </template>
+                </el-table-column>
                 <el-table-column :label="lang.principal" width="200px">
                     <template #default="scope">
-                        <el-avatar :size="'small'" :src="'data:image/jpeg;base64,' + scope.row.principalAvatar"
-                                   style="margin-right: 6px"/>
-                        <div v-text="scope.row.principalNickname"/>
+                        <UserItem :username="scope.row.principalUsername" :nickname="scope.row.principalNickname"
+                                  :avatar="scope.row.principalAvatar" :nicknameInProject="scope.row.principalNickname"
+                                  router/>
                     </template>
                 </el-table-column>
                 <el-table-column :label="lang.status" min-width="180px">
@@ -156,6 +169,7 @@
     import RequestUtils from "@/utils/RequestUtils";
     import StatusCode from "@/utils/enums/StatusCode";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import UserItem from "@/components/items/UserItem.vue";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -174,6 +188,13 @@
     const pageSize = 10;
     const recordCount = ref(1);
     const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
+    const tableRowClassName = ({ row }: { row: TaskInformation }) => {
+        const now = new Date();
+        const nowDate = now.toISOString().split("T")[0] + " " + now.toTimeString().split("/").join("-");
+        if (row.deadline < nowDate && !row.finishTime)
+            return "expiration-row";
+        return;
+    };
 
     init();
 
@@ -213,4 +234,14 @@
         currentTask.value = row;
         showTaskInformationDialog.value = true;
     }
+
+    function toList(val: string) {
+        return val.split("\n");
+    }
 </script>
+
+<style scoped>
+    :deep(.expiration-row) {
+        --el-table-tr-bg-color: #fde2e2;
+    }
+</style>

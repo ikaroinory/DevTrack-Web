@@ -154,9 +154,16 @@
             <el-button type="danger" @click="deleteTask">{{ lang.delete }}</el-button>
         </div>
 
-        <div style="margin-top: 15px">
-            <div class="task-create-info little-text">
-                {{ curTaskInformation.creatorNickname }} {{ lang.createAt }} {{ curTaskInformation.creationTime }}
+        <div style="display: flex; justify-content: space-between">
+            <div style="margin-top: 15px">
+                <div class="task-create-info little-text">
+                    {{ curTaskInformation.creatorNickname }} {{ lang.createAt }} {{ curTaskInformation.creationTime }}
+                </div>
+            </div>
+            <div style="margin-top: 15px" v-if="curTaskInformation.finishTime">
+                <div class="task-create-info little-text">
+                    {{ lang.finishedAt }} {{curTaskInformation.finishTime}}
+                </div>
             </div>
         </div>
     </div>
