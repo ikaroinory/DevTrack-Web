@@ -66,7 +66,7 @@
                     <span class="little-text">{{ lang.taskType }}</span>
                     <div class="task-select">
                         <el-select v-model="curTaskInformation.taskType" @change="updateType">
-                            <el-option v-for="item in taskTypeList"
+                            <el-option v-for="item in GlobalData.taskTypeList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value"
@@ -85,7 +85,7 @@
                                     <Warning/>
                                 </el-icon>
                             </template>
-                            <el-option v-for="item in priorityList"
+                            <el-option v-for="item in GlobalData.priorityList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value"
@@ -110,7 +110,7 @@
                     <span class="little-text">{{ lang.sourceOfDemand }}</span>
                     <div class="task-select">
                         <el-select v-model="curTaskInformation.sourceOfDemand" @change="updateSourceOfDemand">
-                            <el-option v-for="item in sourceOfDemandList"
+                            <el-option v-for="item in GlobalData.sourceOfDemandList"
                                        :key="item.value"
                                        :label="item.label"
                                        :value="item.value"
@@ -178,6 +178,7 @@
     import StatusCode from "@/utils/enums/StatusCode";
     import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import GlobalData from "@/utils/GlobalData";
 
     defineExpose({ init });
     const props = defineProps<{
@@ -189,29 +190,6 @@
     const lang = ApplicationUtils.locale.form.taskInformation;
     const message = ApplicationUtils.locale.message;
     const enumLang = ApplicationUtils.locale.enum;
-
-    const taskTypeList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.newFeature },
-        { value: 2, label: enumLang.bugfix },
-        { value: 3, label: enumLang.design },
-        { value: 4, label: enumLang.docs }
-    ]);
-    const priorityList = ref([
-        { value: 0, label: enumLang.unknown, iconColor: "" },
-        { value: 1, label: enumLang.general, iconColor: "#5dcfff" },
-        { value: 2, label: enumLang.normal, iconColor: "#40e0c3" },
-        { value: 3, label: enumLang.important, iconColor: "#f4d66d" },
-        { value: 4, label: enumLang.urgent, iconColor: "#fb7fb7" },
-        { value: 5, label: enumLang.mostUrgent, iconColor: "#fa8888" }
-    ]);
-    const sourceOfDemandList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.rdPost },
-        { value: 2, label: enumLang.testPost },
-        { value: 3, label: enumLang.designPost },
-        { value: 4, label: enumLang.marketResearch }
-    ]);
 
     const curTaskInformation = ref<TaskInformation>({
         creationTime: "",
