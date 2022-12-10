@@ -372,6 +372,8 @@ const en_us = {
         unknown: "Unknown",
         newFeature: "New feature",
         bugfix: "Bug fix",
+        design: "Design",
+        docs: "Docs",
         general: "General",
         normal: "Normal",
         important: "Important",
@@ -379,6 +381,8 @@ const en_us = {
         mostUrgent: "Most urgent",
         rdPost: "R&D post",
         testPost: "Test post",
+        designPost: "Design post",
+        marketResearch: "Market research",
         notStart: "Not start",
         inProgress: "In progress",
         completed: "Completed"

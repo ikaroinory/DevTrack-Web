@@ -155,7 +155,9 @@
     const taskTypeList = ref([
         { value: 0, label: enumLang.unknown },
         { value: 1, label: enumLang.newFeature },
-        { value: 2, label: enumLang.bugfix }
+        { value: 2, label: enumLang.bugfix },
+        { value: 3, label: enumLang.design },
+        { value: 4, label: enumLang.docs }
     ]);
     const priorityList = ref([
         { value: 0, label: enumLang.unknown },
@@ -168,7 +170,9 @@
     const sourceOfDemandList = ref([
         { value: 0, label: enumLang.unknown },
         { value: 1, label: enumLang.rdPost },
-        { value: 2, label: enumLang.testPost }
+        { value: 2, label: enumLang.testPost },
+        { value: 3, label: enumLang.designPost },
+        { value: 4, label: enumLang.marketResearch }
     ]);
     const members = ref<Array<ProjectMemberInformation>>([]);
 
