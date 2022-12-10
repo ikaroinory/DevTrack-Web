@@ -372,6 +372,8 @@ const ko_kr = {
         unknown: "알 수 없음",
         newFeature: "기능",
         bugfix: "버그 수정",
+        design: "설계",
+        docs: "문서",
         general: "보통",
         normal: "정상",
         important: "중요",
@@ -379,6 +381,8 @@ const ko_kr = {
         mostUrgent: "가장 긴급하다",
         rdPost: "연구개발직",
         testPost: "테스트 보초",
+        designPost: "설계 보초",
+        marketResearch: "시장 조사 연구",
         notStart: "시작하지 않음",
         inProgress: "진행 중",
         completed: "완료됨"

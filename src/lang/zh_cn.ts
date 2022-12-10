@@ -372,6 +372,8 @@ const zh_cn = {
         unknown: "未知",
         newFeature: "功能",
         bugfix: "Bug修复",
+        design: "设计",
+        docs: "文档",
         general: "一般",
         normal: "正常",
         important: "重要",
@@ -379,6 +381,8 @@ const zh_cn = {
         mostUrgent: "最紧急",
         rdPost: "研发岗",
         testPost: "测试岗",
+        designPost: "设计岗",
+        marketResearch: "市场调研",
         notStart: "未开始",
         inProgress: "进行中",
         completed: "已完成"
