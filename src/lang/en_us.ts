@@ -249,7 +249,7 @@ const en_us = {
             taskTitle: "Title",
             enterTitle: "Please enter task title",
             taskType: "Type",
-            selectTaskType: "请选择任务类型",
+            selectTaskType: "Please select task type",
             principal: "Principal",
             selectPrincipal: "Please enter task principal",
             priority: "Priority",
