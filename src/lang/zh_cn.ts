@@ -57,14 +57,14 @@ const zh_cn = {
         },
         dashboard: {
             tasks: "任务",
-            newTask: "新任务",
+            newTask: "新建任务",
             more: "更多",
             projects: "项目",
-            newProject: "新建新项目"
+            newProject: "新建项目"
         },
         projectPreview: {
             title: "项目",
-            newProject: "新建新项目",
+            newProject: "新建项目",
             allProjects: "所有项目",
             privateProjects: "私人性项目",
             publicProjects: "公开性项目",
@@ -446,7 +446,7 @@ const zh_cn = {
         invalidVCode: "验证码无效!",
         noVCodeRecord: "没有验证码记录!",
         signUpSuccessfully: "注册成功!",
-        requiredParamsIsNull: "必须参数为空!",
+        requiredParamsIsNull: "必要参数为空!",
         addWarning: "添加异常.\n添加%d1人, %d2人添加成功.\n\n可能原因:\n1. 未找到用户名.\n2. 该用户已是本项目成员.",
         addFailed: "添加失败!\n\n可能原因:\n1. 未找到用户名.\n2. 该用户已是本项目成员.",
         clearStorageWarning: "确定您想要清除缓存吗?\n\n点击 '%btn' 继续.",
