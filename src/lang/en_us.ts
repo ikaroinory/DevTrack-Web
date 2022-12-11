@@ -425,7 +425,7 @@ const en_us = {
             accept: "Accept",
             ignore: "Ignore",
             read: "Read",
-            delete: "Delete"
+            delete: "Delete",
             cancel: "Cancel"
         },
         status: {
