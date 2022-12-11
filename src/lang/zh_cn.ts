@@ -14,13 +14,13 @@ const zh_cn = {
             members: "成员",
             tasks: "任务",
             roles: "角色",
-            tableReport: "表格报告 "
+            tableReport: "报表"
         },
         home: {
             signIn: "登录",
             signUp: "注册",
-            slogan: "新概念项目合作开发平台",
-            faceTo: "面向独立开发人员/团队/学生的开发和学习平台",
+            slogan: "DevTrack新概念项目协同开发平台",
+            faceTo: "面向独立开发者/团队/学生的高效开发平台",
             joinNow: "立刻加入",
             clickToSignIn: "登录",
             title1: "开发协作实时跟踪",
@@ -38,14 +38,14 @@ const zh_cn = {
             description4_2: "所有成员都与你一起成长!",
             joinDevTrackNow: "现在就加入DevTrack吧!",
             thanks: "鸣谢:",
-            guanyuHu: "Guanyu Hu (全栈开发工程师)",
-            zhipengYang: "Zhipeng Yang (前端开发工程师)",
-            xiaotongWu: "XiaoTong Wu (后端开发工程师)",
+            guanyuHu: "Guanyu Hu (全栈工程师)",
+            zhipengYang: "Zhipeng Yang (前端工程师)",
+            xiaotongWu: "XiaoTong Wu (后端工程师)",
             specialThanks: "特别感谢:",
             xinranWang: "XinRan Wang (设计顾问)",
             quickSignUp: "注册",
             signInNow: "现在登录",
-            copyright: "© 2022 - 2023 Aurora Lab - 保留版权所有"
+            copyright: "© 2022 - 2023 Aurora Lab - 版权所有"
         },
         signIn: {
             title: "登录",
