@@ -1,239 +1,426 @@
 <template>
-    <div class="task-details-container">
-        <div class="task-title">
-            <el-input v-model="taskForm.title" @focus="" input-style="font-size: 2rem; height: 3rem;"/>
-        </div>
-        <div class="task-second-container">
-            <div class="task-second-box">
-                <el-icon size="2.3rem">
-                    <Clock/>
-                </el-icon>
-                <div class="task-second-main">
-                    <div class="task-second-text">进行中</div>
-                    <span class="little-tip">当前状态</span>
-                </div>
-            </div>
-            <div class="task-second-box">
-                <el-avatar/>
-                <div class="task-second-main">
-                    <div class="task-second-text">{{ taskForm.principal }}</div>
-                    <span class="little-tip">负责人</span>
-                </div>
-            </div>
-            <div class="task-second-box-column">
-                <span class="task-second-text">开始时间</span>
-                <el-date-picker v-model="taskForm.startTime"
-                                type="datetime"
-                                :disabled-date="disableStartTime"
-                                size="small"
-                />
-            </div>
-            <div class="task-second-box-column">
-                <span class="task-second-text">截至时间</span>
-                <el-date-picker v-model="taskForm.deadline"
-                                type="datetime"
-                                :disabled-date="disableDeadline"
-                                size="small"
-                />
-            </div>
-        </div>
-        <el-divider/>
-        <div class="task-details">
-            <div class="details-item">
-                <span class="details-label">优先级：</span>
-                <div class="details-select">
-                    <el-select v-model="taskForm.priority">
-                        <el-option v-for="item in options.priorityOptions"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value"
-                        />
-                    </el-select>
-                </div>
-            </div>
-            <div class="details-item">
-                <span class="details-label">需求来源：</span>
-                <div class="details-select">
-                    <el-select v-model="taskForm.sourceOfDemand">
-                        <el-option v-for="item in options.sourceOfDemandOptions"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value"
-                        />
-                    </el-select>
-                </div>
-            </div>
-
-            <div class="details-item">
-                <span class="details-label">类型：</span>
-                <div class="details-select">
-                    <el-select v-model="taskForm.type">
-                        <el-option v-for="item in options.typeOptions"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value"
-                        />
-                    </el-select>
-                </div>
-            </div>
-            <div class="details-item">
-                <span class="details-label">参与人员：</span>
-                <div class="details-select">
-                    <el-select v-model="taskForm.members">
-                        <el-option v-for="item in options.staffOptions"
-                                   :key="item.value"
-                                   :label="item.label"
-                                   :value="item.value"
-                        />
-                    </el-select>
-                </div>
-            </div>
-        </div>
-        <div class="task-description">
-            <span class="details-label">描述：</span>
-            <el-input v-model="taskForm.description"
-                      type="textarea" resize="none" maxlength="100" show-word-limit
+    <div class="task-details-container task-flex-column">
+        <div style="margin-bottom: 20px">
+            <el-input v-model="curTaskInformation.taskName"
+                      @blur="updateTitle"
+                      input-style="font-size: 2rem; height: 3rem;"
             />
         </div>
-        <div class="task-create-container">
-            <div class="task-create-info little-tip">{{ taskForm.creator }} 创建于 2022-11-21 23:51:12</div>
+
+        <el-row>
+            <el-col :span="6">
+                <div class="task-flex">
+                    <el-icon size="3rem" :style="{color: iconColor}">
+                        <Clock/>
+                    </el-icon>
+                    <div class="task-second-main">
+                        <span class="little-text">{{ lang.status }}</span>
+                        <div style="padding-left: 11px; margin-top: 6px">{{ status }}</div>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="task-flex">
+                    <el-avatar :size="48" :src="'data:image/jpeg;base64,' + curTaskInformation.principalAvatar"/>
+                    <div class="task-second-main">
+                        <div class="task-select">
+                            <span class="little-text">{{ lang.principal }}</span>
+                            <el-select v-model="curTaskInformation.principalUUID" @change="updatePrincipal">
+                                <el-option v-for="item in projectMembers"
+                                           :key="item.value"
+                                           :label="item.label"
+                                           :value="item.value"
+                                />
+                            </el-select>
+                        </div>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.startTime }}</span>
+                    <el-date-picker v-model="curTaskInformation.startTime"
+                                    type="datetime"
+                                    :disabled-date="disableStartTime"
+                                    @change="updateStartTime"
+                    />
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.deadline }}</span>
+                    <el-date-picker v-model="curTaskInformation.deadline"
+                                    type="datetime"
+                                    :disabled-date="disableDeadline"
+                                    @change="updateDeadline"
+                    />
+                </div>
+            </el-col>
+        </el-row>
+
+        <el-divider/>
+
+        <el-row>
+            <el-col :span="8">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.taskType }}</span>
+                    <div class="task-select">
+                        <el-select v-model="curTaskInformation.taskType" @change="updateType">
+                            <el-option v-for="item in GlobalData.taskTypeList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="8">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.priority }}</span>
+                    <div class="task-select">
+                        <el-select v-model="curTaskInformation.priority" @change="updatePriority">
+                            <template #prefix>
+                                <el-icon size="1.2rem" :style="{color: selectIconColor}">
+                                    <Warning/>
+                                </el-icon>
+                            </template>
+                            <el-option v-for="item in GlobalData.priorityList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                                       :color="item.iconColor"
+                            >
+                                <div style="display: flex; align-items: center">
+                                    <span style="display: flex">
+                                        <el-icon size="1.2rem" :style="{color: item.iconColor}"
+                                                 style="margin-right: 6px">
+                                            <Warning/>
+                                        </el-icon>
+                                    </span>
+                                    <span>{{ item.label }}</span>
+                                </div>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="8">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.sourceOfDemand }}</span>
+                    <div class="task-select">
+                        <el-select v-model="curTaskInformation.sourceOfDemand" @change="updateSourceOfDemand">
+                            <el-option v-for="item in GlobalData.sourceOfDemandList"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+
+        <el-row style="margin-top: 16px">
+            <el-col :span="24">
+                <div class="task-flex-column">
+                    <span class="little-text">{{ lang.members }}</span>
+                    <div class="task-select">
+                        <el-select style="width: 100%" v-model="taskMembers" multiple
+                                   @visible-change="updateMembers"
+                                   @remove-tag="updateMembers(false)">
+                            <el-option v-for="item in projectMembers"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            />
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+
+        <div class="task-fourthly-container task-flex-column">
+            <span class="little-text">{{ lang.description }}</span>
+            <el-input v-model="curTaskInformation.taskDescription"
+                      type="textarea" resize="none" maxlength="100" show-word-limit
+                      @blur="updateDescription"
+            />
+        </div>
+
+        <div>
+            <el-button v-if="!isFinished" type="success" @click="finishTask(true)">{{ lang.finish }}</el-button>
+            <el-button v-else type="info" @click="finishTask(false)">{{ lang.unfinished }}</el-button>
+            <el-button type="danger" @click="deleteTask">{{ lang.delete }}</el-button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between">
+            <div style="margin-top: 15px">
+                <div class="task-create-info little-text">
+                    {{ curTaskInformation.creatorNickname }} {{ lang.createAt }} {{ curTaskInformation.creationTime }}
+                </div>
+            </div>
+            <div style="margin-top: 15px" v-if="curTaskInformation.finishTime">
+                <div class="task-create-info little-text">
+                    {{ lang.finishedAt }} {{ curTaskInformation.finishTime }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-    import { reactive } from "vue";
-    import { Clock } from "@element-plus/icons-vue";
+    import { computed, inject, ref } from "vue";
+    import { Clock, Warning } from "@element-plus/icons-vue";
+    import TaskInformation from "@/utils/dto/TaskInformation";
+    import ApplicationUtils from "@/utils/ApplicationUtils";
+    import RequestUtils from "@/utils/RequestUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
+    import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import GlobalData from "@/utils/GlobalData";
 
-    const taskForm = reactive({
-        fromProject: "",
-        type: "",
-        title: "test1",
-        creator: "hhhh",
-        principal: "yzp",
-        priority: "",
-        sourceOfDemand: "",
-        description: "",
-        startTime: "",
+    defineExpose({ init });
+    const props = defineProps<{
+        task: TaskInformation,
+        projectMemberList: Array<ProjectMemberInformation>
+    }>();
+    const reload: Function = inject("reload")!;
+
+    const lang = ApplicationUtils.locale.form.taskInformation;
+    const message = ApplicationUtils.locale.message;
+    const enumLang = ApplicationUtils.locale.enum;
+
+    const curTaskInformation = ref<TaskInformation>({
+        creationTime: "",
+        creatorAvatar: "",
+        creatorNickname: "",
+        creatorUUID: "",
+        creatorUsername: "",
         deadline: "",
-        members: new Array<string>()
+        finishTime: "",
+        fromProjectUUID: "",
+        principalAvatar: "",
+        principalNickname: "",
+        principalUUID: "",
+        principalUsername: "",
+        priority: 0,
+        sourceOfDemand: 0,
+        startTime: "",
+        taskDescription: "",
+        taskName: "",
+        taskType: 0,
+        taskUUID: ""
     });
+    const projectMemberAvatarList = ref<{ [key: string]: string }>({});
+    const projectMembers = ref<Array<{ value: string, label: string }>>([]);
+    const oldTaskMembers = ref<Array<string>>([]);
+    const taskMembers = ref<Array<string>>([]);
+
+    const iconColor = computed(() => {
+        if (curTaskInformation.value.finishTime)
+            return "#40e0c3";
+        else if (!curTaskInformation.value.startTime || new Date(curTaskInformation.value.startTime).getTime() > Date.now())
+            return "#ff8888";
+        else
+            return "#f6c659";
+    });
+    const selectIconColor = computed(() => {
+        if (curTaskInformation.value.priority === 5)
+            return "#fa8888";
+        else if (curTaskInformation.value.priority === 4)
+            return "#fb7fb7";
+        else if (curTaskInformation.value.priority === 3)
+            return "#f4d66d";
+        else if (curTaskInformation.value.priority === 2)
+            return "#40e0c3";
+        else if (curTaskInformation.value.priority === 1)
+            return "#5dcfff";
+        else
+            return;
+    });
+    const status = computed(() => {
+        if (curTaskInformation.value.finishTime)
+            return enumLang.completed;
+        else if (!curTaskInformation.value.startTime || new Date(curTaskInformation.value.startTime).getTime() > Date.now())
+            return enumLang.notStart;
+        else
+            return enumLang.inProgress;
+    });
+    const isFinished = computed(() => typeof (curTaskInformation.value.finishTime as string | null) === "string");
+
+    function init() {
+        projectMembers.value = [];
+        taskMembers.value = [];
+
+        curTaskInformation.value = JSON.parse(JSON.stringify(props.task));
+
+        props.projectMemberList.map(value => {
+            const v = value as ProjectMemberInformation;
+            projectMembers.value.push({
+                value: v.userUUID,
+                label: v.nickname + (v.nickname !== v.username ? "(" + v.username + ")" : "")
+            });
+            projectMemberAvatarList.value[v.userUUID] = v.avatar;
+        });
+
+        RequestUtils.getTaskMembers(props.task.taskUUID).then(resp => {
+            if (resp.statusCode !== StatusCode.success) return;
+
+            resp.responseData.map(value => {
+                const v = value as TaskMemberInformation;
+                taskMembers.value.push(v.userUUID);
+                oldTaskMembers.value.push(v.userUUID);
+            });
+        });
+    }
 
     //禁用当前时间之前的时间
-    const disableStartTime = (current: Date) => {
+    function disableStartTime(current: Date) {
         const now = new Date();
         return current.getTime() < new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    };
+    }
 
     //禁用开始时间之前的时间
-    const disableDeadline = (current: Date) => {
-        let startTimeToDate = new Date(taskForm.startTime);
+    function disableDeadline(current: Date) {
+        let startTimeToDate = new Date(curTaskInformation.value.startTime);
         return current < startTimeToDate;
-    };
+    }
 
-    const options = {
-        projectOptions: [
-            {
-                value: "项目1",
-                label: "项目1"
-            },
-            {
-                value: "项目2",
-                label: "项目2"
-            }
-        ],
-        typeOptions: [
-            {
-                value: "新增功能",
-                label: "新增功能"
-            },
-            {
-                value: "修复bug",
-                label: "修复bug"
-            },
-            {
-                value: "添加需求",
-                label: "添加需求"
-            }
-        ],
-        staffOptions: [
-            {
-                value: "张三",
-                label: "张三"
-            },
-            {
-                value: "李四",
-                label: "李四"
-            }
-        ],
-        priorityOptions: [
-            {
-                value: "最高",
-                label: "最高"
-            },
-            {
-                value: "较高",
-                label: "较高"
-            },
-            {
-                value: "普通",
-                label: "普通"
-            },
-            {
-                value: "较低",
-                label: "较低"
-            },
-            {
-                value: "较低",
-                label: "较低"
-            }
-        ],
-        sourceOfDemandOptions: [
-            {
-                value: "研发工程师",
-                label: "研发工程师"
-            },
-            {
-                value: "测试工程师",
-                label: "测试工程师"
-            },
-            {
-                value: "客户",
-                label: "客户"
-            },
-            {
-                value: "产品经理",
-                label: "产品经理"
-            },
-            {
-                value: "市场",
-                label: "市场"
-            },
-            {
-                value: "用户",
-                label: "用户"
-            },
-            {
-                value: "老板",
-                label: "老板"
-            },
-            {
-                value: "合作伙伴",
-                label: "合作伙伴"
-            },
-            {
-                value: "运营",
-                label: "运营"
-            }
-        ]
-    };
+    function updateTitle() {
+        if (curTaskInformation.value.taskName === props.task.taskName) return;
+
+        RequestUtils.updateTaskTitle(props.task.taskUUID, curTaskInformation.value.taskName).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updatePrincipal() {
+        curTaskInformation.value.principalAvatar = projectMemberAvatarList.value[curTaskInformation.value.principalUUID];
+
+        RequestUtils.updateTaskPrincipal(props.task.taskUUID, curTaskInformation.value.principalUUID).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateStartTime() {
+        RequestUtils.updateTaskStartTime(props.task.taskUUID, curTaskInformation.value.startTime).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateDeadline() {
+        RequestUtils.updateTaskDeadline(props.task.taskUUID, curTaskInformation.value.deadline).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateType() {
+        RequestUtils.updateTaskType(props.task.taskUUID, curTaskInformation.value.taskType).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updatePriority() {
+        RequestUtils.updateTaskPriority(props.task.taskUUID, curTaskInformation.value.priority).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateSourceOfDemand() {
+        RequestUtils.updateTaskSourceOfDemand(props.task.taskUUID, curTaskInformation.value.sourceOfDemand).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateDescription() {
+        if (curTaskInformation.value.taskDescription === props.task.taskDescription) return;
+
+        RequestUtils.updateTaskDescription(props.task.taskUUID, curTaskInformation.value.taskDescription).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+        });
+    }
+
+    function updateMembers(val: boolean) {
+        if (val) return;
+
+        if (taskMembers.value.sort().toString() === oldTaskMembers.value.sort().toString()) return;
+
+        RequestUtils.updateTaskMembers(props.task.taskUUID, taskMembers.value).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+
+            oldTaskMembers.value = [...taskMembers.value];
+        });
+
+    }
+
+    function finishTask(val: boolean) {
+        RequestUtils.finishTask(props.task.taskUUID, val).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+            reload();
+        });
+    }
+
+    function deleteTask() {
+        RequestUtils.deleteTask(props.task.taskUUID).then(resp => {
+            if (resp !== StatusCode.success) return;
+
+            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
+            reload();
+        });
+    }
 </script>
 
 <style scoped>
-    .task-details-container {
+    .task-flex {
+        display: flex;
+    }
+
+    .task-flex-column {
         display: flex;
         flex-direction: column;
+    }
+
+    /*完整容器*/
+    .task-details-container {
         padding: 0 15px 15px 15px;
+    }
+
+    /*第二个盒子容器的主要内容部分*/
+    .task-second-main {
+        width: 200px;
+    }
+
+    /*第四个盒子容器*/
+    .task-fourthly-container {
+        margin: 15px 0;
+    }
+
+    /*较小样式的文字*/
+    .little-text {
+        color: var(--color-text-remark);
+        font-size: 13px;
+        padding-left: 11px;
     }
 
     /*隐藏input类型的边框*/
@@ -249,69 +436,18 @@
         box-shadow: 0 0 0 1px var(--el-input-focus-border-color) inset;
     }
 
-
-    .task-second-container {
-        display: flex;
-        justify-content: space-between;
-        margin: 16px 0 0 0;
-    }
-
-    .task-second-box {
-        display: flex;
-    }
-
-    .task-second-box-column {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .task-second-main {
-        margin-left: 5px;
-    }
-
-
-    .task-details {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .details-item {
-        display: flex;
-        flex-direction: column;
-        width: 200px;
-        margin-bottom: 15px;
-    }
-
-    .details-label {
-        color: #5f6e8e;
-        margin-bottom: 5px;
-    }
-
     /*隐藏选择器的箭头*/
     :deep(.el-select .el-input .el-select__caret) {
         color: #ffffff;
     }
 
-    .details-select:hover:deep(.el-select .el-input .el-select__caret) {
+    .task-select:hover:deep(.el-select .el-input .el-select__caret) {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
     }
 
-    .details-select:focus-within:deep(.el-select .el-input .el-select__caret) {
+    .task-select:focus-within:deep(.el-select .el-input .el-select__caret) {
         color: var(--el-select-input-color);
         font-size: var(--el-select-input-font-size);
-    }
-
-
-    .task-description {
-        margin: 15px 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .little-tip {
-        color: var(--color-text-remark);
-        font-size: 13px;
     }
 </style>

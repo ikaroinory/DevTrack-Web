@@ -16,9 +16,9 @@
     import { inject, reactive, ref } from "vue";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import StatusCode from "@/utils/enums/StatusCode";
-    import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     defineExpose({ clearForm });
 
@@ -39,10 +39,10 @@
     function init() {
         props.members.map(value => {
             const v = value as ProjectMemberInformation;
-            if (v.userUUID !== SessionStorageUtils.getUserUUID())
+            if (v.userUUID !== LocalStorageUtils.getUserUUIDFromToken())
                 data.value.push({
                     key: v.recordUUID,
-                    label: v.nicknameInProject || v.nickname + "(" + v.username + ")",
+                    label: v.nickname + "(" + v.username + ")",
                     disabled: false
                 });
         });
@@ -59,7 +59,7 @@
 
     function submit() {
         RequestUtils.removeProjectMembers(form).then(resp => {
-            if (resp.statusCode === StatusCode.success) {
+            if (resp === StatusCode.success) {
                 ApplicationUtils.showMessage(message.removeSuccessfully, "success");
                 reload();
             }

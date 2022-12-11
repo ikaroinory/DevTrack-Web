@@ -1,7 +1,7 @@
 <template>
     <div class="frame-profile-display">
         <div class="frame-avatar">
-            <el-avatar :size="256" :src="props.avatar"/>
+            <el-avatar :size="256" :src="'data:image/jpeg;base64,' + props.avatar"/>
         </div>
         <div class="frame-name">
             <div v-if="nickname !== username" class="label-nickname">{{ props.nickname }}</div>

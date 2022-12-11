@@ -2,15 +2,12 @@
     <div>
         <div class="header-bar">
             <div class="header-bar-flex">
-                <div style="display: flex; align-items: center">
-                    <img style="width: 46px"
-                         src="../assets/logo/DevTrack_Logo_NoBackground.png"
-                         alt=""
-                    />
-                    <div style="font-size: 24px; font-weight: bold; margin-right: 20px; color: var(--color-blue)">DevTrack</div>
-                </div>
+                <img style="width: 150px; margin-bottom: 2px"
+                     src="../assets/logo/logo_long.svg"
+                     alt=""
+                />
                 <div style="display: flex">
-                    <div v-if="SessionStorageUtils.getUserUsername() === ''">
+                    <div v-if="LocalStorageUtils.getUsernameFromToken() === ''">
                         <el-link style="margin-right: 20px" href="/signIn" :underline="false">
                             <div v-text="lang.signIn"/>
                         </el-link>
@@ -137,10 +134,10 @@
                     </div>
                 </div>
                 <div style="display: flex;align-items: center;margin-top: 20px">
-                    <div>
-                        <img style="width: 50px" src="../assets/logo/DevTrack_Logo_NoBackground.png" alt=""/>
-                    </div>
-                    <div style="font-size: 25px;font-weight: bold;margin-right: 20px">DevTrack</div>
+                    <img style="width: 150px; margin-right: 20px"
+                         src="../assets/logo/logo_long.svg"
+                         alt=""
+                    />
                     <a style="color: #73777a;margin-right: 20px" href="/signUp" v-text="lang.quickSignUp"/>
                     <a style="color: #73777a;margin-right: 20px" href="/signIn" v-text="lang.signInNow"/>
                 </div>
@@ -159,6 +156,7 @@
     import router from "@/plugins/VueRouter";
     import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     const lang = ApplicationUtils.locale.view.home;
 
@@ -179,7 +177,7 @@
     }
 
     function goToProfile() {
-        router.push({ name: "profile", params: { username: SessionStorageUtils.getUserUsername() } });
+        router.push({ name: "profile", params: { username: LocalStorageUtils.getUsernameFromToken() } });
     }
 </script>
 

@@ -5,15 +5,12 @@
                      :default-active="$route.path.split('/')[1] === 'project' ? '/project/preview' : $route.path"
                      background-color="#3e4963"
                      text-color="white" mode="horizontal">
-                <div style="margin-left: 16px">
+                <div style="margin-left: 16px; margin-right: 20px">
                     <router-link :to="{name: 'home'}">
-                        <div style="display: flex; align-items: center">
-                            <img style="width: 40px"
-                                 src="../assets/logo/DevTrack_Logo_NoBackground.png"
-                                 alt=""
-                            />
-                            <div style="font-size: 24px; font-weight: bold; margin-right: 20px; color: var(--color-blue)">DevTrack</div>
-                        </div>
+                        <img style="width: 150px"
+                             src="../assets/logo/logo_long.svg"
+                             alt=""
+                        />
                     </router-link>
                 </div>
                 <el-menu-item class="main-menu-item function-menu-item" v-for="item in sideBarList" :index="item.index" :key="item.id">
@@ -65,6 +62,7 @@
     import { Bell, Operation, QuestionFilled } from "@element-plus/icons-vue";
     import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
     const lang = ApplicationUtils.locale.view.mainFrame;
 
@@ -86,7 +84,7 @@
     init();
 
     function init() {
-        username.value = SessionStorageUtils.getUserUsername();
+        username.value = LocalStorageUtils.getUsernameFromToken();
         avatar.value = SessionStorageUtils.getUserAvatar();
         if (SessionStorageUtils.getAccessMode() === "user") {
             routeList.profile = "/profile/" + username.value;

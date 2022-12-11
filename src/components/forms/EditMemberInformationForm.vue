@@ -1,41 +1,60 @@
 <template>
-    <el-form>
-        <el-form-item label="记录号">
-            <div v-text="recordUUID"/>
-        </el-form-item>
-        <el-form-item label="成员名">
-            <div v-text="role"/>
-        </el-form-item>
-        <el-form-item>
-            <el-input type="text" v-model="form.nicknameInProject" clearable/>
-        </el-form-item>
-        <el-form-item>
-            <el-select>
-
+    <el-form label-position="left" label-width="100px">
+        <el-form-item :label="lang.role">
+            <el-select style="width: 100%" v-model="newRoleUUID">
+                <el-option v-for="item in roleList"
+                           :key="item.uuid"
+                           :label="item.name"
+                           :value="item.uuid"
+                />
             </el-select>
         </el-form-item>
+
+        <el-button type="primary" @click="submit">
+            <div>{{ lang.submit }}</div>
+        </el-button>
     </el-form>
 </template>
 
 <script lang="ts" setup>
-    import { reactive } from "vue";
+    import { inject, reactive, ref } from "vue";
+    import Role from "@/utils/po/Role";
+    import ApplicationUtils from "@/utils/ApplicationUtils";
+    import RequestUtils from "@/utils/RequestUtils";
 
-    defineExpose({ clearForm });
-    const props = defineProps({
-        recordUUID: { type: String, required: true },
-        nicknameInProject: { type: String, required: true },
-        role: { type: String, required: true }
-    });
+    defineExpose({ clearForm, init });
+    const props = defineProps<{
+        recordUUID: string,
+        roleUUID: string,
+        roleList: Array<Role>
+    }>();
+
+    const reload: Function = inject("reload")!;
+    const lang = ApplicationUtils.locale.form.editMemberInformation;
+    const message = ApplicationUtils.locale.message;
 
     const form = reactive({
-        recordUUID: props.recordUUID,
-        nicknameInProject: props.nicknameInProject,
-        role: props.role
+        recordUUID: props.recordUUID
     });
+
+    const newRoleUUID = ref(props.roleUUID);
+
+    function init() {
+        newRoleUUID.value = props.roleUUID;
+    }
 
     function clearForm() {
         form.recordUUID = props.recordUUID;
-        form.nicknameInProject = props.nicknameInProject;
-        form.role = props.role;
+
+        newRoleUUID.value = props.roleUUID;
+    }
+
+    function submit() {
+        RequestUtils.updateMemberRole(props.recordUUID, newRoleUUID.value).then(() => {
+            ApplicationUtils.showMessage(message.submitSuccessfully, "success");
+            reload();
+        }).catch(() => {
+            ApplicationUtils.showMessage(message.timeout, "error");
+        });
     }
 </script>

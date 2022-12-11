@@ -7,7 +7,7 @@
             <el-col :span="11">
                 <el-form-item prop="type" :label="lang.taskType">
                     <el-select style="width: 100%" v-model="taskForm.type" :placeholder="lang.selectTaskType">
-                        <el-option v-for="item in taskTypeList"
+                        <el-option v-for="item in GlobalData.taskTypeList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -32,7 +32,7 @@
             <el-col :span="11">
                 <el-form-item prop="priority" :label="lang.priority">
                     <el-select style="width: 100%" v-model="taskForm.priority">
-                        <el-option v-for="item in priorityList"
+                        <el-option v-for="item in GlobalData.priorityList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -44,7 +44,7 @@
             <el-col :span="11">
                 <el-form-item prop="SourceOfDemand" :label="lang.sourceOfDemand">
                     <el-select style="width: 100%" v-model="taskForm.sourceOfDemand">
-                        <el-option v-for="item in sourceOfDemandList"
+                        <el-option v-for="item in GlobalData.sourceOfDemandList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -114,18 +114,21 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-    import { reactive, ref } from "vue";
+    import { inject, reactive, ref } from "vue";
     import type { FormInstance, FormRules } from "element-plus";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import NewTaskForm from "@/utils/forms/NewTaskForm";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import GlobalData from "@/utils/GlobalData";
 
     defineExpose({ clearForm: reset });
 
     const props = defineProps({
         projectUuid: { type: String, required: true }
     });
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.form.newTask;
     const enumLang = ApplicationUtils.locale.enum;
@@ -150,29 +153,11 @@
             { required: true, message: lang.enterTitle, trigger: "blur" }
         ]
     });
-    const taskTypeList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.newFeature },
-        { value: 2, label: enumLang.bugfix }
-    ]);
-    const priorityList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.general },
-        { value: 2, label: enumLang.normal },
-        { value: 3, label: enumLang.important },
-        { value: 4, label: enumLang.urgent },
-        { value: 5, label: enumLang.mostUrgent }
-    ]);
-    const sourceOfDemandList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.rdPost },
-        { value: 2, label: enumLang.testPost }
-    ]);
     const members = ref<Array<ProjectMemberInformation>>([]);
 
     function init() {
         RequestUtils.getProjectMemberInformation(props.projectUuid).then(resp => {
-            members.value = resp;
+            members.value = resp.responseData;
         });
     }
 
@@ -183,9 +168,12 @@
             if (!valid) return;
 
             requestingServe.value = true;
-            RequestUtils.newTask(taskForm.value).then(() => {
-                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+            RequestUtils.newTask(taskForm.value).then(resp => {
                 requestingServe.value = false;
+                if (resp !== StatusCode.success) return;
+
+                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                reload();
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingServe.value = false;

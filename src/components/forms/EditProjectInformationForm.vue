@@ -6,7 +6,7 @@
         </el-form-item>
         <el-form-item :label="lang.principal"
                       prop="principal">
-            <el-select style="width: 100%" v-model="form.principal">
+            <el-select style="width: 100%" v-model="form.principalUUID">
                 <el-option v-for="item in principalOptions"
                            :key="item.value" :label="item.label" :value="item.value"/>
             </el-select>
@@ -59,9 +59,9 @@
     const reload: Function = inject("reload")!;
 
     const form = reactive<UpdateProjectForm>({
-        uuid: props.uuid,
+        projectUUID: props.uuid,
         name: props.name,
-        principal: props.principal,
+        principalUUID: props.principal,
         description: props.description,
         startTime: props.startTime
     });
@@ -85,14 +85,14 @@
 
     function submitEditProjectInformationForm() {
         RequestUtils.updateProject(form).then(resp => {
-            if (resp.statusCode === StatusCode.projectNotFound)
-                ApplicationUtils.showMessageBox(
-                    message.projectNotFoundWithUUID.replace("%s", form.uuid.valueOf()),
+            if (resp === StatusCode.projectNotFound)
+                ApplicationUtils.showMessage(
+                    message.projectNotFoundWithUUID.replace("%s", form.projectUUID.valueOf()),
                     "error"
                 );
-            if (resp.statusCode === StatusCode.valueNotUpdate)
+            if (resp === StatusCode.notUpdate)
                 ApplicationUtils.showMessage(message.youHaveNotModifiedForm, "warning");
-            if (resp.statusCode === StatusCode.success) {
+            if (resp === StatusCode.success) {
                 ApplicationUtils.showMessage(message.submitSuccessfully, "success");
                 reload();
             }
@@ -100,9 +100,9 @@
     }
 
     function clearForm() {
-        form.uuid = props.uuid;
+        form.projectUUID = props.uuid;
         form.name = props.name;
-        form.principal = props.principal;
+        form.principalUUID = props.principal;
         form.description = props.description;
         form.startTime = props.startTime;
     }

@@ -7,7 +7,7 @@ const en_us = {
             search: "Search",
             preferenceSettings: "Preference Settings",
             helpAndSupport: "Help & Support",
-            notifications: "Notifications"
+            message: "Notifications"
         },
         projectFrame: {
             overview: "Overview",
@@ -55,6 +55,10 @@ const en_us = {
             title: "Sign up",
             label: "Sign Up DevTrack Account"
         },
+        forgotPassword: {
+            title: "Reset password",
+            label: "Reset Password"
+        },
         dashboard: {
             tasks: "Tasks",
             newTask: "New task",
@@ -98,14 +102,13 @@ const en_us = {
             nickname: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
-            setMemberRole: "Set member role",
-            editProjectInformation: "Edit information",
-            deleteMembers: "Delete members"
+            editProjectInformation: "Edit information"
         },
         projectMembers: {
             title: "Members",
             memberList: "Member List",
-            inviteMembers: "Invite members",
+            inviteMembers: "Invite Members",
+            removeMembers: "Remove Members",
             nicknameAndUsername: "Nickname(Username)",
             role: "Role",
             joinTime: "Join Time",
@@ -123,7 +126,21 @@ const en_us = {
             priority: "Priority",
             sourceOfDemand: "Source of Demand",
             startTime: "Start Time",
-            deadline: "Deadline"
+            deadline: "Deadline",
+            status: "Status",
+            principal: "Principal"
+        },
+        projectRoles: {
+            title: "Roles",
+            roleList: "Role List",
+            newRole: "New Role",
+            roleName: "Role Name",
+            operations: "Operations",
+            edit: "Edit",
+            remove: "Remove"
+        },
+        projectTableReport: {
+            title: "Table Report"
         },
         settings: {
             title: "Settings",
@@ -145,19 +162,38 @@ const en_us = {
         heatmap: {
             title: "Heatmap",
             noData: "No data",
-            finishSomeTasks: "Finish %d tasks: %x"
+            completedTask: "Completed 1 task on %date",
+            completedTasks: "Completed %cnt tasks on %date"
         },
         projects: {
             title: "Project Overview",
             notStart: "Not start",
             inProgress: "In progress",
-            completed: "Completed"
+            completed: "Completed",
+            noRecords: "No records"
         },
         tasks: {
             title: "Task Overview",
             notStart: "Not start",
             inProgress: "In progress",
+            completed: "Completed",
+            noRecords: "No records"
+        },
+        taskStatistics: {
+            title: "Task Statistics",
+            creation: "Creation",
+            completion: "Completion"
+        },
+        taskOverview: {
+            title: "Overview",
+            notStart: "Not Start",
+            inProgress: "In Progress",
             completed: "Completed"
+        },
+        plannedCompletion: {
+            title: "Planned Completion",
+            withinDeadlines: "Within Deadlines",
+            withoutDeadlines: "Without Deadlines"
         }
     },
     display: {
@@ -204,6 +240,22 @@ const en_us = {
             emailFormatError: "Please enter the correct email address！",
             enterVCode: "Please enter the verification code"
         },
+        forgotPassword: {
+            email: "Email",
+            vCode: "Verification code",
+            getVCode: "Get v-code",
+            availableInXSeconds: "Available in %d seconds",
+            newPassword: "New Password",
+            confirmPassword: "Confirm password",
+            reset: "Reset",
+            passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
+            confirmPasswordError: "Different password。",
+            enterEmail: "Please enter the email",
+            enterNewPassword: "Please enter new password",
+            confirmPasswordTip: "Please check the password",
+            emailFormatError: "Please enter the correct email address！",
+            enterVCode: "Please enter the verification code"
+        },
         newProject: {
             title: "New Project",
             name: "Project name",
@@ -223,7 +275,7 @@ const en_us = {
             taskTitle: "Title",
             enterTitle: "Please enter task title",
             taskType: "Type",
-            selectTaskType: "请选择任务类型",
+            selectTaskType: "Please select task type",
             principal: "Principal",
             selectPrincipal: "Please enter task principal",
             priority: "Priority",
@@ -273,18 +325,10 @@ const en_us = {
             remove: "Remove",
             reset: "Reset"
         },
-        setMembersRole: {
-            title: "Set Role",
-            role: "Role",
-            permission: "Permission",
-            invite: "Invite members",
-            addMembers: "Add members",
-            submit: "Submit",
-            admin: "Admin",
-            member: "Member"
-        },
         editMemberInformation: {
-            title: "Edit Member Information"
+            title: "Edit Member Information",
+            role: "Role",
+            submit: "Submit"
         },
         addMembers: {
             title: "Add Members",
@@ -292,6 +336,57 @@ const en_us = {
             enterUsernameToAddMembers: "Please enter username to add members",
             add: "Add",
             reset: "Reset"
+        },
+        editRole: {
+            title: "Edit Project Role",
+            roleName: "Role Name",
+            permission: "Permission",
+            inviteMember: "Invite member",
+            updateMember: "Update member",
+            removeMember: "Remove member",
+            updateProject: "Update project",
+            deleteProject: "Delete project",
+            createTask: "Create task",
+            updateTask: "Update task",
+            deleteTask: "Delete task",
+            createRole: "Create role",
+            updateRole: "Update role",
+            removeRole: "Remove role",
+            submit: "Submit"
+        },
+        newRole: {
+            title: "New Role",
+            name: "Role Name",
+            permissions: "Permissions",
+            inviteMember: "Invite member",
+            updateMember: "Update member",
+            removeMember: "Remove member",
+            updateProject: "Update project",
+            deleteProject: "Delete project",
+            createTask: "Create task",
+            updateTask: "Update task",
+            deleteTask: "Delete task",
+            createRole: "Create role",
+            updateRole: "Update role",
+            removeRole: "Remove role",
+            create: "Create"
+        },
+        taskInformation: {
+            title: "Task Information",
+            status: "Status",
+            principal: "Principal",
+            startTime: "Start time",
+            deadline: "Deadline",
+            taskType: "Type",
+            priority: "Priority",
+            sourceOfDemand: "Source of demand",
+            members: "Members",
+            description: "Description",
+            createAt: "create at",
+            finish: "Finish",
+            unfinished: "Unfinished",
+            delete: "Delete",
+            finishedAt: "finished at"
         }
     },
     item: {
@@ -303,18 +398,25 @@ const en_us = {
         unknown: "Unknown",
         newFeature: "New feature",
         bugfix: "Bug fix",
+        design: "Design",
+        docs: "Docs",
         general: "General",
         normal: "Normal",
         important: "Important",
         urgent: "Urgent",
         mostUrgent: "Most urgent",
         rdPost: "R&D post",
-        testPost: "test post"
+        testPost: "Test post",
+        designPost: "Design post",
+        marketResearch: "Market research",
+        notStart: "Not start",
+        inProgress: "In progress",
+        completed: "Completed"
     },
     message: {
         title: {
-            message: "Info",
             success: "Success",
+            information: "Information",
             warning: "Warning",
             error: "Error"
         },
@@ -324,9 +426,32 @@ const en_us = {
             ignore: "Ignore",
             read: "Read",
             delete: "Delete"
+            cancel: "Cancel"
+        },
+        status: {
+            unknown: "Unknown error!",
+            recordNotFound: "Record not found!",
+            invalidParams: "Invalid params.",
+            requiredParamsIsEmpty: "Required params is empty!",
+            invalidFiletype: "Invalid filetype!",
+            notUpdate: "Not update!",
+            permissionDenied: "Permission denied!",
+            uuidConflict: "UUID conflict!",
+            tokenIsEmpty: "Token is empty!",
+            expiredToken: "Expired token!",
+            invalidToken: "Invalid token!",
+            vCodeRecordNotFound: "Verification code record not found!",
+            expiredVCode: "Expired verification code!",
+            vCodeError: "Verification code error!",
+            invalidVCode: "Invalid verification code!",
+            passwordError: "Password error!",
+            userNotFound: "User not found!",
+            userExists: "User already exists!",
+            projectNotFound: "Project not found!",
+            roleNotFound: "Role not found!",
+            roleRecordExists: "Role record exists!"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
-        uuidInvalid: "UUID invalid!",
         userNotFound: "User not found!",
         userExists: "User already exists!",
         projectNotFound: "Project not found!",
@@ -342,20 +467,31 @@ const en_us = {
         youDoNotNeedToResetForm: "You do not need to reset form!",
         youHaveNotModifiedAvatar: "You have not modified avatar!",
         youHaveNotModifiedForm: "You have not modified form!",
+        youNeedToSelectAnOptionDifferentFromTheCurrentOne: "You need to select an option different from the current one!",
         timeout: "Request timed out!",
         passwordError: "Password not exist!",
         welcomeUser: "Welcome %s !",
+        welcomeBack: "Welcome back!",
         enterEmail: "Please input your email!",
         invalidTokenSignInAgain: "Invalid token, please sign in again!",
         vCodeSendSuccessfully: "Verification code sent successfully, please check it.",
         vCodeSendFailed: "Failed to send verification code, please try again later!",
         vCodeError: "Verification code error!",
-        vCodeInvalid: "Verification code invalid!",
+        invalidVCode: "Invalid verification code!",
         noVCodeRecord: "Have not verification code record!",
         signUpSuccessfully: "Sign up success!",
         requiredParamsIsNull: "Required params is null!",
         addWarning: "Add exception.\n%d1 member was added, %d2 members were added successfully.\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
-        addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project."
+        addFailed: "Add failed!\n\nPossible causes:\n1. Username not found.\n2. The user is already a member of this project.",
+        clearStorageWarning: "Are you sure you want to clear storage?\n\nClick '%btn' to continue.",
+        doYouWantToRemoveTheUserFromThisProject: "Do you want to remove '%user' from this project?",
+        theNameCannotBeEmpty: "The name cannot be empty!",
+        roleRecordExists: "Role record exists!",
+        roleNotFound: "Role not found!",
+        doYouWantToRemoveTheRole: "Do you want to remove '%role' from this project?",
+        dataNotUpdate: "Data not update, maybe new data is the same as original data.",
+        unknownException: "Unknown exception.",
+        permissionDenied: "Permission denied."
     }
 };
 

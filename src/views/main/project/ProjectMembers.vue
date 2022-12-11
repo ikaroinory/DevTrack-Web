@@ -4,8 +4,12 @@
             <div class="global-frame-title global-vertical-margin" v-text="lang.memberList"/>
             <div>
                 <el-button type="primary" @click="addMembersDialog = true">
-                    <plus class="icon"/>
+                    <plus class="global-icon"/>
                     <span v-text="lang.inviteMembers"/>
+                </el-button>
+                <el-button type="danger" @click="showRemoveMembersDialog = true">
+                    <minus class="global-icon"/>
+                    <span v-text="lang.removeMembers"/>
                 </el-button>
             </div>
         </div>
@@ -24,7 +28,7 @@
                         <el-button type="primary" @click="edit(scope.row)">
                             <div v-text="lang.edit"/>
                         </el-button>
-                        <el-button type="danger">
+                        <el-button type="danger" @click="remove(scope.row)">
                             <div v-text="lang.remove"/>
                         </el-button>
                     </template>
@@ -43,46 +47,56 @@
     </div>
 
     <EditMemberInformationDialog v-model:show="showDialog"
-                                        :record-u-u-i-d="recordUUID"
-                                        :nickname-in-project="nicknameInProject"
-                                        :role="role"
+                                 :record-u-u-i-d="recordUUID"
+                                 :role-u-u-i-d="roleUUID"
+                                 :role-list="roles"
     />
     <AddMembersDialog v-model:show="addMembersDialog"
-                             :uuid="uuid"
+                      :uuid="uuid"
+    />
+    <RemoveProjectMembersDialog v-model:show="showRemoveMembersDialog"
+                                :members="members"
     />
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
-    import { Plus } from "@icon-park/vue-next";
+    import { inject, ref } from "vue";
+    import { Minus, Plus } from "@icon-park/vue-next";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import UserItem from "@/components/items/UserItem.vue";
     import EditMemberInformationDialog from "@/components/dialogs/EditMemberInformationDialog.vue";
+    import RemoveProjectMembersDialog from "@/components/dialogs/RemoveProjectMembersDialog.vue";
     import AddMembersDialog from "@/components/dialogs/AddMembersDialog.vue";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import Role from "@/utils/po/Role";
 
     const props = defineProps({
         uuid: { type: String, required: true }
     });
 
+    const reload: Function = inject("reload")!;
+
     const lang = ApplicationUtils.locale.view.projectMembers;
     const message = ApplicationUtils.locale.message;
 
     const loading = ref(false);
+    const roles = ref<Array<Role>>([]);
     const members = ref<Array<ProjectMemberInformation>>([]);
     const currentPage = ref(1);
     const pageSize = 10;
     const recordCount = ref(1);
     const showDialog = ref(false);
     const recordUUID = ref("");
-    const nicknameInProject = ref("");
-    const role = ref("");
+    const roleUUID = ref("");
     const addMembersDialog = ref(false);
+    const showRemoveMembersDialog = ref(false);
 
     function init() {
         ApplicationUtils.setTitle(lang.title);
         getPage(currentPage.value);
+        RequestUtils.getRoles(props.uuid).then(resp => roles.value = [...resp.responseData]);
     }
 
     function clearTable() {
@@ -92,8 +106,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageProjectMemberInformation(pageNum, pageSize, props.uuid).then(resp => {
-            members.value = resp.list;
-            recordCount.value = resp.recordCount;
+            members.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");
@@ -108,9 +122,24 @@
 
     function edit(members: ProjectMemberInformation) {
         recordUUID.value = members.recordUUID;
-        nicknameInProject.value = members.nicknameInProject;
-        role.value = members.roleName;
+        roleUUID.value = members.roleUUID;
         showDialog.value = true;
+    }
+
+    function remove(member: ProjectMemberInformation) {
+        ApplicationUtils.showMessageBox(
+            message.doYouWantToRemoveTheUserFromThisProject
+                .replace("%user", member.nickname + "(" + member.username + ")"),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            RequestUtils.removeProjectMember(member.recordUUID).then(resp => {
+                if (resp === StatusCode.success) {
+                    ApplicationUtils.showMessage(message.removeSuccessfully, "success");
+                    reload();
+                }
+            }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
+        }).catch(() => {});
     }
 
     init();
