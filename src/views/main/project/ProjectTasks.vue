@@ -178,9 +178,11 @@
     const recordCount = ref(1);
     const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
     const tableRowClassName = ({ row }: { row: TaskInformation }) => {
+        if (!row.deadline) return;
+
         const now = new Date();
         now.setHours(now.getHours() + 8);
-        if (row.deadline < (!row.finishTime ? now.toISOString() : row.finishTime))
+        if (Date.parse(row.deadline) < (!row.finishTime ? now.getTime() : Date.parse(row.finishTime)))
             return "expiration-row";
         return;
     };

@@ -7,7 +7,7 @@ const en_us = {
             search: "Search",
             preferenceSettings: "Preference Settings",
             helpAndSupport: "Help & Support",
-            message: "Message"
+            message: "Notifications"
         },
         projectFrame: {
             overview: "Overview",
