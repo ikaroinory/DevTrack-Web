@@ -78,6 +78,7 @@
     function init() {
         newRole.value.uuid = props.role.uuid;
         newRole.value.name = props.role.name;
+        newRole.value.project = props.role.project;
 
         newRole.value.inviteMember = props.role.inviteMember;
         newRole.value.updateMember = props.role.updateMember;
