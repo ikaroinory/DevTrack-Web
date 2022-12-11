@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import "./css/base.css";
 import "./css/global.css";
-import "vue3-calendar-heatmap/dist/style.css"
+import "vue3-calendar-heatmap/dist/style.css";
 import App from "./App.vue";
 
 import installElementPlus from "@/plugins/ElementPlus";
@@ -9,6 +9,8 @@ import installElementPlusIcon from "@/plugins/ElementPlusIcons";
 import installIconPark from "@/plugins/IconPark";
 import router from "@/plugins/VueRouter";
 import vue3CalendarHeatmap from "vue3-calendar-heatmap";
+import ApplicationUtils from "@/utils/ApplicationUtils";
+import LocalStorageUtils from "@/utils/LocalStorageUtils";
 
 const app = createApp(App);
 
@@ -21,3 +23,5 @@ app.use(router);
 app.use(vue3CalendarHeatmap);
 
 app.mount("#app");
+
+ApplicationUtils.changeLocale(LocalStorageUtils.getLocale());
