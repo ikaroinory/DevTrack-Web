@@ -43,10 +43,12 @@
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
+    import { inject, ref } from "vue";
     import i18n from "@/plugins/VueI18n";
     import router from "@/plugins/VueRouter";
     import ApplicationUtils from "@/utils/ApplicationUtils";
+
+    const reloadPage: Function = inject("reloadPage")!;
 
     const lang = ApplicationUtils.locale.view.settings;
     const message = ApplicationUtils.locale.message;
@@ -64,9 +66,10 @@
     }
 
     function changeLocale() {
-        if (ApplicationUtils.changeLocale(currentLocale.value))
-            ApplicationUtils.showMessage(message.updateSuccessfully, "success");
-        else
+        if (ApplicationUtils.changeLocale(currentLocale.value)) {
+            ApplicationUtils.showMessage(ApplicationUtils.locale.message.updateSuccessfully, "success");
+            reloadPage();
+        } else
             ApplicationUtils.showMessage(message.youNeedToSelectAnOptionDifferentFromTheCurrentOne, "warning");
     }
 

@@ -5,7 +5,6 @@ export default interface ProjectMemberInformation {
     username: string;
     nickname: string;
     avatar: string;
-    nicknameInProject: string;
     roleUUID: string;
     roleName: string;
     joinTime: string;

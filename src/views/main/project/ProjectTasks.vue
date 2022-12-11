@@ -30,10 +30,10 @@
                         <div v-text="scope.row.taskName" v-else></div>
                     </template>
                 </el-table-column>
-                <el-table-column :label="lang.principal" width="200px">
+                <el-table-column :label="lang.principal" width="220px">
                     <template #default="scope">
                         <UserItem :username="scope.row.principalUsername" :nickname="scope.row.principalNickname"
-                                  :avatar="scope.row.principalAvatar" :nicknameInProject="scope.row.principalNickname"
+                                  :avatar="scope.row.principalAvatar"
                                   router/>
                     </template>
                 </el-table-column>
@@ -62,15 +62,9 @@
                 </el-table-column>
                 <el-table-column :label="lang.type" min-width="180px">
                     <template #default="scope">
-                        <div v-if="scope.row.taskType === 1"
-                             v-text="enums.newFeature"
-                        />
-                        <div v-else-if="scope.row.taskType === 2"
-                             v-text="enums.bugfix"
-                        />
-                        <div v-else
-                             v-text="enums.unknown"
-                        />
+                        <div>
+                            {{ GlobalData.taskTypeList.filter(value => value.value === scope.row.taskType)[0].label }}
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column :label="lang.priority" min-width="180px">
@@ -115,15 +109,9 @@
                 </el-table-column>
                 <el-table-column :label="lang.sourceOfDemand" min-width="200px">
                     <template #default="scope">
-                        <div v-if="scope.row.sourceOfDemand === 1"
-                             v-text="enums.rdPost"
-                        />
-                        <div v-else-if="scope.row.sourceOfDemand === 2"
-                             v-text="enums.testPost"
-                        />
-                        <div v-else
-                             v-text="enums.unknown"
-                        />
+                        <div>
+                            {{ GlobalData.sourceOfDemandList.filter(value => value.value === scope.row.sourceOfDemand)[0].label }}
+                        </div>
                     </template>
                 </el-table-column>
                 <el-table-column :label="lang.startTime" min-width="200px">
@@ -170,6 +158,7 @@
     import StatusCode from "@/utils/enums/StatusCode";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
     import UserItem from "@/components/items/UserItem.vue";
+    import GlobalData from "@/utils/GlobalData";
 
     const props = defineProps({
         uuid: { type: String, required: true }
@@ -190,8 +179,8 @@
     const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
     const tableRowClassName = ({ row }: { row: TaskInformation }) => {
         const now = new Date();
-        const nowDate = now.toISOString().split("T")[0] + " " + now.toTimeString().split("/").join("-");
-        if (row.deadline < nowDate && !row.finishTime)
+        now.setHours(now.getHours() + 8);
+        if (row.deadline < (!row.finishTime ? now.toISOString() : row.finishTime))
             return "expiration-row";
         return;
     };

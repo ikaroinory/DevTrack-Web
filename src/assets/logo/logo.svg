@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="-20 -20 256 256"
+     fill="none">
+    <title>DevTrack Logo</title>
+    <g>
+        <path stroke="#409eff"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M175,43.3 l-25,-43.3 h-100 l-50,86.6 l50,86.6 h100 l25,-43.3"
+        />
+        <path stroke="#409eff"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M175,43.3 h-31.5"
+        />
+        <path stroke="#409eff"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M200,86.6 h-81.5"
+        />
+        <path stroke="#409eff"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M175,129.9 h-81.5"
+        />
+        <circle stroke="#409eff"
+                stroke-width="8"
+                cx="125" cy="43.3" r="15"
+        />
+        <circle stroke="#409eff"
+                stroke-width="8"
+                cx="100" cy="86.6" r="15"
+        />
+        <circle stroke="#409eff"
+                stroke-width="8"
+                cx="75" cy="129.9" r="15"
+        />
+    </g>
+</svg>

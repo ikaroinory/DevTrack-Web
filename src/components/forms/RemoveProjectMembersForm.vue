@@ -42,7 +42,7 @@
             if (v.userUUID !== LocalStorageUtils.getUserUUIDFromToken())
                 data.value.push({
                     key: v.recordUUID,
-                    label: v.nicknameInProject || v.nickname + "(" + v.username + ")",
+                    label: v.nickname + "(" + v.username + ")",
                     disabled: false
                 });
         });

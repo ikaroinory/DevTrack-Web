@@ -162,7 +162,8 @@ const en_us = {
         heatmap: {
             title: "Heatmap",
             noData: "No data",
-            finishSomeTasks: "Finish %d tasks: %x"
+            completedTask: "Completed 1 task on %date",
+            completedTasks: "Completed %cnt tasks on %date"
         },
         projects: {
             title: "Project Overview",
@@ -268,7 +269,7 @@ const en_us = {
             taskTitle: "Title",
             enterTitle: "Please enter task title",
             taskType: "Type",
-            selectTaskType: "请选择任务类型",
+            selectTaskType: "Please select task type",
             principal: "Principal",
             selectPrincipal: "Please enter task principal",
             priority: "Priority",
@@ -391,6 +392,8 @@ const en_us = {
         unknown: "Unknown",
         newFeature: "New feature",
         bugfix: "Bug fix",
+        design: "Design",
+        docs: "Docs",
         general: "General",
         normal: "Normal",
         important: "Important",
@@ -398,6 +401,8 @@ const en_us = {
         mostUrgent: "Most urgent",
         rdPost: "R&D post",
         testPost: "Test post",
+        designPost: "Design post",
+        marketResearch: "Market research",
         notStart: "Not start",
         inProgress: "In progress",
         completed: "Completed"

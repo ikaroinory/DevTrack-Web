@@ -3,13 +3,15 @@
 </template>
 
 <script lang="ts" setup>
-    import { nextTick, ref } from "vue";
+    import { nextTick, provide, ref } from "vue";
     import LocalStorageUtils from "@/utils/LocalStorageUtils";
     import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
     import router from "@/plugins/VueRouter";
     import StatusCode from "@/utils/enums/StatusCode";
+
+    provide("reloadPage", () => reloadPage());
 
     const message = ApplicationUtils.locale.message;
     const isRouterAlive = ref(true);
