@@ -7,7 +7,7 @@ const en_us = {
             search: "Search",
             preferenceSettings: "Preference Settings",
             helpAndSupport: "Help & Support",
-            message: "Message"
+            notifications: "Notifications"
         },
         projectFrame: {
             overview: "Overview",
@@ -167,6 +167,9 @@ const en_us = {
         },
         taskInformation: {
             title: "Task Information"
+        },
+        systemNotification: {
+            title: "System Notification"
         }
     },
     form: {
@@ -316,7 +319,11 @@ const en_us = {
             error: "Error"
         },
         button: {
-            ok: "Save"
+            ok: "Save",
+            accept: "Accept",
+            ignore: "Ignore",
+            read: "Read",
+            delete: "Delete"
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         uuidInvalid: "UUID invalid!",

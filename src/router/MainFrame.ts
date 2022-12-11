@@ -4,6 +4,7 @@ import Profile from "@/views/main/Profile.vue";
 import ProjectPreview from "@/views/main/ProjectPreview.vue";
 import ProjectFrame from "@/views/main/ProjectFrame.vue";
 import Settings from "@/views/main/Settings.vue";
+import Notifications from "@/views/main/Notifications.vue";
 import projectRouter from "@/router/ProjectRouter";
 
 const mainFrame: Array<RouteRecordRaw> = [
@@ -35,8 +36,13 @@ const mainFrame: Array<RouteRecordRaw> = [
     },
     {
         path: "/settings",
-        name: "Settings",
+        name: "settings",
         component: Settings
+    },
+    {
+        path: "/notifications",
+        name: "notifications",
+        component: Notifications
     }
 ];
 
