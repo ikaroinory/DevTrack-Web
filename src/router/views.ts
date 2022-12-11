@@ -2,6 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 import Home from "@/views/Home.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
+import ForgotPassword from "@/views/ForgotPassword.vue";
 import MainFrame from "@/views/MainFrame.vue";
 import mainFrame from "@/router/MainFrame";
 
@@ -20,6 +21,11 @@ const views: Array<RouteRecordRaw> = [
         path: "/signup",
         name: "signUp",
         component: SignUp
+    },
+    {
+        path: "/forgotpassword",
+        name: "forgotPassword",
+        component: ForgotPassword
     },
     {
         path: "/main",
