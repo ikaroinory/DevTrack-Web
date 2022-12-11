@@ -55,6 +55,10 @@ const en_us = {
             title: "Sign up",
             label: "Sign Up DevTrack Account"
         },
+        forgotPassword: {
+            title: "Reset password",
+            label: "Reset Password"
+        },
         dashboard: {
             tasks: "Tasks",
             newTask: "New task",
@@ -227,6 +231,22 @@ const en_us = {
             enterPassword: "Please enter password",
             confirmPasswordTip: "Please check the password",
             enterEmail: "Please enter the email",
+            emailFormatError: "Please enter the correct email address！",
+            enterVCode: "Please enter the verification code"
+        },
+        forgotPassword: {
+            email: "Email",
+            vCode: "Verification code",
+            getVCode: "Get v-code",
+            availableInXSeconds: "Available in %d seconds",
+            newPassword: "New Password",
+            confirmPassword: "Confirm password",
+            reset: "Reset",
+            passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
+            confirmPasswordError: "Different password。",
+            enterEmail: "Please enter the email",
+            enterNewPassword: "Please enter new password",
+            confirmPasswordTip: "Please check the password",
             emailFormatError: "Please enter the correct email address！",
             enterVCode: "Please enter the verification code"
         },
