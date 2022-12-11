@@ -58,6 +58,9 @@
                     connectNulls: true
                 }
             ],
+            dataZoom: [
+                { show: "true", start: 35, end: 100 }
+            ],
             legend: {
                 data: [lang.creation, lang.completion]
             }
