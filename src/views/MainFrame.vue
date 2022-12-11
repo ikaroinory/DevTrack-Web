@@ -36,7 +36,7 @@
                         </el-icon>
                     </el-menu-item>
                 </el-tooltip>
-                <el-tooltip placement="bottom" :hide-after="toolTipHideAfter" :content="lang.notifications">
+                <el-tooltip placement="bottom" :hide-after="toolTipHideAfter" :content="lang.message">
                     <el-menu-item index="/notifications" class="main-menu-item">
                         <el-icon>
                             <el-badge is-dot :hidden="false">
