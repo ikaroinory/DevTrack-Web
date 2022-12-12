@@ -7,7 +7,7 @@ const en_us = {
             search: "Search",
             preferenceSettings: "Preference Settings",
             helpAndSupport: "Help & Support",
-            message: "Message"
+            message: "Notifications"
         },
         projectFrame: {
             overview: "Overview",
@@ -200,6 +200,12 @@ const en_us = {
         profile: {
             editProfile: "Edit profile",
             follow: "Follow"
+        },
+        taskInformation: {
+            title: "Task Information"
+        },
+        systemNotification: {
+            title: "System Notification"
         }
     },
     form: {
@@ -415,7 +421,11 @@ const en_us = {
             error: "Error"
         },
         button: {
-            ok: "Ok",
+            ok: "Save",
+            accept: "Accept",
+            ignore: "Ignore",
+            read: "Read",
+            delete: "Delete",
             cancel: "Cancel"
         },
         status: {
