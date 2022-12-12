@@ -28,6 +28,8 @@
 
         if (LocalStorageUtils.getExpireFromToken() <= Number(Date.now().toString().substring(0, 10))) {
             ApplicationUtils.showMessage(message.invalidTokenSignInAgain, "warning");
+            LocalStorageUtils.removeToken();
+            return;
         }
 
         RequestUtils.autoSignIn().then(resp => {
