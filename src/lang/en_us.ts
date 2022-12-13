@@ -61,10 +61,8 @@ const en_us = {
         },
         dashboard: {
             tasks: "Tasks",
-            newTask: "New task",
-            more: "More",
             projects: "Projects",
-            newProject: "New project"
+            schedule: "Schedule"
         },
         projectPreview: {
             title: "Projects",
@@ -156,6 +154,21 @@ const en_us = {
             cancel: "Cancel",
             about: "About",
             applicationServiceAgreement: "DevTrack Application Service Agreement"
+        },
+        projectTable: {
+            projectName: "Project Name",
+            principal: "Principal"
+        },
+        scheduleTable: {
+            taskName: "Task Name",
+            principal: "Principal"
+        },
+        taskTable: {
+            taskName: "Task Name",
+            principal: "Principal",
+            startTime: "Start Time",
+            deadline: "Deadline",
+            status: "Status"
         }
     },
     chart: {
@@ -241,6 +254,7 @@ const en_us = {
             enterVCode: "Please enter the verification code"
         },
         forgotPassword: {
+            username: "Username",
             email: "Email",
             vCode: "Verification code",
             getVCode: "Get v-code",
@@ -248,13 +262,16 @@ const en_us = {
             newPassword: "New Password",
             confirmPassword: "Confirm password",
             reset: "Reset",
+            usernameRule: "Username is composed of letters, numbers and underscores, and the length is 6~20 characters.",
             passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
-            confirmPasswordError: "Different password.",
+            confirmPasswordError: "Different password。",
+            enterUsername: "Please enter username",
             enterEmail: "Please enter the email",
             enterNewPassword: "Please enter new password",
             confirmPasswordTip: "Please check the password",
             emailFormatError: "Please enter the correct email address！",
-            enterVCode: "Please enter the verification code"
+            enterVCode: "Please enter the verification code",
+            returnSignIn: "Return signIn"
         },
         newProject: {
             title: "New Project",
@@ -495,7 +512,8 @@ const en_us = {
         doYouWantToRemoveTheRole: "Do you want to remove '%role' from this project?",
         dataNotUpdate: "Data not update, maybe new data is the same as original data.",
         unknownException: "Unknown exception.",
-        permissionDenied: "Permission denied."
+        permissionDenied: "Permission denied.",
+        resetPasswordSuccessfully: "Reset password success!"
     }
 };
 

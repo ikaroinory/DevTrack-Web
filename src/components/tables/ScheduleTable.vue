@@ -13,6 +13,9 @@
 </template>
 
 <script lang="ts" setup>
+    import ApplicationUtils from "@/utils/ApplicationUtils";
+
+    const lang = ApplicationUtils.locale.view.scheduleTable;
     interface Tasks {
         id: number;
         name: string;
@@ -164,11 +167,11 @@
     const tableHead = [
         {
             data: "name",
-            columnLabel: "任务名称"
+            columnLabel: lang.taskName
         },
         {
             data: "principal",
-            columnLabel: "负责人"
+            columnLabel: lang.principal
         }
     ];
 </script>
