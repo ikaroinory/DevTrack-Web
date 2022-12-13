@@ -56,12 +56,14 @@ const ko_kr = {
             label: "DevTrack 계정으로 등록"
         },
         forgotPassword: {
-            title: "Reset password",
-            label: "Reset Password"
+            title: "비밀번호 재설정",
+            label: "비밀번호 재설정"
         },
         dashboard: {
             taskList: "Task List",
-            schedule: "Schedule"
+            tasks: "작업",
+            projects: "프로젝트",
+            schedule: "일정"
         },
         projectPreview: {
             title: "프로젝트",
@@ -251,24 +253,24 @@ const ko_kr = {
             enterVCode: "인증 코드를 입력하십시오."
         },
         forgotPassword: {
-            username: "Username",
-            email: "Email",
-            vCode: "Verification code",
-            getVCode: "Get v-code",
-            availableInXSeconds: "Available in %d seconds",
-            newPassword: "New Password",
-            confirmPassword: "Confirm password",
-            reset: "Reset",
-            usernameRule: "Username is composed of letters, numbers and underscores, and the length is 6~20 characters.",
-            passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
-            confirmPasswordError: "Different password。",
-            enterUsername: "Please enter username",
-            enterEmail: "Please enter the email",
-            enterNewPassword: "Please enter new password",
-            confirmPasswordTip: "Please check the password",
-            emailFormatError: "Please enter the correct email address！",
-            enterVCode: "Please enter the verification code",
-            returnSignIn: "Return signIn"
+            username: "사용자 이름",
+            email: "메일박스",
+            vCode: "인증 코드",
+            getVCode: "인증 코드 가져오기",
+            availableInXSeconds: "%d초 동안 유효",
+            newPassword: "새 암호",
+            confirmPassword: "암호 확인",
+            reset: "재설정",
+            usernameRule: "사용자 이름은 문자, 숫자 및 밑줄로 구성되며 길이는 6 ~ 20자입니다.",
+            passwordRule: "암호는 대문자, 소문자, 숫자 및 기호로 구성되며 길이는 8 ~ 16자입니다.",
+            confirmPasswordError: "암호가 다름.",
+            enterUsername: "사용자 이름을 입력하십시오.",
+            enterPassword: "암호를 입력하십시오.",
+            confirmPasswordTip: "비밀번호를 입력하려면 여기를 클릭하십시오.",
+            enterEmail: "메일박스 입력",
+            emailFormatError: "올바른 이메일 주소를 입력하십시오!",
+            enterVCode: "인증 코드를 입력하십시오.",
+            returnSignIn: "로그인으로 돌아가기"
         },
         newProject: {
             title: "새 항목",
@@ -371,7 +373,7 @@ const ko_kr = {
         newRole: {
             title: "새 역할",
             name: "역할 이름",
-            permission: "권한",
+            permissions: "권한",
             inviteMember: "구성원 초대",
             updateMember: "구성원 업데이트",
             removeMember: "구성원 제거",
@@ -436,6 +438,10 @@ const ko_kr = {
         },
         button: {
             ok: "확인",
+            accept: "수신",
+            ignore: "무시",
+            read: "읽음",
+            delete: "삭제",
             cancel: "취소"
         },
         status: {
@@ -472,7 +478,7 @@ const ko_kr = {
         updateSuccessfully: "업데이트 성공!",
         submitSuccessfully: "커밋 성공!",
         removeSuccessfully: "제거 성공!",
-        ignoreSuccessfully: "Ignore successfully!",
+        ignoreSuccessfully: "성공 무시!",
         deleteSuccessfully: "삭제 성공!",
         joinSuccessfully: "프로젝트 참여 성공!",
         addSuccessfully: "추가 성공!",
@@ -506,7 +512,7 @@ const ko_kr = {
         dataNotUpdate: "데이터가 업데이트되지 않았습니다. 아마도 새 데이터는 원래의 데이터와 같을 것입니다.",
         unknownException: "알 수 없는 예외.",
         permissionDenied: "청구가 기각되다.",
-        resetPasswordSuccessfully: "Reset password success!"
+        resetPasswordSuccessfully: "암호 재설정 성공!"
     }
 };
 

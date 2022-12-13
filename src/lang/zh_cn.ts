@@ -61,6 +61,8 @@ const zh_cn = {
         },
         dashboard: {
             taskList: "任务列表",
+            tasks: "任务",
+            projects: "项目",
             schedule: "日程"
         },
         projectPreview: {
@@ -435,7 +437,11 @@ const zh_cn = {
             error: "错误"
         },
         button: {
-            ok: "确认",
+            ok: "确定",
+            accept: "接收",
+            ignore: "忽略",
+            read: "已读",
+            delete: "删除",
             cancel: "取消"
         },
         status: {
@@ -506,7 +512,7 @@ const zh_cn = {
         dataNotUpdate: "数据未更新， 也许新数据与原数据相同。",
         unknownException: "未知异常。",
         permissionDenied: "请求被驳回。",
-        resetPasswordSuccessfully: "Reset password success!"
+        resetPasswordSuccessfully: "密码重置成功！"
     }
 };
 

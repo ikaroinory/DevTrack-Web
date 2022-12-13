@@ -53,7 +53,7 @@
     const lang = ApplicationUtils.locale.view.settings;
     const message = ApplicationUtils.locale.message;
 
-    const localeOptions = [];
+    const localeOptions: Array<any> = [];
 
     const activeTab = ref("general");
     const currentLocale = ref(i18n.global.locale);

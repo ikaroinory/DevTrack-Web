@@ -18,7 +18,7 @@
             <div class="block-main">
                 <ProjectsChart v-bind="projectChartInfo"/>
                 <TasksChart v-bind="taskChartInfo"/>
-                <Heatmap v-bind="heatmapChartInfo"/>
+                <Heatmap :data="heatmapChartInfo.data"/>
             </div>
         </el-main>
     </el-container>
