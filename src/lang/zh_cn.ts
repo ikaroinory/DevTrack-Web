@@ -62,7 +62,7 @@ const zh_cn = {
         dashboard: {
             tasks: "任务",
             projects: "项目",
-            schedule: "Schedule"
+            schedule: "日程"
         },
         projectPreview: {
             title: "项目",
