@@ -5,6 +5,7 @@ import SignUp from "@/views/SignUp.vue";
 import ForgotPassword from "@/views/ForgotPassword.vue";
 import MainFrame from "@/views/MainFrame.vue";
 import mainFrame from "@/router/MainFrame";
+import NotFound from "@/views/error/NotFound.vue";
 
 const views: Array<RouteRecordRaw> = [
     {
@@ -33,6 +34,11 @@ const views: Array<RouteRecordRaw> = [
         component: MainFrame,
         children: mainFrame,
         redirect: { name: "dashboard" }
+    },
+    {
+        path: "/:catchAll(.*)",
+        name: "notFound",
+        component: NotFound
     }
 ];
 
