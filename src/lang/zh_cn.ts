@@ -196,6 +196,9 @@ const zh_cn = {
         profile: {
             editProfile: "编辑个人信息",
             follow: "关注"
+        },
+        notifications: {
+            title: "Notifications"
         }
     },
     form: {
@@ -422,7 +425,8 @@ const zh_cn = {
             roleRecordExists: "角色已存在!"
         },
         uuidConflict: "编号池冲突，请稍后再试!",
-        userNotFound: "未找到用户!",
+        userNotFound: "用户不存在！",
+        notificationNotFound: "通知不存在！",
         userExists: "用户已存在!",
         projectNotFound: "未找到项目·!",
         projectNotFoundWithUUID: "未找到项目!\n项目的uuid: %s.",
@@ -431,6 +435,8 @@ const zh_cn = {
         updateSuccessfully: "更新成功!",
         submitSuccessfully: "提交成功!",
         removeSuccessfully: "移除成功!",
+        deleteSuccessfully: "删除成功！",
+        joinSuccessfully: "成功加入该项目！",
         addSuccessfully: "添加成功!",
         uploadFailed: "上传失败!",
         youDoNotNeedToResetAvatar: "你不需要重置头像!",

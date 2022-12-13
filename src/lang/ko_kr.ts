@@ -196,6 +196,9 @@ const ko_kr = {
         profile: {
             editProfile: "개인 정보 편집",
             follow: "관심"
+        },
+        notifications: {
+            title: "Notifications"
         }
     },
     form: {
@@ -423,6 +426,7 @@ const ko_kr = {
         },
         uuidConflict: "번호 풀 충돌, 나중에 다시 시도하십시오!",
         userNotFound: "사용자를 찾을 수 없음!",
+        notificationNotFound: "Notification not found!",
         userExists: "사용자가 이미 있습니다.!",
         projectNotFound: "항목을 찾을 수 없음!",
         projectNotFoundWithUUID: "항목을 찾을 수 없습니다!\n프로젝트의 uuid: %s.",
@@ -431,6 +435,8 @@ const ko_kr = {
         updateSuccessfully: "업데이트 성공!",
         submitSuccessfully: "커밋 성공!",
         removeSuccessfully: "제거 성공!",
+        deleteSuccessfully: "Delete successfully!",
+        joinSuccessfully: "Joined the project successfully!",
         addSuccessfully: "추가 성공!",
         uploadFailed: "업로드 실패!",
         youDoNotNeedToResetAvatar: "프로필 사진을 재설정할 필요가 없습니다!",

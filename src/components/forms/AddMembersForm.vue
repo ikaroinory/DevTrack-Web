@@ -60,7 +60,7 @@
             return;
         }
 
-        RequestUtils.addProjectMembers(form).then(resp => {
+        RequestUtils.inviteMembers(form).then(resp => {
             if (resp.statusCode === StatusCode.projectNotFound)
                 ApplicationUtils.showMessage(message.projectNotFound, "error");
 

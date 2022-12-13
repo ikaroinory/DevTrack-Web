@@ -25,6 +25,7 @@ import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
 import TaskStatisticsVO from "@/utils/vo/TaskStatisticsVO";
 import TaskOverviewVO from "@/utils/vo/TaskOverviewVO";
 import PlannedCompletionVO from "@/utils/vo/PlannedCompletionVO";
+import NotificationDTO from "@/utils/dto/NotificationDTO";
 
 const source = axios.CancelToken.source();
 
@@ -130,6 +131,7 @@ class RequestUrl {
     private static readonly memberController = "member/";
     private static readonly taskController = "task/";
     private static readonly roleController = "role/";
+    private static readonly notificationController = "notification/";
 
     // Account Controller
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
@@ -151,10 +153,13 @@ class RequestUrl {
 
     // Member Controller
     public static readonly addProjectMembers = this.baseUrl + this.memberController + "add";
+    public static readonly inviteMembers = this.baseUrl + this.memberController + "invite";
     public static readonly removeProjectMembers = this.baseUrl + this.memberController + "remove";
     public static readonly updateMemberRole = this.baseUrl + this.memberController + "update";
     public static readonly getOnePageProjectMemberInfo = this.baseUrl + this.memberController + "getOnePageFromProject";
     public static readonly getProjectMemberInformation = this.baseUrl + this.memberController + "getAllFromProject";
+    public static readonly acceptInvitation = this.baseUrl + this.memberController + "accept";
+    public static readonly ignoreInvitation = this.baseUrl + this.memberController + "ignore";
 
     // Task Controller
     public static readonly getHeatMap = this.baseUrl + this.taskController + "getHeatMap";
@@ -182,6 +187,10 @@ class RequestUrl {
     public static readonly removeRole = this.baseUrl + this.roleController + "remove";
     public static readonly getRoles = this.baseUrl + this.roleController + "getAllFromProject";
     public static readonly getOnePageRoles = this.baseUrl + this.roleController + "getOnePageFromProject";
+
+    // Notification Controller
+    public static readonly getNotifications = this.baseUrl + this.notificationController + "get";
+    public static readonly deleteNotification = this.baseUrl + this.notificationController + "delete";
 }
 
 export default class RequestUtils {
@@ -265,6 +274,10 @@ export default class RequestUtils {
         return (await this.post(RequestUrl.addProjectMembers, this.toFormData(form)));
     }
 
+    public static async inviteMembers(form: AddProjectMembersForm): Promise<Response<number>> {
+        return (await this.post(RequestUrl.inviteMembers, this.toFormData(form)));
+    }
+
     public static async removeProjectMember(recordUUID: string): Promise<number> {
         return this.removeProjectMembers({ recordUUIDList: [recordUUID] });
     }
@@ -283,6 +296,14 @@ export default class RequestUtils {
 
     public static async getProjectMemberInformation(projectUUID: String): Promise<Response<Array<ProjectMemberInformation>>> {
         return (await this.get(RequestUrl.getProjectMemberInformation, { projectUUID }));
+    }
+
+    public static async acceptInvitation(notificationUUID: string, projectUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.acceptInvitation, this.toFormData({ notificationUUID, projectUUID })));
+    }
+
+    public static async ignoreInvitation(notificationUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.ignoreInvitation, this.toFormData({ notificationUUID })));
     }
 
     // Task Controller
@@ -385,5 +406,14 @@ export default class RequestUtils {
 
     public static async getRoles(projectUUID: string): Promise<Response<Array<Role>>> {
         return (await this.get(RequestUrl.getRoles, { projectUUID }));
+    }
+
+    // Notification Controller
+    public static async getNotifications(): Promise<Response<Array<NotificationDTO>>> {
+        return (await this.get(RequestUrl.getNotifications, null));
+    }
+
+    public static async deleteNotification(notificationUUID: string): Promise<number> {
+        return (await this.post(RequestUrl.deleteNotification, this.toFormData({ notificationUUID })));
     }
 }

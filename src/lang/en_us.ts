@@ -204,8 +204,8 @@ const en_us = {
         taskInformation: {
             title: "Task Information"
         },
-        systemNotification: {
-            title: "System Notification"
+        notifications: {
+            title: "Notifications"
         }
     },
     form: {
@@ -453,6 +453,7 @@ const en_us = {
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         userNotFound: "User not found!",
+        notificationNotFound: "Notification not found!",
         userExists: "User already exists!",
         projectNotFound: "Project not found!",
         projectNotFoundWithUUID: "Project not found!\nProject uuid: %s.",
@@ -461,6 +462,8 @@ const en_us = {
         updateSuccessfully: "Update successfully!",
         submitSuccessfully: "Submit successfully!",
         removeSuccessfully: "Remove successfully!",
+        deleteSuccessfully: "Delete successfully!",
+        joinSuccessfully: "Joined the project successfully!",
         addSuccessfully: "Add successfully!",
         uploadFailed: "Upload failed!",
         youDoNotNeedToResetAvatar: "You do not need to reset avatar!",
