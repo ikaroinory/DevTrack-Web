@@ -170,7 +170,7 @@ const zh_cn = {
             priority: "负责人",
             sourceOfDemand: "需求来源",
             startTime: "开始时间",
-            deadline: "截止时间",
+            deadline: "截止时间"
         }
     },
     chart: {

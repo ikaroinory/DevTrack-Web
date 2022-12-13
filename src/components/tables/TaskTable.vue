@@ -149,7 +149,27 @@
     const loading = ref(false);
     const showTaskInformationDialog = ref(false);
     const tasks = ref<Array<TaskInformation>>([]);
-    const currentTask = ref<TaskInformation>();
+    const currentTask = ref<TaskInformation>({
+        creationTime: "",
+        creatorAvatar: "",
+        creatorNickname: "",
+        creatorUUID: "",
+        creatorUsername: "",
+        deadline: "",
+        finishTime: "",
+        fromProjectUUID: "",
+        principalAvatar: "",
+        principalNickname: "",
+        principalUUID: "",
+        principalUsername: "",
+        priority: 0,
+        sourceOfDemand: 0,
+        startTime: "",
+        taskDescription: "",
+        taskName: "",
+        taskType: 0,
+        taskUUID: ""
+    });
     const currentPage = ref(1);
     const pageSize = 10;
     const recordCount = ref(1);

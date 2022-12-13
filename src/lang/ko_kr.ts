@@ -265,7 +265,7 @@ const ko_kr = {
             passwordRule: "암호는 대문자, 소문자, 숫자 및 기호로 구성되며 길이는 8 ~ 16자입니다.",
             confirmPasswordError: "암호가 다름.",
             enterUsername: "사용자 이름을 입력하십시오.",
-            enterPassword: "암호를 입력하십시오.",
+            enterNewPassword: "암호를 입력하십시오.",
             confirmPasswordTip: "비밀번호를 입력하려면 여기를 클릭하십시오.",
             enterEmail: "메일박스 입력",
             emailFormatError: "올바른 이메일 주소를 입력하십시오!",
