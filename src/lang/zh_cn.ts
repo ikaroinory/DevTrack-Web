@@ -507,7 +507,8 @@ const zh_cn = {
         doYouWantToRemoveTheRole: "您想要将 '%role' 从该项目移除吗？",
         dataNotUpdate: "数据未更新， 也许新数据与原数据相同。",
         unknownException: "未知异常。",
-        permissionDenied: "请求被驳回。"
+        permissionDenied: "请求被驳回。",
+        resetPasswordSuccessfully: "Reset password success!"
     }
 };
 
