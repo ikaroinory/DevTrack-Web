@@ -60,8 +60,7 @@ const ko_kr = {
             label: "Reset Password"
         },
         dashboard: {
-            tasks: "작업",
-            projects: "프로젝트",
+            taskList: "Task List",
             schedule: "Schedule"
         },
         projectPreview: {
@@ -155,20 +154,21 @@ const ko_kr = {
             about: "정보",
             applicationServiceAgreement: "DevTrack 애플리케이션 서비스 계약"
         },
-        projectTable: {
-            projectName: "Project Name",
-            principal: "Principal"
-        },
         scheduleTable: {
-            taskName: "Task Name",
-            principal: "Principal"
+            name: "Name",
+            principal: "Principal",
+            priority: "Priority",
+            deadline: "Deadline"
         },
         taskTable: {
-            taskName: "Task Name",
+            name: "Name",
             principal: "Principal",
+            status: "Status",
+            type: "Type",
+            priority: "Priority",
+            sourceOfDemand: "SourceOfDemand",
             startTime: "Start Time",
             deadline: "Deadline",
-            status: "Status"
         }
     },
     chart: {

@@ -60,8 +60,7 @@ const en_us = {
             label: "Reset Password"
         },
         dashboard: {
-            tasks: "Tasks",
-            projects: "Projects",
+            taskList: "Task List",
             schedule: "Schedule"
         },
         projectPreview: {
@@ -155,20 +154,21 @@ const en_us = {
             about: "About",
             applicationServiceAgreement: "DevTrack Application Service Agreement"
         },
-        projectTable: {
-            projectName: "Project Name",
-            principal: "Principal"
-        },
         scheduleTable: {
-            taskName: "Task Name",
-            principal: "Principal"
+            name: "Name",
+            principal: "Principal",
+            priority: "Priority",
+            deadline: "Deadline"
         },
         taskTable: {
-            taskName: "Task Name",
+            name: "Name",
             principal: "Principal",
+            status: "Status",
+            type: "Type",
+            priority: "Priority",
+            sourceOfDemand: "SourceOfDemand",
             startTime: "Start Time",
             deadline: "Deadline",
-            status: "Status"
         }
     },
     chart: {

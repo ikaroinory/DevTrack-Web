@@ -183,6 +183,8 @@ class RequestUrl {
     public static readonly getTaskStatistics = this.baseUrl + this.taskController + "getTaskStatistics";
     public static readonly getTaskOverview = this.baseUrl + this.taskController + "getTaskOverview";
     public static readonly getPlannedCompletion = this.baseUrl + this.taskController + "getPlannedCompletion";
+    public static readonly getTasksFromUser = this.baseUrl + this.taskController + "getOnePageFromUser";
+    public static readonly getUsersSchedule = this.baseUrl + this.taskController + "getSchedule";
 
     // Role Controller
     public static readonly newRole = this.baseUrl + this.roleController + "new";
@@ -197,7 +199,7 @@ class RequestUrl {
 }
 
 export default class RequestUtils {
-    private static readonly defaultTimeout: number = 3000;
+    private static readonly defaultTimeout: number = 300000;
 
     private static async get(url: string, form: any, timeout?: number): Promise<Response<any> | any> {
         return (await axios.get(url, {
@@ -393,6 +395,14 @@ export default class RequestUtils {
 
     public static async getPlannedCompletion(projectUUID: string): Promise<Response<PlannedCompletionVO>> {
         return (await this.get(RequestUrl.getPlannedCompletion, { projectUUID }));
+    }
+
+    public static async getTasksFromUser(pageNum: number, pageSize: number): Promise<Response<PageInformation<TaskInformation>>> {
+        return (await this.get(RequestUrl.getTasksFromUser, { pageNum, pageSize }));
+    }
+
+    public static async getUsersSchedule(): Promise<Response<Array<TaskInformation>>> {
+        return (await this.get(RequestUrl.getUsersSchedule, null));
     }
 
     // Role Controller
