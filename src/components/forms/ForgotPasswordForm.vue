@@ -1,10 +1,13 @@
 <template>
-    <el-form :model="forgotPassword" :rules="forgotPasswordFormRules" ref="forgotPasswordFormRef" label-position="top" label-width="80px">
+    <el-form :model="forgotPasswordForm" :rules="forgotPasswordFormRules" ref="forgotPasswordFormRef" label-position="top" label-width="80px">
+        <el-form-item prop="username" :label="lang.username">
+            <el-input type="text" v-model="forgotPasswordForm.username"/>
+        </el-form-item>
         <el-form-item prop="email" :label="lang.email">
-            <el-input type="email" v-model="forgotPassword.email"/>
+            <el-input type="email" v-model="forgotPasswordForm.email"/>
         </el-form-item>
         <el-form-item prop="vCode" :label="lang.vCode">
-            <el-input type="text" v-model="forgotPassword.vCode">
+            <el-input type="text" v-model="forgotPasswordForm.vCode">
                 <template #append>
                     <el-button class="button-getVCode"
                                type="primary"
@@ -19,10 +22,10 @@
             </el-input>
         </el-form-item>
         <el-form-item prop="password" :label="lang.newPassword">
-            <el-input type="password" v-model="forgotPassword.newPassword" show-password/>
+            <el-input type="password" v-model="forgotPasswordForm.password" show-password/>
         </el-form-item>
         <el-form-item prop="confirmPassword" :label="lang.confirmPassword">
-            <el-input type="password" v-model="forgotPassword.confirmPassword" show-password/>
+            <el-input type="password" v-model="forgotPasswordForm.confirmPassword" show-password/>
         </el-form-item>
 
 
@@ -35,15 +38,15 @@
             </el-button>
         </el-form-item>
 
-<!--        <el-form-item>-->
-<!--            <div style="display: flex;align-items: center">-->
-<!--                <div v-text="lang.haveAccount"/>-->
-<!--                <router-link class="el-link el-link&#45;&#45;primary"-->
-<!--                             v-text="lang.signIn"-->
-<!--                             :to="{name: 'signIn'}"-->
-<!--                />-->
-<!--            </div>-->
-<!--        </el-form-item>-->
+        <el-form-item>
+            <div style="display: flex;align-items: center">
+<!--                <div v-text="lang.returnSignIn"/>-->
+                <router-link class="el-link el-link--primary"
+                             v-text="lang.returnSignIn"
+                             :to="{name: 'signIn'}"
+                />
+            </div>
+        </el-form-item>
     </el-form>
 </template>
 
@@ -83,32 +86,42 @@
     });
 
     const requestingService = ref(false);
-    const forgotPassword = reactive({
-        newPassword: "",
+    const forgotPasswordForm = reactive({
+        username: "",
+        password: "",
         confirmPassword: "",
         email: "",
         vCode: ""
     });
 
     const formValidator = {
-        newPassword(rule: any, value: any, callback: any) {
+        username(rule: any, value: any, callback: any) {
+            const regex = new RegExp("^\\w{6,20}$");
+            if (!regex.test(value))
+                callback(lang.usernameRule);
+            return callback();
+        },
+        password(rule: any, value: any, callback: any) {
             const regex = new RegExp("^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*,._])[0-9a-zA-Z!@#$%^&*,._]{8,16}$");
             if (!regex.test(value))
                 callback(lang.passwordRule);
-            //不能与原密码相同
             return callback();
         },
         confirmPassword(rule: any, value: any, callback: any) {
-            if (value !== forgotPassword.newPassword)
+            if (value !== forgotPasswordForm.password)
                 callback(lang.confirmPasswordError);
             return callback();
         }
     };
 
     const forgotPasswordFormRules: FormRules = {
-        newPassword: [
+        username: [
+            { required: true, message: lang.enterUsername, trigger: "blur" },
+            { validator: formValidator.username, trigger: "blur" }
+        ],
+        password: [
             { required: true, message: lang.enterNewPassword, trigger: "blur" },
-            { validator: formValidator.newPassword, trigger: "blur" }
+            { validator: formValidator.password, trigger: "blur" }
         ],
         confirmPassword: [
             { required: true, message: lang.confirmPasswordTip, trigger: "blur" },
@@ -122,51 +135,42 @@
     };
 
     function getVCode() {
-        if (forgotPassword.email === "") {
+        if (forgotPasswordForm.email === "") {
             ApplicationUtils.showMessage(message.enterEmail, "error");
             return;
         }
 
-        // timer.start();
-        // RequestUtils.getSignUpCode(forgotPassword.email).then(() => {
-        //     ApplicationUtils.showMessage(message.vCodeSendSuccessfully, "success");
-        // }).catch(() => {
-        //     ApplicationUtils.showMessage(message.vCodeSendFailed, "error");
-        //     requestingService.value = false;
-        //     timer.stop();
-        // });
+        timer.start();
+        RequestUtils.getForgotPasswordCode(forgotPasswordForm.email).then(() => {
+            ApplicationUtils.showMessage(message.vCodeSendSuccessfully, "success");
+        }).catch(() => {
+            ApplicationUtils.showMessage(message.vCodeSendFailed, "error");
+            requestingService.value = false;
+            timer.stop();
+        });
     }
 
     function submitForgotPasswordForm() {
         forgotPasswordFormRef.value?.validate((valid) => {
             if (!valid) return;
 
-            // requestingService.value = true;
-            // const newSignUpForm = JSON.parse(JSON.stringify(forgotPassword));
-            // delete newSignUpForm.confirmPassword;
-            // console.log(newSignUpForm);
-            // RequestUtils.signUp(newSignUpForm).then(resp => {
-            //     if (resp === StatusCode.userExists)
-            //         ApplicationUtils.showMessage(message.userExists, "error");
-            //     if (resp === StatusCode.vCodeError)
-            //         ApplicationUtils.showMessage(message.vCodeError, "error");
-            //     if (resp === StatusCode.invalidVCode)
-            //         ApplicationUtils.showMessage(message.vCodeInvalid, "error");
-            //     if (resp === StatusCode.vCodeRecordNotFound)
-            //         ApplicationUtils.showMessage(message.noVCodeRecord, "error");
-            //     if (resp === StatusCode.uuidConflict)
-            //         ApplicationUtils.showMessage(message.uuidConflict, "error");
-            //
-            //     if (resp === StatusCode.success) {
-            //         ApplicationUtils.showMessage(message.signUpSuccessfully, "success");
-            //         router.push({ name: "signIn" });
-            //     }
-            //
-            //     requestingService.value = false;
-            // }).catch(() => {
-            //     ApplicationUtils.showMessage(message.timeout, "error");
-            //     requestingService.value = false;
-            // });
+            requestingService.value = true;
+            const newForgotPasswordForm = JSON.parse(JSON.stringify(forgotPasswordForm));
+            delete newForgotPasswordForm.confirmPassword;
+            RequestUtils.retrieve(newForgotPasswordForm).then(resp => {
+                if (resp === StatusCode.userNotFound)
+                    ApplicationUtils.showMessage(message.userNotFound, "error");
+
+                if (resp === StatusCode.success) {
+                    ApplicationUtils.showMessage(message.resetPasswordSuccessfully, "success");
+                    router.push({ name: "signIn" });
+                }
+
+                requestingService.value = false;
+            }).catch(() => {
+                ApplicationUtils.showMessage(message.timeout, "error");
+                requestingService.value = false;
+            });
         });
     }
 </script>

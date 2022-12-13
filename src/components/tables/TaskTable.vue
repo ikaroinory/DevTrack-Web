@@ -36,7 +36,9 @@
 <script lang="ts" setup>
     import { ref } from "vue";
     import TaskTableDetailsDialog from "@/components/display/TaskInformationDisplay.vue";
+    import ApplicationUtils from "@/utils/ApplicationUtils";
 
+    const lang = ApplicationUtils.locale.view.taskTable;
     const currentPage = ref(1);
     const pageSize = ref(15);
     const tableDialogVisible = ref(false);
@@ -209,23 +211,23 @@
     const tableHead = [
         {
             data: "name",
-            columnLabel: "任务名称"
+            columnLabel: lang.taskName
         },
         {
             data: "principal",
-            columnLabel: "负责人"
+            columnLabel: lang.principal
         },
         {
             data: "startDate",
-            columnLabel: "开始时间"
+            columnLabel: lang.startTime
         },
         {
             data: "endDate",
-            columnLabel: "截止时间"
+            columnLabel: lang.deadline
         },
         {
             data: "status",
-            columnLabel: "任务状态"
+            columnLabel: lang.status
         }
     ];
 </script>

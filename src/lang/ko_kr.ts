@@ -55,12 +55,14 @@ const ko_kr = {
             title: "등록",
             label: "DevTrack 계정으로 등록"
         },
+        forgotPassword: {
+            title: "Reset password",
+            label: "Reset Password"
+        },
         dashboard: {
             tasks: "작업",
-            newTask: "새 작업",
-            more: "추가",
             projects: "프로젝트",
-            newProject: "새 항목"
+            schedule: "Schedule"
         },
         projectPreview: {
             title: "프로젝트",
@@ -152,6 +154,21 @@ const ko_kr = {
             cancel: "취소",
             about: "정보",
             applicationServiceAgreement: "DevTrack 애플리케이션 서비스 계약"
+        },
+        projectTable: {
+            projectName: "Project Name",
+            principal: "Principal"
+        },
+        scheduleTable: {
+            taskName: "Task Name",
+            principal: "Principal"
+        },
+        taskTable: {
+            taskName: "Task Name",
+            principal: "Principal",
+            startTime: "Start Time",
+            deadline: "Deadline",
+            status: "Status"
         }
     },
     chart: {
@@ -229,6 +246,26 @@ const ko_kr = {
             enterEmail: "메일박스 입력",
             emailFormatError: "올바른 이메일 주소를 입력하십시오.！",
             enterVCode: "인증 코드를 입력하십시오."
+        },
+        forgotPassword: {
+            username: "Username",
+            email: "Email",
+            vCode: "Verification code",
+            getVCode: "Get v-code",
+            availableInXSeconds: "Available in %d seconds",
+            newPassword: "New Password",
+            confirmPassword: "Confirm password",
+            reset: "Reset",
+            usernameRule: "Username is composed of letters, numbers and underscores, and the length is 6~20 characters.",
+            passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
+            confirmPasswordError: "Different password。",
+            enterUsername: "Please enter username",
+            enterEmail: "Please enter the email",
+            enterNewPassword: "Please enter new password",
+            confirmPasswordTip: "Please check the password",
+            emailFormatError: "Please enter the correct email address！",
+            enterVCode: "Please enter the verification code",
+            returnSignIn: "Return signIn"
         },
         newProject: {
             title: "새 항목",
@@ -461,7 +498,8 @@ const ko_kr = {
         doYouWantToRemoveTheRole: "이 항목에서 '%role' 을 제거하시겠습니까?",
         dataNotUpdate: "데이터가 업데이트되지 않았습니다. 아마도 새 데이터는 원래의 데이터와 같을 것입니다.",
         unknownException: "알 수 없는 예외.",
-        permissionDenied: "청구가 기각되다."
+        permissionDenied: "청구가 기각되다.",
+        resetPasswordSuccessfully: "Reset password success!"
     }
 };
 

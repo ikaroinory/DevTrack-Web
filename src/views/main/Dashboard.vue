@@ -9,7 +9,7 @@
         <div class="right-container box-flex">
             <div class="right-top-box box-style box-flex">
                 <div class="top-title">
-                    <span>我的日程</span>
+                    <span v-text="lang.schedule"/>
                 </div>
                 <ScheduleTable/>
             </div>
@@ -30,6 +30,7 @@
     import ProjectTable from "@/components/tables/ProjectTable.vue";
 
     const lang = ApplicationUtils.locale.view.dashboard;
+
 </script>
 
 <style scoped>

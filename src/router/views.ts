@@ -23,7 +23,7 @@ const views: Array<RouteRecordRaw> = [
         component: SignUp
     },
     {
-        path: "/forgotpassword",
+        path: "/account/forget",
         name: "forgotPassword",
         component: ForgotPassword
     },

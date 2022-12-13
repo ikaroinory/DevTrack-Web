@@ -55,6 +55,10 @@ const zh_cn = {
             title: "注册",
             label: "注册成为DevTrack账户"
         },
+        forgotPassword: {
+            title: "重置密码",
+            label: "重置密码"
+        },
         dashboard: {
             tasks: "任务",
             newTask: "新建任务",
@@ -152,6 +156,21 @@ const zh_cn = {
             cancel: "取消",
             about: "关于",
             applicationServiceAgreement: "DevTrack应用服务协议"
+        },
+        projectTable: {
+            projectName: "项目名称",
+            principal: "负责人"
+        },
+        scheduleTable: {
+            taskName: "任务名称",
+            principal: "负责人"
+        },
+        taskTable: {
+            taskName: "任务名称",
+            principal: "负责人",
+            startTime: "开始时间",
+            deadline: "截止时间",
+            status: "状态"
         }
     },
     chart: {
@@ -229,6 +248,26 @@ const zh_cn = {
             enterEmail: "请输入邮箱",
             emailFormatError: "请输入正确的邮箱地址！",
             enterVCode: "请输入验证码"
+        },
+        forgotPassword: {
+            username: "用户名",
+            email: "邮箱",
+            vCode: "验证码",
+            getVCode: "获取验证码",
+            availableInXSeconds: "%d秒内有效",
+            newPassword: "新密码",
+            confirmPassword: "确认密码",
+            reset: "重置",
+            usernameRule: "用户名由字母、数字和下划线组成，长度为6~20个字符。",
+            passwordRule: "密码由大写字母、小写字母、数字和符号组成，长度为8~16个字符。",
+            confirmPasswordError: "密码不同。",
+            enterUsername: "请输入用户名",
+            enterEmail: "请输入邮箱",
+            enterNewPassword: "请输入新密码",
+            confirmPasswordTip: "请点击这里以输入密码",
+            emailFormatError: "请输入正确的邮箱地址！",
+            enterVCode: "请输入验证码",
+            returnSignIn: "返回登录"
         },
         newProject: {
             title: "新建项目",
@@ -461,7 +500,8 @@ const zh_cn = {
         doYouWantToRemoveTheRole: "您想要将 '%role' 从该项目移除吗?",
         dataNotUpdate: "数据未更新, 也许新数据与原数据相同.",
         unknownException: "未知异常.",
-        permissionDenied: "请求被驳回."
+        permissionDenied: "请求被驳回.",
+        resetPasswordSuccessfully: "重置密码成功!"
     }
 };
 

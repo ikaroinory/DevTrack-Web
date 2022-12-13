@@ -13,38 +13,42 @@
 </template>
 
 <script lang="ts" setup>
+    import ApplicationUtils from "@/utils/ApplicationUtils";
+
+    const lang = ApplicationUtils.locale.view.projectTable;
+
     interface Projects {
         uuid: string;
         name: string;
         principalUsername: string;
     }
 
+
     const tableData: Projects[] = [
         {
             uuid: "1",
             name: "project1",
-            principalUsername: "handsome boy",
+            principalUsername: "handsome boy"
         },
         {
             uuid: "2",
             name: "project2",
-            principalUsername: "wxt",
+            principalUsername: "wxt"
         },
         {
             uuid: "3",
             name: "project3",
-            principalUsername: "twq",
+            principalUsername: "twq"
         }
     ];
-
     const tableHead = [
         {
             data: "name",
-            columnLabel: "项目名称"
+            columnLabel: lang.projectName
         },
         {
             data: "principalUsername",
-            columnLabel: "负责人"
+            columnLabel: lang.principal
         }
     ];
 </script>
