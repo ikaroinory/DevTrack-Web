@@ -32,11 +32,26 @@
             <el-col :span="11">
                 <el-form-item prop="priority" :label="lang.priority">
                     <el-select style="width: 100%" v-model="taskForm.priority">
+                        <template #prefix>
+                            <el-icon size="1.2rem" :style="{color: selectIconColor}">
+                                <Warning/>
+                            </el-icon>
+                        </template>
                         <el-option v-for="item in GlobalData.priorityList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
-                        />
+                        >
+                            <div style="display: flex; align-items: center">
+                                    <span style="display: flex">
+                                        <el-icon size="1.2rem" :style="{color: item.iconColor}"
+                                                 style="margin-right: 6px">
+                                            <Warning/>
+                                        </el-icon>
+                                    </span>
+                                <span>{{ item.label }}</span>
+                            </div>
+                        </el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
@@ -114,7 +129,8 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-    import { inject, reactive, ref } from "vue";
+    import { computed, inject, reactive, ref } from "vue";
+    import { Warning } from "@element-plus/icons-vue";
     import type { FormInstance, FormRules } from "element-plus";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -154,6 +170,20 @@
         ]
     });
     const members = ref<Array<ProjectMemberInformation>>([]);
+    const selectIconColor = computed(() => {
+        if (taskForm.value.priority === 5)
+            return "#fa8888";
+        else if (taskForm.value.priority === 4)
+            return "#fb7fb7";
+        else if (taskForm.value.priority === 3)
+            return "#f4d66d";
+        else if (taskForm.value.priority === 2)
+            return "#40e0c3";
+        else if (taskForm.value.priority === 1)
+            return "#5dcfff";
+        else
+            return;
+    });
 
     function init() {
         RequestUtils.getProjectMemberInformation(props.projectUuid).then(resp => {

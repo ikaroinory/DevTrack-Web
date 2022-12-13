@@ -60,6 +60,7 @@ const zh_cn = {
             label: "重置密码"
         },
         dashboard: {
+            taskList: "任务列表",
             tasks: "任务",
             projects: "项目",
             schedule: "日程"
@@ -155,20 +156,21 @@ const zh_cn = {
             about: "关于",
             applicationServiceAgreement: "DevTrack应用服务协议"
         },
-        projectTable: {
-            projectName: "项目名称",
-            principal: "负责人"
-        },
         scheduleTable: {
-            taskName: "任务名称",
-            principal: "负责人"
+            name: "任务名称",
+            principal: "负责人",
+            priority: "优先级",
+            deadline: "截止时间"
         },
         taskTable: {
-            taskName: "任务名称",
+            name: "任务名称",
             principal: "负责人",
+            status: "状态",
+            type: "类型",
+            priority: "负责人",
+            sourceOfDemand: "需求来源",
             startTime: "开始时间",
             deadline: "截止时间",
-            status: "状态"
         }
     },
     chart: {
