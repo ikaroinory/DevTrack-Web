@@ -25,6 +25,7 @@ import TaskMemberInformation from "@/utils/dto/TaskMemberInformation";
 import TaskStatisticsVO from "@/utils/vo/TaskStatisticsVO";
 import TaskOverviewVO from "@/utils/vo/TaskOverviewVO";
 import PlannedCompletionVO from "@/utils/vo/PlannedCompletionVO";
+import ForgotPasswordForm from "@/utils/forms/ForgotPasswordForm";
 import NotificationDTO from "@/utils/dto/NotificationDTO";
 
 const source = axios.CancelToken.source();
@@ -136,6 +137,7 @@ class RequestUrl {
     // Account Controller
     public static readonly signIn = this.baseUrl + this.accountController + "signIn";
     public static readonly signUp = this.baseUrl + this.accountController + "signUp";
+    public static readonly retrieve = this.baseUrl + this.accountController + "retrieve";
     public static readonly autoSignIn = this.baseUrl + this.accountController + "autoSignIn";
     public static readonly getAvatar = this.baseUrl + this.accountController + "getAvatar";
     public static readonly updateAvatar = this.baseUrl + this.accountController + "updateAvatar";
@@ -144,6 +146,8 @@ class RequestUrl {
 
     // Email Controller
     public static readonly sendVCode = this.baseUrl + this.emailController + "signUpVCode";
+
+    public static readonly forgotPasswordSendVCode = this.baseUrl + this.emailController + "forgetVCode";
 
     // Project Controller
     public static readonly getOnePageUserProjects = this.baseUrl + this.projectController + "getOnePage";
@@ -229,6 +233,10 @@ export default class RequestUtils {
         return (await this.post(RequestUrl.signIn, this.toFormData(form)));
     }
 
+    public static async retrieve(form: ForgotPasswordForm): Promise<number> {
+        return (await this.post(RequestUrl.retrieve, this.toFormData(form)));
+    }
+
     public static async getUserInformation(username: string): Promise<Response<UserInformation>> {
         return (await this.get(RequestUrl.getUserInformation, { username }, 1500));
     }
@@ -245,9 +253,14 @@ export default class RequestUtils {
         return (await this.post(RequestUrl.updateProfile, this.toFormData(form)));
     }
 
-    // Email Controller
+    // SignUp Email Controller
     public static async getSignUpCode(email: string): Promise<Response<string>> {
         return (await this.post(RequestUrl.sendVCode, this.toFormData({ email })));
+    }
+
+    // ForgotPassword Email Controller
+    public static async getForgotPasswordCode(email: string): Promise<Response<string>> {
+        return (await this.post(RequestUrl.forgotPasswordSendVCode, this.toFormData({ email })));
     }
 
     // Project Controller
