@@ -198,7 +198,7 @@ const ko_kr = {
             follow: "관심"
         },
         notifications: {
-            title: "Notifications"
+            title: "알림"
         }
     },
     form: {
@@ -225,12 +225,12 @@ const ko_kr = {
             signIn: "여기를 클릭하여 로그인하세요",
             usernameRule: "사용자 이름은 문자, 숫자 및 밑줄로 구성되며 길이는 6 ~ 20자입니다.",
             passwordRule: "암호는 대문자, 소문자, 숫자 및 기호로 구성되며 길이는 8 ~ 16자입니다.",
-            confirmPasswordError: "암호가 다름。",
+            confirmPasswordError: "암호가 다름.",
             enterUsername: "사용자 이름을 입력하십시오.",
             enterPassword: "암호를 입력하십시오.",
             confirmPasswordTip: "비밀번호를 입력하려면 여기를 클릭하십시오.",
             enterEmail: "메일박스 입력",
-            emailFormatError: "올바른 이메일 주소를 입력하십시오.！",
+            emailFormatError: "올바른 이메일 주소를 입력하십시오!",
             enterVCode: "인증 코드를 입력하십시오."
         },
         newProject: {
@@ -426,7 +426,7 @@ const ko_kr = {
         },
         uuidConflict: "번호 풀 충돌, 나중에 다시 시도하십시오!",
         userNotFound: "사용자를 찾을 수 없음!",
-        notificationNotFound: "Notification not found!",
+        notificationNotFound: "알림을 찾을 수 없음!",
         userExists: "사용자가 이미 있습니다.!",
         projectNotFound: "항목을 찾을 수 없음!",
         projectNotFoundWithUUID: "항목을 찾을 수 없습니다!\n프로젝트의 uuid: %s.",
@@ -435,9 +435,9 @@ const ko_kr = {
         updateSuccessfully: "업데이트 성공!",
         submitSuccessfully: "커밋 성공!",
         removeSuccessfully: "제거 성공!",
-        deleteSuccessfully: "Delete successfully!",
         ignoreSuccessfully: "Ignore successfully!",
-        joinSuccessfully: "Joined the project successfully!",
+        deleteSuccessfully: "삭제 성공!",
+        joinSuccessfully: "프로젝트 참여 성공!",
         addSuccessfully: "추가 성공!",
         uploadFailed: "업로드 실패!",
         youDoNotNeedToResetAvatar: "프로필 사진을 재설정할 필요가 없습니다!",
