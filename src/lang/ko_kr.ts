@@ -371,7 +371,7 @@ const ko_kr = {
         newRole: {
             title: "새 역할",
             name: "역할 이름",
-            permission: "권한",
+            permissions: "권한",
             inviteMember: "구성원 초대",
             updateMember: "구성원 업데이트",
             removeMember: "구성원 제거",
@@ -435,8 +435,12 @@ const ko_kr = {
             error: "오류"
         },
         button: {
-            ok: "확인",
-            cancel: "취소"
+            ok: "Save",
+            accept: "Accept",
+            ignore: "Ignore",
+            read: "Read",
+            delete: "Delete",
+            cancel: "Cancel"
         },
         status: {
             unknown: "알 수 없는 오류!",

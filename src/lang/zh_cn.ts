@@ -61,10 +61,8 @@ const zh_cn = {
         },
         dashboard: {
             tasks: "任务",
-            newTask: "新建任务",
-            more: "更多",
             projects: "项目",
-            newProject: "新建项目"
+            schedule: "Schedule"
         },
         projectPreview: {
             title: "项目",
@@ -437,7 +435,11 @@ const zh_cn = {
             error: "错误"
         },
         button: {
-            ok: "确认",
+            ok: "确定",
+            accept: "接收",
+            ignore: "忽略",
+            read: "已读",
+            delete: "删除",
             cancel: "取消"
         },
         status: {
@@ -507,7 +509,8 @@ const zh_cn = {
         doYouWantToRemoveTheRole: "您想要将 '%role' 从该项目移除吗？",
         dataNotUpdate: "数据未更新， 也许新数据与原数据相同。",
         unknownException: "未知异常。",
-        permissionDenied: "请求被驳回。"
+        permissionDenied: "请求被驳回。",
+        resetPasswordSuccessfully: "密码重置成功！"
     }
 };
 

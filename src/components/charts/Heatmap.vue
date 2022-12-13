@@ -3,7 +3,8 @@
         <div class="block-title" v-text="lang.title"/>
         <calendar-heatmap class="chart-heatmap"
                           :tooltip-formatter="tooltipFormatter"
-                          :range-color="rangeColor" :values="props.data"
+                          :range-color="rangeColor"
+                          :values="data"
                           :end-date="Date.now()"
                           :no-data-text="lang.noData"
                           :round="2"
@@ -12,12 +13,12 @@
 </template>
 
 <script lang="ts" setup>
-    import { CalendarHeatmap } from "vue3-calendar-heatmap";
+    import { CalendarHeatmap, Value } from "vue3-calendar-heatmap";
     import { CalendarItem } from "vue3-calendar-heatmap/dist/src/components/Heatmap";
     import ApplicationUtils from "@/utils/ApplicationUtils";
 
     const props = defineProps<{
-        data: Array<{ date: string, count: number | null }>
+        data: Array<Value>
     }>();
 
     const lang = ApplicationUtils.locale.chart.heatmap;

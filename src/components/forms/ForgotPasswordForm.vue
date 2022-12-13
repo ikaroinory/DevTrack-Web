@@ -71,7 +71,7 @@
         start() {
             this.isCountdown = true;
             this.count = 60;
-            this.id = setInterval(() => {
+            this.id = window.setInterval(() => {
                 if (this.count > 0 && this.count <= 60)
                     this.count--;
                 else
