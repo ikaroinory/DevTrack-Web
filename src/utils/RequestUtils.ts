@@ -124,7 +124,7 @@ axios.interceptors.response.use(response => {
 });
 
 class RequestUrl {
-    private static readonly baseUrl = "http://api.extradev.cn";
+    private static readonly baseUrl = "http://localhost:8181/";
 
     private static readonly accountController = "account/";
     private static readonly projectController = "project/";
