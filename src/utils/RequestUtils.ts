@@ -123,7 +123,7 @@ axios.interceptors.response.use(response => {
 });
 
 class RequestUrl {
-    private static readonly baseUrl = "http://10.117.12.66:8181/";
+    private static readonly baseUrl = "http://api.extradev.cn";
 
     private static readonly accountController = "account/";
     private static readonly projectController = "project/";
@@ -199,14 +199,20 @@ export default class RequestUtils {
         return (await axios.get(url, {
             params: form,
             timeout: timeout || this.defaultTimeout,
-            headers: { Authorization: LocalStorageUtils.getToken() }
+            headers: {
+                Authorization: LocalStorageUtils.getToken(),
+                "Access-Control-Allow-Origin": "*"
+            }
         })).data;
     }
 
     private static async post(url: string, form: any | FormData, timeout?: number): Promise<Response<any> | any> {
         return (await axios.post(url, form, {
-            headers: { Authorization: LocalStorageUtils.getToken() },
-            timeout: timeout || this.defaultTimeout
+            timeout: timeout || this.defaultTimeout,
+            headers: {
+                Authorization: LocalStorageUtils.getToken(),
+                "Access-Control-Allow-Origin": "*"
+            }
         })).data;
     }
 
