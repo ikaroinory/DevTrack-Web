@@ -39,9 +39,7 @@
                 <el-tooltip placement="bottom" :hide-after="toolTipHideAfter" :content="lang.message">
                     <el-menu-item index="/notifications" class="main-menu-item">
                         <el-icon>
-                            <el-badge is-dot :hidden="false">
-                                <Bell/>
-                            </el-badge>
+                            <Bell/>
                         </el-icon>
                     </el-menu-item>
                 </el-tooltip>

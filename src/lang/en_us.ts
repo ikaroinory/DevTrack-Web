@@ -217,8 +217,8 @@ const en_us = {
         taskInformation: {
             title: "Task Information"
         },
-        systemNotification: {
-            title: "System Notification"
+        notifications: {
+            title: "Notifications"
         }
     },
     form: {
@@ -245,7 +245,7 @@ const en_us = {
             signIn: "Click here to sign in",
             usernameRule: "Username is composed of letters, numbers and underscores, and the length is 6~20 characters.",
             passwordRule: "The password consists of uppercase letters, lowercase letters, numbers, and symbols, with a length of 8~16 characters.",
-            confirmPasswordError: "Different password。",
+            confirmPasswordError: "Different password.",
             enterUsername: "Please enter username",
             enterPassword: "Please enter password",
             confirmPasswordTip: "Please check the password",
@@ -348,7 +348,7 @@ const en_us = {
             submit: "Submit"
         },
         addMembers: {
-            title: "Add Members",
+            title: "Invite Members",
             enterUsername: "Please enter username",
             enterUsernameToAddMembers: "Please enter username to add members",
             add: "Add",
@@ -470,6 +470,7 @@ const en_us = {
         },
         uuidConflict: "Numbering pool conflict, please try again later!",
         userNotFound: "User not found!",
+        notificationNotFound: "Notification not found!",
         userExists: "User already exists!",
         projectNotFound: "Project not found!",
         projectNotFoundWithUUID: "Project not found!\nProject uuid: %s.",
@@ -478,6 +479,9 @@ const en_us = {
         updateSuccessfully: "Update successfully!",
         submitSuccessfully: "Submit successfully!",
         removeSuccessfully: "Remove successfully!",
+        deleteSuccessfully: "Delete successfully!",
+        ignoreSuccessfully: "Ignore successfully!",
+        joinSuccessfully: "Joined the project successfully!",
         addSuccessfully: "Add successfully!",
         uploadFailed: "Upload failed!",
         youDoNotNeedToResetAvatar: "You do not need to reset avatar!",
