@@ -63,7 +63,7 @@
         RequestUtils.ignoreInvitation(props.uuid).then(resp => {
             if (resp !== StatusCode.success) return;
 
-            ApplicationUtils.showMessage(message.deleteSuccessfully, "success");
+            ApplicationUtils.showMessage(message.ignoreSuccessfully, "success");
 
             reload();
         });

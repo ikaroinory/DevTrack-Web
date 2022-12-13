@@ -436,6 +436,7 @@ const ko_kr = {
         submitSuccessfully: "커밋 성공!",
         removeSuccessfully: "제거 성공!",
         deleteSuccessfully: "Delete successfully!",
+        ignoreSuccessfully: "Ignore successfully!",
         joinSuccessfully: "Joined the project successfully!",
         addSuccessfully: "추가 성공!",
         uploadFailed: "업로드 실패!",

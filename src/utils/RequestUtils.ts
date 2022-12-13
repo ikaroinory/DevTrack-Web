@@ -152,7 +152,6 @@ class RequestUrl {
     public static readonly updateProject = this.baseUrl + this.projectController + "update";
 
     // Member Controller
-    public static readonly addProjectMembers = this.baseUrl + this.memberController + "add";
     public static readonly inviteMembers = this.baseUrl + this.memberController + "invite";
     public static readonly removeProjectMembers = this.baseUrl + this.memberController + "remove";
     public static readonly updateMemberRole = this.baseUrl + this.memberController + "update";
@@ -270,11 +269,7 @@ export default class RequestUtils {
 
 
     // Member Controller
-    public static async addProjectMembers(form: AddProjectMembersForm): Promise<Response<number>> {
-        return (await this.post(RequestUrl.addProjectMembers, this.toFormData(form)));
-    }
-
-    public static async inviteMembers(form: AddProjectMembersForm): Promise<Response<number>> {
+    public static async inviteMembers(form: AddProjectMembersForm): Promise<number> {
         return (await this.post(RequestUrl.inviteMembers, this.toFormData(form)));
     }
 

@@ -331,7 +331,7 @@ const en_us = {
             submit: "Submit"
         },
         addMembers: {
-            title: "Add Members",
+            title: "Invite Members",
             enterUsername: "Please enter username",
             enterUsernameToAddMembers: "Please enter username to add members",
             add: "Add",
@@ -463,6 +463,7 @@ const en_us = {
         submitSuccessfully: "Submit successfully!",
         removeSuccessfully: "Remove successfully!",
         deleteSuccessfully: "Delete successfully!",
+        ignoreSuccessfully: "Ignore successfully!",
         joinSuccessfully: "Joined the project successfully!",
         addSuccessfully: "Add successfully!",
         uploadFailed: "Upload failed!",
