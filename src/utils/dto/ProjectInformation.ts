@@ -1,16 +1,18 @@
 export default interface ProjectInformation {
-    uuid: String;
-    name: String;
-    creatorUUID: String;
-    creatorUsername: String;
-    creatorNickname: String;
-    creatorAvatar: String;
-    principalUUID: String;
-    principalUsername: String;
-    principalNickname: String;
-    principalAvatar: String;
-    description: String;
-    creationTime: String;
-    startTIme: String;
-    status: String;
+    uuid: string;
+    name: string;
+    creatorUUID: string;
+    creatorUsername: string;
+    creatorNickname: string;
+    creatorAvatar: string;
+    principalUUID: string;
+    principalUsername: string;
+    principalNickname: string;
+    principalAvatar: string;
+    description: string;
+    creationTime: string;
+    startTime: string;
+    finishTime: string;
+    status: number;
+    progress: number;
 }

@@ -1,7 +1,7 @@
 export default interface NewProjectForm {
     name: string;
-    creator: string;
-    principal: string;
+    creatorUUID: string;
+    principalUUID: string;
     publicProject: boolean;
     description: string;
     adminName: string;

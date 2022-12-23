@@ -70,7 +70,7 @@
         start() {
             this.isCountdown = true;
             this.count = 60;
-            this.id = setInterval(() => {
+            this.id = window.setInterval(() => {
                 if (this.count > 0 && this.count <= 60)
                     this.count--;
                 else
@@ -158,18 +158,7 @@
             delete newSignUpForm.confirmPassword;
             console.log(newSignUpForm);
             RequestUtils.signUp(newSignUpForm).then(resp => {
-                if (resp.statusCode === StatusCode.userExists)
-                    ApplicationUtils.showMessage(message.userExists, "error");
-                if (resp.statusCode === StatusCode.vCodeError)
-                    ApplicationUtils.showMessage(message.vCodeError, "error");
-                if (resp.statusCode === StatusCode.vCodeInvalid)
-                    ApplicationUtils.showMessage(message.vCodeInvalid, "error");
-                if (resp.statusCode === StatusCode.vCodeNoRecord)
-                    ApplicationUtils.showMessage(message.noVCodeRecord, "error");
-                if (resp.statusCode === StatusCode.uuidConflict)
-                    ApplicationUtils.showMessage(message.uuidConflict, "error");
-
-                if (resp.statusCode === StatusCode.success) {
+                if (resp === StatusCode.success) {
                     ApplicationUtils.showMessage(message.signUpSuccessfully, "success");
                     router.push({ name: "signIn" });
                 }

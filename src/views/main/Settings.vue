@@ -30,7 +30,7 @@
                 <div class="item-settings">
                     <div class="label-title" v-text="lang.cancellation"/>
                     <div class="label-description" style="color: var(--color-red)" v-text="lang.cancellationDescription"/>
-                    <el-button type="danger">
+                    <el-button type="danger" disabled>
                         <div v-text="lang.cancel"/>
                     </el-button>
                 </div>
@@ -43,32 +43,37 @@
 </template>
 
 <script lang="ts" setup>
-    import { ref } from "vue";
+    import { inject, ref } from "vue";
     import i18n from "@/plugins/VueI18n";
     import router from "@/plugins/VueRouter";
     import ApplicationUtils from "@/utils/ApplicationUtils";
-
+    const reloadPage: Function = inject("reloadPage")!;
     const lang = ApplicationUtils.locale.view.settings;
-
-    const localeOptions = [];
-
+    const message = ApplicationUtils.locale.message;
+    const localeOptions: Array<any> = [];
     const activeTab = ref("general");
     const currentLocale = ref(i18n.global.locale);
-
     init();
-
     function init() {
         ApplicationUtils.setTitle(lang.title);
         Object.entries(i18n.global.messages).forEach(([key, value]) => localeOptions.push({ value: key, label: value.name }));
     }
-
     function changeLocale() {
-        ApplicationUtils.changeLocale(currentLocale.value);
+        if (ApplicationUtils.changeLocale(currentLocale.value)) {
+            ApplicationUtils.showMessage(ApplicationUtils.locale.message.updateSuccessfully, "success");
+            reloadPage();
+        } else
+            ApplicationUtils.showMessage(message.youNeedToSelectAnOptionDifferentFromTheCurrentOne, "warning");
     }
-
     function clearStorage() {
-        ApplicationUtils.clearStorage();
-        router.replace({ name: "signIn" });
+        ApplicationUtils.showMessageBox(
+            message.clearStorageWarning.replace("%btn", message.button.ok),
+            "warning",
+            "OkCancel"
+        ).then(() => {
+            ApplicationUtils.clearStorage();
+            router.replace({ name: "signIn" });
+        }).catch(() => {});
     }
 </script>
 
@@ -77,28 +82,22 @@
         width: 1200px;
         margin: 100px auto;
     }
-
     .frame-tab-pane {
         margin-left: 60px;
     }
-
     .label-title, .label-description {
         margin-bottom: 12px;
     }
-
     .label-title {
         font-weight: bold;
     }
-
     .label-description {
         color: #8b949e;
         font-size: 12px;
     }
-
     .item-settings {
         margin-bottom: 40px;
     }
-
     .item-settings:nth-last-child(1) {
         margin-bottom: 0;
     }

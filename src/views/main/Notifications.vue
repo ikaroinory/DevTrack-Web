@@ -1,13 +1,8 @@
 <template>
-    <SystemNotificationDisplay/>
-    <NotificationItem title="Title"
-                      description="Desc."
-                      time="time"
-    />
+    <NotificationDisplay/>
 </template>
 
-<script setup>
-    import SystemNotificationDisplay from "@/components/display/SystemNotificationDisplay.vue";
-    import NotificationItem from "@/components/items/NotificationItem.vue";
+<script lang="ts" setup>
+    import NotificationDisplay from "@/components/display/NotificationDisplay.vue";
     //
 </script>

@@ -7,7 +7,7 @@
             <el-col :span="11">
                 <el-form-item prop="type" :label="lang.taskType">
                     <el-select style="width: 100%" v-model="taskForm.type" :placeholder="lang.selectTaskType">
-                        <el-option v-for="item in taskTypeList"
+                        <el-option v-for="item in GlobalData.taskTypeList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -32,11 +32,26 @@
             <el-col :span="11">
                 <el-form-item prop="priority" :label="lang.priority">
                     <el-select style="width: 100%" v-model="taskForm.priority">
-                        <el-option v-for="item in priorityList"
+                        <template #prefix>
+                            <el-icon size="1.2rem" :style="{color: selectIconColor}">
+                                <Warning/>
+                            </el-icon>
+                        </template>
+                        <el-option v-for="item in GlobalData.priorityList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
-                        />
+                        >
+                            <div style="display: flex; align-items: center">
+                                    <span style="display: flex">
+                                        <el-icon size="1.2rem" :style="{color: item.iconColor}"
+                                                 style="margin-right: 6px">
+                                            <Warning/>
+                                        </el-icon>
+                                    </span>
+                                <span>{{ item.label }}</span>
+                            </div>
+                        </el-option>
                     </el-select>
                 </el-form-item>
             </el-col>
@@ -44,7 +59,7 @@
             <el-col :span="11">
                 <el-form-item prop="SourceOfDemand" :label="lang.sourceOfDemand">
                     <el-select style="width: 100%" v-model="taskForm.sourceOfDemand">
-                        <el-option v-for="item in sourceOfDemandList"
+                        <el-option v-for="item in GlobalData.sourceOfDemandList"
                                    :key="item.value"
                                    :label="item.label"
                                    :value="item.value"
@@ -114,18 +129,22 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-    import { reactive, ref } from "vue";
+    import { computed, inject, reactive, ref } from "vue";
+    import { Warning } from "@element-plus/icons-vue";
     import type { FormInstance, FormRules } from "element-plus";
     import RequestUtils from "@/utils/RequestUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import NewTaskForm from "@/utils/forms/NewTaskForm";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
+    import StatusCode from "@/utils/enums/StatusCode";
+    import GlobalData from "@/utils/GlobalData";
 
     defineExpose({ clearForm: reset });
 
     const props = defineProps({
         projectUuid: { type: String, required: true }
     });
+    const reload: Function = inject("reload")!;
 
     const lang = ApplicationUtils.locale.form.newTask;
     const enumLang = ApplicationUtils.locale.enum;
@@ -150,29 +169,25 @@
             { required: true, message: lang.enterTitle, trigger: "blur" }
         ]
     });
-    const taskTypeList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.newFeature },
-        { value: 2, label: enumLang.bugfix }
-    ]);
-    const priorityList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.general },
-        { value: 2, label: enumLang.normal },
-        { value: 3, label: enumLang.important },
-        { value: 4, label: enumLang.urgent },
-        { value: 5, label: enumLang.mostUrgent }
-    ]);
-    const sourceOfDemandList = ref([
-        { value: 0, label: enumLang.unknown },
-        { value: 1, label: enumLang.rdPost },
-        { value: 2, label: enumLang.testPost }
-    ]);
     const members = ref<Array<ProjectMemberInformation>>([]);
+    const selectIconColor = computed(() => {
+        if (taskForm.value.priority === 5)
+            return "#fa8888";
+        else if (taskForm.value.priority === 4)
+            return "#fb7fb7";
+        else if (taskForm.value.priority === 3)
+            return "#f4d66d";
+        else if (taskForm.value.priority === 2)
+            return "#40e0c3";
+        else if (taskForm.value.priority === 1)
+            return "#5dcfff";
+        else
+            return;
+    });
 
     function init() {
         RequestUtils.getProjectMemberInformation(props.projectUuid).then(resp => {
-            members.value = resp;
+            members.value = resp.responseData;
         });
     }
 
@@ -183,9 +198,12 @@
             if (!valid) return;
 
             requestingServe.value = true;
-            RequestUtils.newTask(taskForm.value).then(() => {
-                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+            RequestUtils.newTask(taskForm.value).then(resp => {
                 requestingServe.value = false;
+                if (resp !== StatusCode.success) return;
+
+                ApplicationUtils.showMessage(message.createSuccessfully, "success");
+                reload();
             }).catch(() => {
                 ApplicationUtils.showMessage(message.timeout, "error");
                 requestingServe.value = false;

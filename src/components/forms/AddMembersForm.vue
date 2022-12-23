@@ -60,34 +60,13 @@
             return;
         }
 
-        RequestUtils.addProjectMembers(form).then(resp => {
-            if (resp.statusCode === StatusCode.projectNotFound)
+        RequestUtils.inviteMembers(form).then(resp => {
+            if (resp === StatusCode.projectNotFound)
                 ApplicationUtils.showMessage(message.projectNotFound, "error");
 
-            if (resp.statusCode === StatusCode.success) {
-                if (resp.resultData === form.usernameList.length) {
-                    ApplicationUtils.showMessageBox(
-                        message.addSuccessfully
-                            .replace("%d", resp.resultData.toString()),
-                        "success"
-                    );
-                    reload();
-                }
-                if (resp.resultData < form.usernameList.length && resp.resultData > 0) {
-                    ApplicationUtils.showMessageBox(
-                        message.addWarning
-                            .replace("%d1", form.usernameList.length.toString())
-                            .replace("%d2", resp.resultData.toString()),
-                        "warning"
-                    );
-                    reload();
-                }
-                if (resp.resultData === 0)
-                    ApplicationUtils.showMessageBox(
-                        message.addFailed
-                            .replace("%d", resp.resultData.toString()),
-                        "error"
-                    );
+            if (resp === StatusCode.success) {
+                ApplicationUtils.showMessage(message.addSuccessfully, "success");
+                reload();
             }
         }).catch(() => ApplicationUtils.showMessage(message.timeout, "error"));
     }

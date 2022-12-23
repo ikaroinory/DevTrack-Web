@@ -3,12 +3,15 @@
 </template>
 
 <script lang="ts" setup>
-    import { nextTick, ref } from "vue";
+    import { nextTick, provide, ref } from "vue";
     import LocalStorageUtils from "@/utils/LocalStorageUtils";
     import SessionStorageUtils from "@/utils/SessionStorageUtils";
     import ApplicationUtils from "@/utils/ApplicationUtils";
     import RequestUtils from "@/utils/RequestUtils";
     import router from "@/plugins/VueRouter";
+    import StatusCode from "@/utils/enums/StatusCode";
+
+    provide("reloadPage", () => reloadPage());
 
     const message = ApplicationUtils.locale.message;
     const isRouterAlive = ref(true);
@@ -25,14 +28,18 @@
 
         if (LocalStorageUtils.getExpireFromToken() <= Number(Date.now().toString().substring(0, 10))) {
             ApplicationUtils.showMessage(message.invalidTokenSignInAgain, "warning");
+            LocalStorageUtils.removeToken();
+            return;
         }
 
         RequestUtils.autoSignIn().then(resp => {
-            ApplicationUtils.showMessage(message.welcomeUser.replace("%s", resp.resultData.nickname), "success");
-            SessionStorageUtils.setUserInformation(resp.resultData);
-            SessionStorageUtils.setAccessMode("user");
-            reloadPage();
-            routerInterceptor(resp.resultData.username);
+            if (resp.statusCode === StatusCode.success) {
+                ApplicationUtils.showMessage(message.welcomeBack, "success");
+                SessionStorageUtils.setAccessMode("user");
+                SessionStorageUtils.setUserAvatar(resp.responseData);
+                reloadPage();
+                routerInterceptor(LocalStorageUtils.getUsernameFromToken());
+            }
         });
     }
 

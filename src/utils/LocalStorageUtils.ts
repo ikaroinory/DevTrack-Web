@@ -22,6 +22,14 @@ export default class LocalStorageUtils {
             return (JSON.parse(Base64.fromBase64(token.split(".")[1])) as Token).aud;
     }
 
+    public static getUserUUIDFromToken(): string {
+        const token = this.getToken();
+        if (token === "")
+            return "";
+        else
+            return (JSON.parse(Base64.fromBase64(token.split(".")[1])) as Token).uuid;
+    }
+
     public static getExpireFromToken(): number {
         const token = this.getToken();
         if (token === "")

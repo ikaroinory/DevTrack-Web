@@ -1,28 +1,33 @@
 <template>
-    <div v-loading="loading" class="global-vertical-margin">
-        <ProjectItem v-for="item in list"
-                     :uuid="item.uuid"
-                     :name="item.name"
-                     :description="item.description"
-                     :progress="0"
-                     :creator="item.creatorNickname"
-                     :creation-time="item.creationTime"
-        />
+    <div v-if="recordCount !== 0">
+        <div v-loading="loading" class="global-vertical-margin">
+            <ProjectItem v-for="item in list"
+                         :uuid="item.uuid"
+                         :name="item.name"
+                         :description="item.description"
+                         :progress="item.progress"
+                         :creator="item.creatorNickname"
+                         :creation-time="item.creationTime"
+            />
+        </div>
+        <div class="global-vertical-margin">
+            <el-pagination v-model:current-page="currentPage"
+                           v-model:page-size="pageSize"
+                           @current-change="changePage"
+                           :background="true"
+                           :total="recordCount"
+                           :hide-on-single-page="false"
+            />
+        </div>
     </div>
-    <div class="global-vertical-margin">
-        <el-pagination v-model:current-page="currentPage"
-                       v-model:page-size="pageSize"
-                       @current-change="changePage"
-                       :background="true"
-                       :total="recordCount"
-                       :hide-on-single-page="false"
-        />
+    <div v-else>
+        <el-empty :description="message.projectNotFound"/>
     </div>
 </template>
 
 <script lang="ts" setup>
     import { ref } from "vue";
-    import ProjectItem from "@/components/items/ProjectItem.vue"
+    import ProjectItem from "@/components/items/ProjectItem.vue";
     import RequestUtils from "@/utils/RequestUtils";
     import ProjectInformation from "@/utils/dto/ProjectInformation";
     import ApplicationUtils from "@/utils/ApplicationUtils";
@@ -46,8 +51,8 @@
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getOnePageUserProjects(pageNum, pageSize).then(resp => {
-            list.value = resp.list;
-            recordCount.value = resp.recordCount;
+            list.value = resp.responseData.list;
+            recordCount.value = resp.responseData.recordCount;
             loading.value = false;
         }).catch(() => {
             ApplicationUtils.showMessage(message.timeout, "error");

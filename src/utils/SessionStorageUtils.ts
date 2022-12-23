@@ -1,47 +1,13 @@
-import UserInformation from "@/utils/dto/UserInformation";
-
 export default class SessionStorageUtils {
-    private static readonly userInformation = "userInformation";
+    private static readonly avatar = "avatar";
     private static readonly accessMode = "accessMode";
 
-    public static setUserInformation(userInformation: UserInformation): void {
-        sessionStorage.setItem(this.userInformation, JSON.stringify(userInformation));
-    }
-
-    private static getUserInformation(): string {
-        return sessionStorage.getItem(this.userInformation) ?? "";
-    }
-
-    public static getUserUsername(): string {
-        const info = this.getUserInformation();
-        if (info === "")
-            return "";
-        else
-            return (JSON.parse(info) as UserInformation).username;
-    }
-
-    public static getUserUUID(): string {
-        const info = this.getUserInformation();
-        if (info === "")
-            return "";
-        else
-            return (JSON.parse(info) as UserInformation).uuid;
-    }
-
-    public static getUserNickname(): string {
-        const info = this.getUserInformation();
-        if (info === "")
-            return "";
-        else
-            return (JSON.parse(info) as UserInformation).nickname;
+    public static setUserAvatar(avatar: string): void {
+        sessionStorage.setItem(this.avatar, "data:image/jpeg;base64," + avatar);
     }
 
     public static getUserAvatar(): string {
-        const info = this.getUserInformation();
-        if (info === "")
-            return "";
-        else
-            return "data:image/jpeg;base64," + (JSON.parse(info) as UserInformation).avatar;
+        return sessionStorage.getItem(this.avatar) ?? "data:image/jpeg;base64,";
     }
 
     public static setAccessMode(accessMode: "visitor" | "user"): void {
