@@ -113,7 +113,6 @@
             </el-table-column>
         </el-table>
     </div>
-
     <div class="pagination-box">
         <el-pagination v-model:current-page="currentPage"
                        v-model:page-size="pageSize"
@@ -123,13 +122,11 @@
                        :hide-on-single-page="false"
         />
     </div>
-
     <TaskInformationDialog v-model:show="showTaskInformationDialog"
                            :task="currentTask"
                            :project-member-list="projectMemberList"
     />
 </template>
-
 <script lang="ts" setup>
     import { ref } from "vue";
     import { Clock, Warning } from "@element-plus/icons-vue";
@@ -141,11 +138,9 @@
     import StatusCode from "@/utils/enums/StatusCode";
     import UserItem from "@/components/items/UserItem.vue";
     import ProjectMemberInformation from "@/utils/dto/ProjectMemberInformation";
-
     const lang = ApplicationUtils.locale.view.taskTable;
     const message = ApplicationUtils.locale.message;
     const enums = ApplicationUtils.locale.enum;
-
     const loading = ref(false);
     const showTaskInformationDialog = ref(false);
     const tasks = ref<Array<TaskInformation>>([]);
@@ -176,24 +171,19 @@
     const projectMemberList = ref<Array<ProjectMemberInformation>>([]);
     const tableRowClassName = ({ row }: { row: TaskInformation }) => {
         if (!row.deadline) return;
-
         const now = new Date();
         now.setHours(now.getHours() + 8);
         if (Date.parse(row.deadline) < (!row.finishTime ? now.getTime() : Date.parse(row.finishTime)))
             return "expiration-row";
         return;
     };
-
     init();
-
     function init() {
         getPage(currentPage.value);
     }
-
     function clearTable() {
         tasks.value = [];
     }
-
     function getPage(pageNum: number) {
         loading.value = true;
         RequestUtils.getTasksFromUser(pageNum, pageSize).then(resp => {
@@ -205,48 +195,40 @@
             loading.value = false;
         });
     }
-
     function changePage(val: number) {
         clearTable();
         getPage(val);
     }
-
     async function showDialog(row: TaskInformation) {
         currentTask.value = row;
         await RequestUtils.getProjectMemberInformation(currentTask.value?.fromProjectUUID || "").then(resp => {
             if (resp.statusCode !== StatusCode.success) return;
-
             projectMemberList.value = resp.responseData;
         });
         showTaskInformationDialog.value = true;
     }
-
     function toList(val: string) {
         return val.split("\n");
     }
 </script>
-
 <style scoped>
     .table-box {
         flex-grow: 1;
         height: 0;
         padding: 0 12px;
     }
-
     .pagination-box {
         display: flex;
         justify-content: center;
         margin: 12px;
         position: relative;
     }
-
     /*调整分页中total样式*/
     :deep(.el-pagination__total) {
         width: 100px;
         position: absolute;
         right: 15px;
     }
-
     :deep(.el-table__row):hover {
         cursor: pointer;
     }

@@ -21,9 +21,7 @@
     import TaskTable from "@/components/tables/TaskTable.vue";
     import ScheduleTable from "@/components/tables/ScheduleTable.vue";
     import ApplicationUtils from "@/utils/ApplicationUtils";
-
     const lang = ApplicationUtils.locale.view.dashboard;
-
 </script>
 
 <style scoped>
@@ -33,33 +31,27 @@
         padding: 12px;
         box-sizing: border-box;
     }
-
     .left-container {
         flex-grow: 5;
         width: 0;
     }
-
     .right-container {
         flex-grow: 3;
         width: 0;
         margin-left: 12px;
     }
-
     .right-box {
         flex-grow: 1;
         height: 0;
     }
-
     .box-flex {
         display: flex;
         flex-direction: column;
     }
-
     .box-style {
         border-radius: var(--border-radius-item);
         box-shadow: var(--shadow-default);
     }
-
     .top-title {
         margin: 12px;
         height: 30px;
